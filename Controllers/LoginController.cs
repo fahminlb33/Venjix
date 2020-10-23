@@ -9,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using Venjix.DAL;
 using Venjix.DTO;
 using Venjix.Infrastructure.Authentication;
+using Venjix.Infrastructure.Helpers;
 
 namespace Venjix.Controllers
 {
@@ -40,7 +41,7 @@ namespace Venjix.Controllers
             var user = await _context.Users.SingleOrDefaultAsync(x => x.Username == dto.Username);
             if (user == null || !BCrypt.Net.BCrypt.Verify(dto.Password, user.Password))
             {
-                ViewData["ErrorMessage"] = "Username or password invalid.";
+                ViewData[ViewBagKeys.ErrorMessage] = "Username or password invalid.";
                 return View("Index");
             }
 
