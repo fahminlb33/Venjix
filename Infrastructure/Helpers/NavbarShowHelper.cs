@@ -41,7 +41,6 @@ namespace Venjix.Infrastructure.Helpers
             if (!currentController.Equals(targetController)) return;
             if (!actions.Any(x => x.Equals(currentAction)))
             {
-                Debug.Print("Navbar SHOW RUN");
                 output.Attributes.SetAttribute("class", "collapse show");
             }
             else
