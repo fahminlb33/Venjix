@@ -1,12 +1,9 @@
-# Venjix
+# Venjix ![.NET Core](https://github.com/fahminlb33/Venjix/workflows/.NET%20Core/badge.svg)
 
 Venjix is an open source web app to collect, visualize, and forecast data from 
 IOT devices, acting as a server hub for centralized IOT data collection.
 You can think this app is like ThingSpeak but hosed in your local server.
 
-## Build Status
-
-Will be updated!
 
 ## Features
 
@@ -21,7 +18,8 @@ Will be updated!
 
 ## Deploying
 
-
+Deploying is easy, you can deploy this app to run in your local computer,
+inside a docker container, or into a Raspberry Pi!
 
 ### Docker
 
@@ -45,3 +43,10 @@ Will be updated!
 
 Contribution is very welcome! Create an issue or pull request to help imrpove this
 project.
+
+What tools I'm using:
+
+1. Visual Studio 2019.
+2. Web Compiler (extension).
+3. Libman (included in VS2019).
+4. Docker.
