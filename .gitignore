@@ -509,3 +509,7 @@ MigrationBackup/
 
 # Libman Libraries
 wwwroot/lib
+
+# Precompiled CSS
+wwwroot/css/sb-admin-2.css
+wwwroot/css/sb-admin-2.min.css
