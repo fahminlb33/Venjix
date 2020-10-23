@@ -1,0 +1,224 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>SB Admin 2 - Dashboard</title>
+
+    <!-- Custom fonts for this template-->
+    <link href="~/css/Nunito.css" rel="stylesheet preload">
+    <link href="~/lib/fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template-->
+    <link href="~/css/sb-admin-2.css" rel="stylesheet">
+</head>
+
+<body id="page-top">
+
+    <!-- Page Wrapper -->
+    <div id="wrapper">
+
+        <!-- Sidebar -->
+        <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+
+            <!-- Sidebar - Brand -->
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+                <div class="sidebar-brand-icon rotate-n-15">
+                    <i class="fas fa-laugh-wink"></i>
+                </div>
+                <div class="sidebar-brand-text mx-3">Venjix</div>
+            </a>
+
+            <!-- Divider -->
+            <hr class="sidebar-divider my-0">
+
+            <!-- Nav Item - Dashboard -->
+            <li class="nav-item" active-when="/Home/Index">
+                <a class="nav-link" asp-controller="Home" asp-action="Index">
+                    <i class="fas fa-fw fa-tachometer-alt"></i>
+                    <span>Dashboard</span>
+                </a>
+            </li>
+
+            <!-- Divider -->
+            <hr class="sidebar-divider">
+
+            <!-- Heading -->
+            <div class="sidebar-heading">
+                Data Acquisition
+            </div>
+
+            <!-- Nav Item - Sensors -->
+            <li class="nav-item" active-when="/Sensors/">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseSensors" aria-expanded="true" 
+                   aria-controls="collapseSensors" collapsed-when="/Sensors/">
+                    <i class="fas fa-fw fa-satellite-dish"></i>
+                    <span>Sensors</span>
+                </a>
+                <div id="collapseSensors" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar" show-when="/Sensors/">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <a class="collapse-item" active-when="/Sensors/Add|Edit" asp-controller="Sensors" asp-action="Add">Add Sensor</a>
+                        <a class="collapse-item" active-when="/Sensors/Index" asp-controller="Sensors" asp-action="Index">Registered Sensors</a>
+                    </div>
+                </div>
+            </li>
+
+            <!-- Nav Item - Visualize -->
+            <li class="nav-item" active-when="/Visualize/">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseVisualize" aria-expanded="true" 
+                   aria-controls="collapseVisualize" collapsed-when="/Visualize/">
+                    <i class="fas fa-fw fa-chart-area"></i>
+                    <span>Visualize</span>
+                </a>
+                <div id="collapseVisualize" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar" show-when="/Visualize/">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <a class="collapse-item" active-when="/Visualize/Table" asp-controller="Visualize" asp-action="Table"> Table</a>
+                        <a class="collapse-item" active-when="/Visualize/TimeSeries" asp-controller="Visualize" asp-action="TimeSeries">Time Series</a>
+                        <a class="collapse-item" active-when="/Visualize/Scatter" asp-controller="Visualize" asp-action="Scatter">Scatter</a>
+                        <a class="collapse-item" active-when="/Visualize/Geomap" asp-controller="Visualize" asp-action="Geomap">Geomap</a>
+                    </div>
+                </div>
+            </li>
+
+            <!-- Nav Item - Forecast -->
+            <li class="nav-item" active-when="/Forecast/">
+                <a class="nav-link" active-when="/Forecast/Index" asp-controller="Forecast" asp-action="Index">
+                    <i class="fas fa-fw fa-brain"></i>
+                    <span>Forecast (ML)</span>
+                </a>
+            </li>
+
+            <!-- Divider -->
+            <hr class="sidebar-divider">
+
+            <!-- Heading -->
+            <div class="sidebar-heading">
+                Management
+            </div>
+
+            <!-- Nav Item - Users -->
+            <li class="nav-item" active-when="/Users/">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUsers" aria-expanded="true" 
+                   aria-controls="collapseUsers" collapsed-when="/Users/">
+                    <i class="fas fa-fw fa-users"></i>
+                    <span>Users</span>
+                </a>
+                <div id="collapseUsers" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar" show-when="/Users/">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <a class="collapse-item" active-when="/Users/Add|Edit" asp-controller="Users" asp-action="Add">Add User</a>
+                        <a class="collapse-item" active-when="/Users/Index" asp-controller="Users" asp-action="Index">Registered Users</a>
+                    </div>
+                </div>
+            </li>
+
+            <!-- Nav Item - Telegram Bot -->
+            <li class="nav-item" active-when="/Telegram/Index">
+                <a class="nav-link" active-when="/Telegram/Index" asp-controller="Telegram" asp-action="Index">
+                    <i class="fab fa-fw fa-telegram-plane"></i>
+                    <span>Telegram Bot</span>
+                </a>
+            </li>
+
+            <!-- Nav Item - Webhooks -->
+            <li class="nav-item" active-when="/Webhooks/">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseWebhooks" aria-expanded="true"
+                   aria-controls="collapseWebhooks" collapsed-when="/Webhooks/">
+                    <i class="fas fa-fw fa-link"></i>
+                    <span>Webhooks</span>
+                </a>
+                <div id="collapseWebhooks" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar" show-when="/Webhooks/">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <a class="collapse-item" active-when="/Webhooks/Add|Edit" asp-controller="Webhooks" asp-action="Add">Add Hook</a>
+                        <a class="collapse-item" active-when="/Webhooks/Index" asp-controller="Webhooks" asp-action="Index">Registered Hooks</a>
+                    </div>
+                </div>
+            </li>
+
+            <!-- Nav Item - About -->
+            <li class="nav-item" active-when="/Home/About">
+                <a class="nav-link" active-when="/Home/About" asp-controller="Home" asp-action="About">
+                    <i class="fas fa-fw fa-info"></i>
+                    <span>About</span>
+                </a>
+            </li>
+
+            <!-- Divider -->
+            <hr class="sidebar-divider d-none d-md-block">
+
+            <!-- Sidebar Toggler (Sidebar) -->
+            <div class="text-center d-none d-md-inline">
+                <button class="rounded-circle border-0" id="sidebarToggle"></button>
+            </div>
+
+        </ul>
+        <!-- End of Sidebar -->
+        <!-- Content Wrapper -->
+        <div id="content-wrapper" class="d-flex flex-column">
+
+            <!-- Main Content -->
+            <div id="content">
+
+                <!-- Topbar -->
+                <partial name="_NavbarPartial" />
+                <!-- End of Topbar -->
+                <!-- Begin Page Content -->
+                <div class="container-fluid">
+                    @RenderBody()
+                </div>
+                <!-- /.container-fluid -->
+
+            </div>
+            <!-- End of Main Content -->
+            <!-- Footer -->
+            <partial name="_FooterPartial" />
+            <!-- End of Footer -->
+
+        </div>
+        <!-- End of Content Wrapper -->
+
+    </div>
+    <!-- End of Page Wrapper -->
+    <!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fas fa-angle-up"></i>
+    </a>
+
+    <!-- Logout Modal-->
+    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                    <a class="btn btn-primary" href="login.html">Logout</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap core JavaScript-->
+    <script src="~/lib/jquery/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script src="~/lib/jquery-easing/jquery.easing.min.js"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script src="~/js/sb-admin-2.js"></script>
+
+    @RenderSection("Scripts", false)
+
+</body>
+
+</html>
