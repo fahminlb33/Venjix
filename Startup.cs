@@ -32,6 +32,7 @@ namespace Venjix
             .AddCookie(options =>
             {
                 options.LoginPath = "/login/index";
+                options.LogoutPath = "/login/logout";
                 options.ExpireTimeSpan = TimeSpan.FromMinutes(5);
             });
             services.AddAuthorization(config =>
@@ -40,8 +41,8 @@ namespace Venjix
             });
             services.AddAntiforgery(options =>
             {
-                options.FormFieldName = "AntiforgeryFieldname";
-                options.HeaderName = "X-CSRF-TOKEN-HEADERNAME";
+                options.FormFieldName = "VAntiForgery";
+                options.HeaderName = "X-CSRF-TOKEN";
                 options.SuppressXFrameOptionsHeader = false;
             });
 
