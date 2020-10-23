@@ -110,6 +110,7 @@
                 </a>
                 <div id="collapseUsers" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar" show-when="/Users/">
                     <div class="bg-white py-2 collapse-inner rounded">
+                        <a class="collapse-item" active-when="/Users/Profile" asp-controller="Users" asp-action="Profile">Profile</a>
                         <a class="collapse-item" active-when="/Users/Add|Edit" asp-controller="Users" asp-action="Add">Add User</a>
                         <a class="collapse-item" active-when="/Users/Index" asp-controller="Users" asp-action="Index">Registered Users</a>
                     </div>
@@ -201,7 +202,7 @@
                 <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
                 <div class="modal-footer">
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                    <a class="btn btn-primary" href="login.html">Logout</a>
+                    <a class="btn btn-primary" asp-controller="Login" asp-action="Logout">Logout</a>
                 </div>
             </div>
         </div>

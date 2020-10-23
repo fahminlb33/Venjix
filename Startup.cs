@@ -48,6 +48,7 @@ namespace Venjix
             services.AddDbContext<VenjixContext>(options => options.UseSqlite(@"Data Source=main.db"));
             services.AddRouting(options => options.LowercaseUrls = true);
             services.AddControllersWithViews().AddRazorRuntimeCompilation();
+            services.AddHttpContextAccessor();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

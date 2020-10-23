@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authentication.Cookies;
+﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Venjix.DAL;
 using Venjix.Infrastructure.Authentication;
 
 namespace Venjix.Controllers
@@ -32,6 +26,12 @@ namespace Venjix.Controllers
         public IActionResult Edit()
         {
             return View();
+        }
+
+        [Authorize(Roles = Roles.AdminOrUser)]
+        public IActionResult Profile()
+        {
+            return View("Edit");
         }
     }
 }
