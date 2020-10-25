@@ -41,7 +41,6 @@ namespace Venjix.Infrastructure.Helpers
             if (!currentController.Equals(targetController)) return;
             if (!actions.Any(x => x.Equals(currentAction)))
             {
-                Debug.Print("Navbar Colapse RUN");
                 if (output.Attributes.ContainsName("class"))
                 {
                     var lastAttr = output.Attributes["class"].Value.ToString();
