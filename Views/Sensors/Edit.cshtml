@@ -1,5 +1,37 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
+﻿@model SensorEditFormDto
+
+<h1 class="h3 mb-2 text-gray-800">Add Sensor</h1>
+<p class="mb-4">Add new sensor value to track.</p>
+
+<div class="row">
+    <div class="col-lg-6">
+        <div class="card mb-4">
+            <div class="card-header">
+                <h6 class="m-0 font-weight-bold text-primary">Sensor Information</h6>
+            </div>
+            <div class="card-body">
+                <form method="post" asp-action="Save">
+                    @Html.HiddenFor(x => x.SensorId)
+                    <div class="form-group">
+                        <label asp-for="DisplayName">Display name</label>
+                        <div class="form-row">
+                            <div class="col-5">
+                                <input type="text" class="form-control" asp-for="DisplayName">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="ApiField">API field name</label>
+                        <div class="form-row">
+                            <div class="col-5">
+                                <input type="password" class="form-control" asp-for="ApiField">
+                            </div>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">Save</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

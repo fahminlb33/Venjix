@@ -22,5 +22,10 @@ namespace Venjix.Controllers
         {
             return View();
         }
+
+        public IActionResult Save()
+        {
+            return View("Index");
+        }
     }
 }
