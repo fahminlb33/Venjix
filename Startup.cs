@@ -1,4 +1,5 @@
 using System;
+using AutoMapper;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
@@ -8,6 +9,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Venjix.DAL;
+using Venjix.Infrastructure.DataTables;
 
 namespace Venjix
 {
@@ -23,6 +25,7 @@ namespace Venjix
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddControllersWithViews().AddRazorRuntimeCompilation();
             services.AddAuthentication(x =>
             {
                 x.DefaultSignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
@@ -33,6 +36,7 @@ namespace Venjix
             {
                 options.LoginPath = "/login/index";
                 options.LogoutPath = "/login/logout";
+                options.AccessDeniedPath = "/error/unauthorizedpage";
                 options.ExpireTimeSpan = TimeSpan.FromMinutes(5);
             });
             services.AddAuthorization(config =>
@@ -48,8 +52,11 @@ namespace Venjix
 
             services.AddDbContext<VenjixContext>(options => options.UseSqlite(@"Data Source=main.db"));
             services.AddRouting(options => options.LowercaseUrls = true);
-            services.AddControllersWithViews().AddRazorRuntimeCompilation();
+            services.AddHealthChecks();
             services.AddHttpContextAccessor();
+            services.AddAutoMapper(typeof(Startup));
+
+            services.AddTransient<IDataTables, DataTables>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -68,7 +75,7 @@ namespace Venjix
             app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();
-            
+            app.UseHealthChecks("/status");
             app.UseCors(x => x
               .AllowAnyOrigin()
               .AllowAnyMethod()
@@ -76,6 +83,7 @@ namespace Venjix
 
             app.UseEndpoints(endpoints =>
             {
+                endpoints.MapControllers();
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
