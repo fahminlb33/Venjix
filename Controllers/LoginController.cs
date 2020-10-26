@@ -10,6 +10,7 @@ using Venjix.DAL;
 using Venjix.DTO;
 using Venjix.Infrastructure.Authentication;
 using Venjix.Infrastructure.Helpers;
+using Venjix.Models;
 
 namespace Venjix.Controllers
 {
@@ -36,17 +37,18 @@ namespace Venjix.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> LoginAuthorization(LoginFormDto dto)
+        public async Task<IActionResult> LoginAuthorization(LoginModel dto)
         {
             var user = await _context.Users.SingleOrDefaultAsync(x => x.Username == dto.Username);
             if (user == null || !BCrypt.Net.BCrypt.Verify(dto.Password, user.Password))
             {
-                ViewData[ViewBagKeys.ErrorMessage] = "Username or password invalid.";
+                ViewData[ViewDataKeys.Message] = "Username or password invalid.";
                 return View("Index");
             }
 
             var claims = new[]
             {
+                new Claim(ClaimTypes.NameIdentifier, user.UserId.ToString()),
                 new Claim(ClaimTypes.Name, user.Username),
                 new Claim(ClaimTypes.Role, user.Role),
             };

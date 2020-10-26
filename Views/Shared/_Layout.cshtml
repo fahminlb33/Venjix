@@ -8,14 +8,18 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>SB Admin 2 - Dashboard</title>
+    <title>@ViewData[ViewDataKeys.Title]</title>
 
     <!-- Custom fonts for this template-->
-    <link href="~/css/Nunito.css" rel="stylesheet preload">
+    <link href="~/css/Nunito.css" rel="stylesheet preload" as="style">
     <link href="~/lib/fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet">
 
     <!-- Custom styles for this template-->
     <link href="~/css/sb-admin-2.min.css" rel="stylesheet">
+
+    <link href="~/img/favicon.ico" rel="icon" type="image/x-icon">
+
+    @RenderSection("Styles", false)
 </head>
 
 <body id="page-top">

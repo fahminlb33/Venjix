@@ -1,5 +1,6 @@
-﻿@model LoginFormDto
+﻿@model LoginModel
 @{
+    ViewData[ViewDataKeys.Title] = "Login to Venjix";
     Layout = "_LoginLayout";
 }
 
@@ -17,10 +18,10 @@
                             <div class="text-center">
                                 <h1 class="h4 text-gray-900 mb-4">Welcome Back!</h1>
                             </div>
-                            @if (ViewData[ViewBagKeys.ErrorMessage] != null)
+                            @if (ViewData[ViewDataKeys.Message] != null)
                             {
                                 <div class="alert alert-danger" role="alert">
-                                    @ViewData[ViewBagKeys.ErrorMessage]
+                                    @ViewData[ViewDataKeys.Message]
                                 </div>
                             }
                             <form class="user" method="post" asp-action="LoginAuthorization" asp-antiforgery="true">

@@ -1,5 +1,50 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model UserEditModel
 @{
+    ViewData[ViewDataKeys.Title] = "Add new Users - Venjix";
+    ViewData[ViewDataKeys.PageHeading] = Model.IsEdit ? "Edit User" : "Add User";
+    ViewData[ViewDataKeys.PageSubheading] = Model.IsEdit ? "Edit user profile." : "Add user profile.";
+
+    var loggedRole = User.FindFirst(System.Security.Claims.ClaimTypes.Role).Value;
+    var disableRole = loggedRole != Venjix.Infrastructure.Authentication.Roles.Admin;
 }
+
+<h1 class="h3 mb-2 text-gray-800">@ViewData[ViewDataKeys.PageHeading]</h1>
+<p class="mb-4">@ViewData[ViewDataKeys.PageSubheading]</p>
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card mb-4">
+            <div class="card-header">
+                <h6 class="m-0 font-weight-bold text-primary">User's Profile</h6>
+            </div>
+            <div class="card-body">
+                @if (ViewData[ViewDataKeys.Message] != null)
+                {
+                    <div class="alert alert-@((bool)ViewData[ViewDataKeys.IsSuccess] == true ? "success" : "danger")" role="alert">
+                        @ViewData[ViewDataKeys.Message]
+                    </div>
+                }
+
+                <form method="post" asp-action="Save">
+                    <input type="hidden" asp-for="IsEdit" />
+                    <input type="hidden" asp-for="UserId" />
+
+                    <div class="form-group">
+                        <label asp-for="Username">Username</label>
+                        <input type="text" class="form-control" asp-for="Username">
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Password">Password</label>
+                        <input type="password" class="form-control" asp-for="Password">
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Password">Password</label>
+                        <select class="form-control" asp-for="Role" asp-items="Model.Roles" readonly-when="disableRole"></select>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">Save</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
