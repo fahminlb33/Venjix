@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Venjix.DAL;
 
 namespace Venjix.Controllers
 {
@@ -20,6 +22,9 @@ namespace Venjix.Controllers
 
         public IActionResult Table()
         {
+            var ll = new List<SelectListItem>();
+            ll.Add(new SelectListItem { Text = "AAA", Value = "ass" });
+            ViewData["Items"] = ll;
             return View();
         }
 
