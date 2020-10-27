@@ -32,11 +32,8 @@ namespace Venjix.Controllers
         }
 
         [Authorize(Roles = Roles.Admin)]
-        public IActionResult Index([FromQuery] string message, [FromQuery] bool success)
+        public IActionResult Index()
         {
-            ViewData[ViewDataKeys.Message] = message;
-            ViewData[ViewDataKeys.IsSuccess] = success;
-
             return View("Index");
         }
 
@@ -53,11 +50,8 @@ namespace Venjix.Controllers
         }
 
         [Authorize(Roles = Roles.AdminOrUser)]
-        public async Task<IActionResult> Profile([FromQuery] string message, [FromQuery] bool success)
+        public async Task<IActionResult> Profile()
         {
-            ViewData[ViewDataKeys.Message] = message;
-            ViewData[ViewDataKeys.IsSuccess] = success;
-
             var id = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
             var user = await _context.Users.FindAsync(id);
 
@@ -74,7 +68,10 @@ namespace Venjix.Controllers
             var user = await _context.Users.FindAsync(id);
             if (user == null)
             {
-                return RedirectToAction("Index", new { message = "User does not exists.", success = false });
+                TempData[ViewDataKeys.Message] = "User does not exists.";
+                TempData[ViewDataKeys.IsSuccess] = false;
+
+                return RedirectToAction("Index");
             }
 
             var model = _mapper.Map<UserEditModel>(user);
@@ -90,13 +87,19 @@ namespace Venjix.Controllers
             var user = await _context.Users.FindAsync(id);
             if (user == null)
             {
-                return RedirectToAction("Index", new { message = "User does not exists.", success = false });
+                TempData[ViewDataKeys.Message] = "User does not exists.";
+                TempData[ViewDataKeys.IsSuccess] = false;
+
+                return RedirectToAction("Index");
             }
 
             _context.Users.Remove(user);
             await _context.SaveChangesAsync();
 
-            return RedirectToAction("Index", new { message = "User deleted successfully.", success = true });
+            TempData[ViewDataKeys.Message] = "User deleted successfully.";
+            TempData[ViewDataKeys.IsSuccess] = true;
+
+            return RedirectToAction("Index");
         }
 
         [HttpPost]
@@ -122,15 +125,17 @@ namespace Venjix.Controllers
 
             await _context.SaveChangesAsync();
 
+            TempData[ViewDataKeys.IsSuccess] = true;
             if (role == Roles.User)
             {
-                return RedirectToAction("Profile", new { message = "Profile updated successfully.", success = true });
+                TempData[ViewDataKeys.Message] = "Profile updated successfully.";
+                return RedirectToAction("Profile");
             }
             else
             {
-                return RedirectToAction("Index", new { message = "User saved successfully.", success = true });
+                TempData[ViewDataKeys.Message] = "User saved successfully.";
+                return RedirectToAction("Index");
             }
-
         }
 
         [HttpPost]

@@ -12,10 +12,10 @@
         <h6 class="m-0 font-weight-bold text-primary">Users</h6>
     </div>
     <div class="card-body">
-        @if (ViewData[ViewDataKeys.Message] != null)
+        @if (TempData[ViewDataKeys.Message] != null)
         {
-            <div class="alert alert-@((bool)ViewData[ViewDataKeys.IsSuccess] == true ? "success" : "danger")" role="alert">
-                @ViewData[ViewDataKeys.Message]
+            <div class="alert alert-@((bool)TempData[ViewDataKeys.IsSuccess] == true ? "success" : "danger")" role="alert">
+                @TempData[ViewDataKeys.Message]
             </div>
         }
 

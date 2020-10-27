@@ -1,6 +1,6 @@
 ﻿@model UserEditModel
 @{
-    ViewData[ViewDataKeys.Title] = "Add new Users - Venjix";
+    ViewData[ViewDataKeys.Title] = Model.IsEdit ? "Edit user - Venjix": "Add new user - Venjix";
     ViewData[ViewDataKeys.PageHeading] = Model.IsEdit ? "Edit User" : "Add User";
     ViewData[ViewDataKeys.PageSubheading] = Model.IsEdit ? "Edit user profile." : "Add user profile.";
 
@@ -18,10 +18,10 @@
                 <h6 class="m-0 font-weight-bold text-primary">User's Profile</h6>
             </div>
             <div class="card-body">
-                @if (ViewData[ViewDataKeys.Message] != null)
+                @if (TempData[ViewDataKeys.Message] != null)
                 {
-                    <div class="alert alert-@((bool)ViewData[ViewDataKeys.IsSuccess] == true ? "success" : "danger")" role="alert">
-                        @ViewData[ViewDataKeys.Message]
+                    <div class="alert alert-@((bool)TempData[ViewDataKeys.IsSuccess] == true ? "success" : "danger")" role="alert">
+                        @TempData[ViewDataKeys.Message]
                     </div>
                 }
 
