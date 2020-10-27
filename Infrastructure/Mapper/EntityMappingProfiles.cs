@@ -15,6 +15,9 @@ namespace Venjix.Infrastructure.Mapper
 
             CreateMap<Sensor, SensorEditModel>();
             CreateMap<SensorEditModel, Sensor>();
+
+            CreateMap<Webhook, WebhookEditModel>();
+            CreateMap<WebhookEditModel, Webhook>();
         }
     }
 }
