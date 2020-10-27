@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using Venjix.DAL;
+using Venjix.Infrastructure.DAL;
 using Venjix.Models;
 
 namespace Venjix.Infrastructure.Mapper

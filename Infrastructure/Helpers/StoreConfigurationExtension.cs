@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System;
 using System.ComponentModel;
-using Venjix.DAL;
+using Venjix.Infrastructure.DAL;
 
 namespace Venjix.Infrastructure.Helpers
 {

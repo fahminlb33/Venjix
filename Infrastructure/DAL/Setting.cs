@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Venjix.DAL
+namespace Venjix.Infrastructure.DAL
 {
     public class Setting
     {

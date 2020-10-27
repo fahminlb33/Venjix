@@ -1,4 +1,4 @@
-﻿namespace Venjix.DAL
+﻿namespace Venjix.Infrastructure.DAL
 {
     public enum TriggerEvent
     {

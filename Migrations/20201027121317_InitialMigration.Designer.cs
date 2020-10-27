@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using Venjix.DAL;
+using Venjix.Infrastructure.DAL;
 
 namespace Venjix.Migrations
 {
@@ -18,7 +18,7 @@ namespace Venjix.Migrations
             modelBuilder
                 .HasAnnotation("ProductVersion", "3.1.9");
 
-            modelBuilder.Entity("Venjix.DAL.Recording", b =>
+            modelBuilder.Entity("Venjix.Infrastructure.DAL.Recording", b =>
                 {
                     b.Property<int>("RecordingId")
                         .ValueGeneratedOnAdd()
@@ -40,7 +40,7 @@ namespace Venjix.Migrations
                     b.ToTable("Recordings");
                 });
 
-            modelBuilder.Entity("Venjix.DAL.Sensor", b =>
+            modelBuilder.Entity("Venjix.Infrastructure.DAL.Sensor", b =>
                 {
                     b.Property<int>("SensorId")
                         .ValueGeneratedOnAdd()
@@ -57,7 +57,7 @@ namespace Venjix.Migrations
                     b.ToTable("Sensors");
                 });
 
-            modelBuilder.Entity("Venjix.DAL.Setting", b =>
+            modelBuilder.Entity("Venjix.Infrastructure.DAL.Setting", b =>
                 {
                     b.Property<string>("Key")
                         .HasColumnType("TEXT");
@@ -70,7 +70,7 @@ namespace Venjix.Migrations
                     b.ToTable("Settings");
                 });
 
-            modelBuilder.Entity("Venjix.DAL.Trigger", b =>
+            modelBuilder.Entity("Venjix.Infrastructure.DAL.Trigger", b =>
                 {
                     b.Property<int>("TriggerId")
                         .ValueGeneratedOnAdd()
@@ -96,7 +96,7 @@ namespace Venjix.Migrations
                     b.ToTable("Triggers");
                 });
 
-            modelBuilder.Entity("Venjix.DAL.User", b =>
+            modelBuilder.Entity("Venjix.Infrastructure.DAL.User", b =>
                 {
                     b.Property<int>("UserId")
                         .ValueGeneratedOnAdd()
@@ -128,7 +128,7 @@ namespace Venjix.Migrations
                         });
                 });
 
-            modelBuilder.Entity("Venjix.DAL.Webhook", b =>
+            modelBuilder.Entity("Venjix.Infrastructure.DAL.Webhook", b =>
                 {
                     b.Property<int>("WebhookId")
                         .ValueGeneratedOnAdd()
@@ -154,9 +154,9 @@ namespace Venjix.Migrations
                     b.ToTable("Webhooks");
                 });
 
-            modelBuilder.Entity("Venjix.DAL.Recording", b =>
+            modelBuilder.Entity("Venjix.Infrastructure.DAL.Recording", b =>
                 {
-                    b.HasOne("Venjix.DAL.Sensor", "Sensor")
+                    b.HasOne("Venjix.Infrastructure.DAL.Sensor", "Sensor")
                         .WithMany()
                         .HasForeignKey("SensorId")
                         .OnDelete(DeleteBehavior.Cascade)

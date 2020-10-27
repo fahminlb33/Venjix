@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Venjix.Infrastructure.Authentication;
 
-namespace Venjix.DAL
+namespace Venjix.Infrastructure.DAL
 {
     public class VenjixContext : DbContext
     {
