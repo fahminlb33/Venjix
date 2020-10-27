@@ -1,0 +1,72 @@
+﻿@{
+    ViewData[ViewKeys.Title] = "Manage Triggers - Venjix";
+    ViewData[ViewKeys.PageHeading] = "Manage Triggers";
+    ViewData[ViewKeys.PageSubheading] = "Add, edit, and delete triggers to invoke webhooks and Telegram service.";
+}
+
+<h1 class="h3 mb-2 text-gray-800">@ViewData[ViewKeys.PageHeading]</h1>
+<p class="mb-4">@ViewData[ViewKeys.PageSubheading]</p>
+
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">@ViewData[ViewKeys.PageHeading]</h6>
+    </div>
+    <div class="card-body">
+        @if (TempData[ViewKeys.Message] != null)
+        {
+            <div class="alert alert-@((bool)TempData[ViewKeys.IsSuccess] == true ? "success" : "danger")" role="alert">
+                @TempData[ViewKeys.Message]
+            </div>
+        }
+
+        <div class="table-responsive">
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <thead>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+@section Styles {
+    <link href="~/lib/datatables/css/dataTables.bootstrap4.min.css" rel="stylesheet">
+}
+
+@section Scripts {
+    <script src="~/lib/datatables/js/jquery.dataTables.min.js"></script>
+    <script src="~/lib/datatables/js/dataTables.bootstrap4.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            var table = $('#dataTable').DataTable({
+                serverSide: true,
+                ajax: {
+                    url: '@(Url.Action("TableData"))',
+                    type: 'POST',
+                    contentType: 'application/json',
+                    data: function (d) {
+                        return JSON.stringify(d);
+                    }
+                },
+                columns: [
+                    { name: "Name", data: "name", title: "Trigger Name" },
+                    { name: "Event", data: "event", title: "Event" },
+                    { name: "Target", data: "target", title: "Target" },
+                    { title: "Manage", data: null, defaultContent: '<button class="btn btn-outline-primary">Edit</button> <button class="btn btn-outline-danger">Delete</button>' }
+                ]
+            });
+
+            $('#dataTable tbody').on('click', 'button', function () {
+                var button = $(this).text()
+                var data = table.row($(this).parents('tr')).data();
+
+                if (button == 'Edit') {
+                    window.location.href = '@(Url.Action("Edit", "Triggers"))/' + data.webhookId
+                } else {
+                    window.location.href = '@(Url.Action("Delete", "Triggers"))/' + data.webhookId
+                }
+            });
+        });
+    </script>
+}

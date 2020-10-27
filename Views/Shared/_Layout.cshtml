@@ -59,7 +59,7 @@
 
             <!-- Nav Item - Sensors -->
             <li class="nav-item" active-when="/Sensors/">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseSensors" aria-expanded="true" 
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseSensors" aria-expanded="true"
                    aria-controls="collapseSensors" collapsed-when="/Sensors/">
                     <i class="fas fa-fw fa-satellite-dish"></i>
                     <span>Sensors</span>
@@ -67,7 +67,7 @@
                 <div id="collapseSensors" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar" show-when="/Sensors/">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <a class="collapse-item" active-when="/Sensors/Add|Edit" asp-controller="Sensors" asp-action="Add">Add Sensor</a>
-                        <a class="collapse-item" active-when="/Sensors/Index" asp-controller="Sensors" asp-action="Index">Registered Sensors</a>
+                        <a class="collapse-item" active-when="/Sensors/Index" asp-controller="Sensors" asp-action="Index">Sensors</a>
                         <a class="collapse-item" active-when="/Sensors/Statistics" asp-controller="Sensors" asp-action="Statistics">Statistics</a>
                     </div>
                 </div>
@@ -75,7 +75,7 @@
 
             <!-- Nav Item - Visualize -->
             <li class="nav-item" active-when="/Visualize/">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseVisualize" aria-expanded="true" 
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseVisualize" aria-expanded="true"
                    aria-controls="collapseVisualize" collapsed-when="/Visualize/">
                     <i class="fas fa-fw fa-chart-area"></i>
                     <span>Visualize</span>
@@ -108,7 +108,7 @@
 
             <!-- Nav Item - Users -->
             <li class="nav-item" active-when="/Users/">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUsers" aria-expanded="true" 
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUsers" aria-expanded="true"
                    aria-controls="collapseUsers" collapsed-when="/Users/">
                     <i class="fas fa-fw fa-users"></i>
                     <span>Users</span>
@@ -117,7 +117,7 @@
                     <div class="bg-white py-2 collapse-inner rounded">
                         <a class="collapse-item" active-when="/Users/Profile" asp-controller="Users" asp-action="Profile">Profile</a>
                         <a class="collapse-item" active-when="/Users/Add|Edit" asp-controller="Users" asp-action="Add">Add User</a>
-                        <a class="collapse-item" active-when="/Users/Index" asp-controller="Users" asp-action="Index">Registered Users</a>
+                        <a class="collapse-item" active-when="/Users/Index" asp-controller="Users" asp-action="Index">Users</a>
                     </div>
                 </div>
             </li>
@@ -140,7 +140,22 @@
                 <div id="collapseWebhooks" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar" show-when="/Webhooks/">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <a class="collapse-item" active-when="/Webhooks/Add|Edit" asp-controller="Webhooks" asp-action="Add">Add Hook</a>
-                        <a class="collapse-item" active-when="/Webhooks/Index" asp-controller="Webhooks" asp-action="Index">Registered Hooks</a>
+                        <a class="collapse-item" active-when="/Webhooks/Index" asp-controller="Webhooks" asp-action="Index">Hooks</a>
+                    </div>
+                </div>
+            </li>
+
+            <!-- Nav Item - Triggers -->
+            <li class="nav-item" active-when="/Triggers/">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTriggers" aria-expanded="true"
+                   aria-controls="collapseTriggers" collapsed-when="/Triggers/">
+                    <i class="fas fa-fw fa-bolt"></i>
+                    <span>Triggers</span>
+                </a>
+                <div id="collapseTriggers" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar" show-when="/Triggers/">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <a class="collapse-item" active-when="/Triggers/Add|Edit" asp-controller="Triggers" asp-action="Add">Add Trigger</a>
+                        <a class="collapse-item" active-when="/Triggers/Index" asp-controller="Triggers" asp-action="Index">Triggers</a>
                     </div>
                 </div>
             </li>
