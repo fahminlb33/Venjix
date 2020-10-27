@@ -1,13 +1,15 @@
 ﻿@{
     ViewData[ViewKeys.Title] = "Manage Sensors - Venjix";
+    ViewData[ViewKeys.PageHeading] = "Manage Sensors";
+    ViewData[ViewKeys.PageSubheading] = "Add, edit, and delete monitored sensors.";
 }
 
-<h1 class="h3 mb-2 text-gray-800">Registered Sensors</h1>
-<p class="mb-4">Manage sensors data.</p>
+<h1 class="h3 mb-2 text-gray-800">@ViewData[ViewKeys.PageHeading]</h1>
+<p class="mb-4">@ViewData[ViewKeys.PageSubheading]</p>
 
 <div class="card shadow mb-4">
     <div class="card-header py-3">
-        <h6 class="m-0 font-weight-bold text-primary">Sensors</h6>
+        <h6 class="m-0 font-weight-bold text-primary">@ViewData[ViewKeys.PageHeading]</h6>
     </div>
     <div class="card-body">
         @if (TempData[ViewKeys.Message] != null)

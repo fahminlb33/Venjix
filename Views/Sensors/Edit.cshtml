@@ -5,14 +5,14 @@
     ViewData[ViewKeys.PageSubheading] = Model.IsEdit ? "Edit sensor fields." : "Add sensor fields.";
 }
 
-<h1 class="h3 mb-2 text-gray-800">Add Sensor</h1>
-<p class="mb-4">Add new sensor value to track.</p>
+<h1 class="h3 mb-2 text-gray-800">@ViewData[ViewKeys.PageHeading]</h1>
+<p class="mb-4">@ViewData[ViewKeys.PageSubheading]</p>
 
 <div class="row">
     <div class="col-lg-12">
         <div class="card mb-4">
             <div class="card-header">
-                <h6 class="m-0 font-weight-bold text-primary">Sensor Information</h6>
+                <h6 class="m-0 font-weight-bold text-primary">@ViewData[ViewKeys.PageHeading]</h6>
             </div>
             <div class="card-body">
                 <form method="post" asp-action="Save">
