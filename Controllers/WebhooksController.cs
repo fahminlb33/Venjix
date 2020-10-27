@@ -2,7 +2,7 @@
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Venjix.DAL;
+using Venjix.Infrastructure.DAL;
 using Venjix.Infrastructure.Authentication;
 using Venjix.Infrastructure.DataTables;
 using Venjix.Infrastructure.Helpers;

@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Venjix.DAL;
+using Venjix.Infrastructure.DAL;
 using Venjix.Infrastructure.Authentication;
 using Venjix.Infrastructure.Helpers;
 using Venjix.Models;
