@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Venjix.DAL;
+using Venjix.Infrastructure.DAL;
 using Venjix.Infrastructure.DataTables;
 
 namespace Venjix

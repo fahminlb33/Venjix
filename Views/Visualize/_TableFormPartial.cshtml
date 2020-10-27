@@ -1,11 +1,11 @@
-﻿@model VisualizeTableDto
+﻿@model VisualizeTableModel
 
-<form method="post" asp-action="Save">
+<form method="post" asp-action="Process">
     <div class="form-group">
-        <label asp-for="ApiField">API Field</label>
+        <label asp-for="SensorId">Sensor</label>
         <div class="form-row">
             <div class="col-5">
-                <select class="form-control" asp-for="ApiField" asp-items="@((List<SelectListItem>) ViewData["Items"])"></select>
+                <select class="form-control" asp-for="SensorId" asp-items="Model.Sensors"></select>
             </div>
         </div>
     </div>
