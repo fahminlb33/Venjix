@@ -47,8 +47,8 @@ namespace Venjix.Controllers
             var sensor = await _context.Sensors.FindAsync(id);
             if (sensor == null)
             {
-                TempData[ViewDataKeys.Message] = "Sensor does not exists.";
-                TempData[ViewDataKeys.IsSuccess] = false;
+                TempData[ViewKeys.Message] = "Sensor does not exists.";
+                TempData[ViewKeys.IsSuccess] = false;
 
                 return RedirectToAction("Index");
             }
@@ -65,8 +65,8 @@ namespace Venjix.Controllers
             var sensor = await _context.Sensors.FindAsync(id);
             if (sensor == null)
             {
-                TempData[ViewDataKeys.Message] = "Sensor does not exists.";
-                TempData[ViewDataKeys.IsSuccess] = false;
+                TempData[ViewKeys.Message] = "Sensor does not exists.";
+                TempData[ViewKeys.IsSuccess] = false;
 
                 return RedirectToAction("Index");
             }
@@ -74,8 +74,8 @@ namespace Venjix.Controllers
             _context.Sensors.Remove(sensor);
             await _context.SaveChangesAsync();
 
-            TempData[ViewDataKeys.Message] = "Sensor deleted successfully.";
-            TempData[ViewDataKeys.IsSuccess] = true;
+            TempData[ViewKeys.Message] = "Sensor deleted successfully.";
+            TempData[ViewKeys.IsSuccess] = true;
 
             return RedirectToAction("Index");
         }
@@ -96,8 +96,8 @@ namespace Venjix.Controllers
 
             await _context.SaveChangesAsync();
 
-            TempData[ViewDataKeys.Message] = "Sensor saved successfully.";
-            TempData[ViewDataKeys.IsSuccess] = true;
+            TempData[ViewKeys.Message] = "Sensor saved successfully.";
+            TempData[ViewKeys.IsSuccess] = true;
 
             return RedirectToAction("Index");
         }

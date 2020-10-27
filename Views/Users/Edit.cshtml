@@ -1,15 +1,15 @@
 ﻿@model UserEditModel
 @{
-    ViewData[ViewDataKeys.Title] = Model.IsEdit ? "Edit user - Venjix": "Add new user - Venjix";
-    ViewData[ViewDataKeys.PageHeading] = Model.IsEdit ? "Edit User" : "Add User";
-    ViewData[ViewDataKeys.PageSubheading] = Model.IsEdit ? "Edit user profile." : "Add user profile.";
+    ViewData[ViewKeys.Title] = Model.IsEdit ? "Edit user - Venjix": "Add new user - Venjix";
+    ViewData[ViewKeys.PageHeading] = Model.IsEdit ? "Edit User" : "Add User";
+    ViewData[ViewKeys.PageSubheading] = Model.IsEdit ? "Edit user profile." : "Add user profile.";
 
     var loggedRole = User.FindFirst(System.Security.Claims.ClaimTypes.Role).Value;
     var disableRole = loggedRole != Venjix.Infrastructure.Authentication.Roles.Admin;
 }
 
-<h1 class="h3 mb-2 text-gray-800">@ViewData[ViewDataKeys.PageHeading]</h1>
-<p class="mb-4">@ViewData[ViewDataKeys.PageSubheading]</p>
+<h1 class="h3 mb-2 text-gray-800">@ViewData[ViewKeys.PageHeading]</h1>
+<p class="mb-4">@ViewData[ViewKeys.PageSubheading]</p>
 
 <div class="row">
     <div class="col-lg-12">
@@ -18,10 +18,10 @@
                 <h6 class="m-0 font-weight-bold text-primary">User's Profile</h6>
             </div>
             <div class="card-body">
-                @if (TempData[ViewDataKeys.Message] != null)
+                @if (TempData[ViewKeys.Message] != null)
                 {
-                    <div class="alert alert-@((bool)TempData[ViewDataKeys.IsSuccess] == true ? "success" : "danger")" role="alert">
-                        @TempData[ViewDataKeys.Message]
+                    <div class="alert alert-@((bool)TempData[ViewKeys.IsSuccess] == true ? "success" : "danger")" role="alert">
+                        @TempData[ViewKeys.Message]
                     </div>
                 }
 

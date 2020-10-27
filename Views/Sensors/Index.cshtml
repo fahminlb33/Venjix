@@ -1,5 +1,5 @@
 ﻿@{
-    ViewData[ViewDataKeys.Title] = "Manage Sensors - Venjix";
+    ViewData[ViewKeys.Title] = "Manage Sensors - Venjix";
 }
 
 <h1 class="h3 mb-2 text-gray-800">Registered Sensors</h1>
@@ -10,10 +10,10 @@
         <h6 class="m-0 font-weight-bold text-primary">Sensors</h6>
     </div>
     <div class="card-body">
-        @if (TempData[ViewDataKeys.Message] != null)
+        @if (TempData[ViewKeys.Message] != null)
         {
-            <div class="alert alert-@((bool)TempData[ViewDataKeys.IsSuccess] == true ? "success" : "danger")" role="alert">
-                @TempData[ViewDataKeys.Message]
+            <div class="alert alert-@((bool)TempData[ViewKeys.IsSuccess] == true ? "success" : "danger")" role="alert">
+                @TempData[ViewKeys.Message]
             </div>
         }
 

@@ -1,6 +1,6 @@
 ﻿namespace Venjix.Infrastructure.Helpers
 {
-    public static class ViewDataKeys
+    public static class ViewKeys
     {
         public const string Title = nameof(Title);
         public const string PageHeading = nameof(PageHeading);

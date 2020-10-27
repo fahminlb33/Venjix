@@ -68,8 +68,8 @@ namespace Venjix.Controllers
             var user = await _context.Users.FindAsync(id);
             if (user == null)
             {
-                TempData[ViewDataKeys.Message] = "User does not exists.";
-                TempData[ViewDataKeys.IsSuccess] = false;
+                TempData[ViewKeys.Message] = "User does not exists.";
+                TempData[ViewKeys.IsSuccess] = false;
 
                 return RedirectToAction("Index");
             }
@@ -87,8 +87,8 @@ namespace Venjix.Controllers
             var user = await _context.Users.FindAsync(id);
             if (user == null)
             {
-                TempData[ViewDataKeys.Message] = "User does not exists.";
-                TempData[ViewDataKeys.IsSuccess] = false;
+                TempData[ViewKeys.Message] = "User does not exists.";
+                TempData[ViewKeys.IsSuccess] = false;
 
                 return RedirectToAction("Index");
             }
@@ -96,8 +96,8 @@ namespace Venjix.Controllers
             _context.Users.Remove(user);
             await _context.SaveChangesAsync();
 
-            TempData[ViewDataKeys.Message] = "User deleted successfully.";
-            TempData[ViewDataKeys.IsSuccess] = true;
+            TempData[ViewKeys.Message] = "User deleted successfully.";
+            TempData[ViewKeys.IsSuccess] = true;
 
             return RedirectToAction("Index");
         }
@@ -125,15 +125,15 @@ namespace Venjix.Controllers
 
             await _context.SaveChangesAsync();
 
-            TempData[ViewDataKeys.IsSuccess] = true;
+            TempData[ViewKeys.IsSuccess] = true;
             if (role == Roles.User)
             {
-                TempData[ViewDataKeys.Message] = "Profile updated successfully.";
+                TempData[ViewKeys.Message] = "Profile updated successfully.";
                 return RedirectToAction("Profile");
             }
             else
             {
-                TempData[ViewDataKeys.Message] = "User saved successfully.";
+                TempData[ViewKeys.Message] = "User saved successfully.";
                 return RedirectToAction("Index");
             }
         }
