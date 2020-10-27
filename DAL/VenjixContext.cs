@@ -8,6 +8,7 @@ namespace Venjix.DAL
         public DbSet<User> Users { get; set; }
         public DbSet<Sensor> Sensors { get; set; }
         public DbSet<Recording> Recordings { get; set; }
+        public DbSet<Webhook> Webhooks { get; set; }
 
         public VenjixContext(DbContextOptions<VenjixContext> options) : base(options)
         { }
