@@ -68,52 +68,28 @@ namespace Venjix.Migrations
                     b.ToTable("Settings");
                 });
 
-            modelBuilder.Entity("Venjix.DAL.Telegram", b =>
-                {
-                    b.Property<int>("TelegramId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("MessageFormat")
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("TelegramId");
-
-                    b.ToTable("Telegrams");
-                });
-
             modelBuilder.Entity("Venjix.DAL.Trigger", b =>
                 {
                     b.Property<int>("TriggerId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
+                    b.Property<bool>("ContinuousSend")
+                        .HasColumnType("INTEGER");
+
                     b.Property<int>("Event")
                         .HasColumnType("INTEGER");
 
-                    b.Property<bool>("HookEnabled")
+                    b.Property<int>("Target")
                         .HasColumnType("INTEGER");
 
-                    b.Property<bool>("SendOnFirstMatch")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("SensorId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<bool>("TelegramEnabled")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("TelegramId")
+                    b.Property<int>("TargetId")
                         .HasColumnType("INTEGER");
 
                     b.Property<double>("Value")
                         .HasColumnType("REAL");
 
                     b.HasKey("TriggerId");
-
-                    b.HasIndex("SensorId");
-
-                    b.HasIndex("TelegramId");
 
                     b.ToTable("Triggers");
                 });
@@ -181,21 +157,6 @@ namespace Venjix.Migrations
                     b.HasOne("Venjix.DAL.Sensor", "Sensor")
                         .WithMany()
                         .HasForeignKey("SensorId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("Venjix.DAL.Trigger", b =>
-                {
-                    b.HasOne("Venjix.DAL.Sensor", "Sensor")
-                        .WithMany()
-                        .HasForeignKey("SensorId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Venjix.DAL.Telegram", "Telegram")
-                        .WithMany()
-                        .HasForeignKey("TelegramId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

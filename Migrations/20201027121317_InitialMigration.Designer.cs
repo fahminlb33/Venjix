@@ -9,8 +9,8 @@ using Venjix.DAL;
 namespace Venjix.Migrations
 {
     [DbContext(typeof(VenjixContext))]
-    [Migration("20201027092457_AddTriggersTelegram")]
-    partial class AddTelegram
+    [Migration("20201027121317_InitialMigration")]
+    partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -57,18 +57,43 @@ namespace Venjix.Migrations
                     b.ToTable("Sensors");
                 });
 
-            modelBuilder.Entity("Venjix.DAL.Telegram", b =>
+            modelBuilder.Entity("Venjix.DAL.Setting", b =>
                 {
-                    b.Property<int>("TelegramId")
+                    b.Property<string>("Key")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Value")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Key");
+
+                    b.ToTable("Settings");
+                });
+
+            modelBuilder.Entity("Venjix.DAL.Trigger", b =>
+                {
+                    b.Property<int>("TriggerId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("MessageFormat")
-                        .HasColumnType("TEXT");
+                    b.Property<bool>("ContinuousSend")
+                        .HasColumnType("INTEGER");
 
-                    b.HasKey("TelegramId");
+                    b.Property<int>("Event")
+                        .HasColumnType("INTEGER");
 
-                    b.ToTable("Telegrams");
+                    b.Property<int>("Target")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("TargetId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<double>("Value")
+                        .HasColumnType("REAL");
+
+                    b.HasKey("TriggerId");
+
+                    b.ToTable("Triggers");
                 });
 
             modelBuilder.Entity("Venjix.DAL.User", b =>
