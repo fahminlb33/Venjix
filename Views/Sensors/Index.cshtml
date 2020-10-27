@@ -1,43 +1,69 @@
-﻿<!-- Page Heading -->
-<h1 class="h3 mb-2 text-gray-800">Sensors</h1>
-<p class="mb-4">What's logged in Venjix's system.</p>
+﻿@{
+    ViewData[ViewDataKeys.Title] = "Manage Sensors - Venjix";
+}
 
-<!-- DataTales Example -->
+<h1 class="h3 mb-2 text-gray-800">Registered Sensors</h1>
+<p class="mb-4">Manage sensors data.</p>
+
 <div class="card shadow mb-4">
     <div class="card-header py-3">
         <h6 class="m-0 font-weight-bold text-primary">Sensors</h6>
     </div>
     <div class="card-body">
+        @if (TempData[ViewDataKeys.Message] != null)
+        {
+            <div class="alert alert-@((bool)TempData[ViewDataKeys.IsSuccess] == true ? "success" : "danger")" role="alert">
+                @TempData[ViewDataKeys.Message]
+            </div>
+        }
+
         <div class="table-responsive">
             <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                 <thead>
-                    <tr>
-                        <th>API Field</th>
-                        <th>Display Name</th>
-                        <th>Description</th>
-                        <th>Last Updated</th>
-                        <th>Recorded Data</th>
-                    </tr>
                 </thead>
-                <tfoot>
-                    <tr>
-                        <th>API Field</th>
-                        <th>Display Name</th>
-                        <th>Description</th>
-                        <th>Last Updated</th>
-                        <th>Recorded Data</th>
-                    </tr>
-                </tfoot>
                 <tbody>
-                    <tr>
-                        <td>Tiger Nixon</td>
-                        <td>System Architect</td>
-                        <td>Edinburgh</td>
-                        <td>61</td>
-                        <td>2011/04/25</td>
-                    </tr>
                 </tbody>
             </table>
         </div>
     </div>
 </div>
+
+@section Styles {
+    <link href="~/lib/datatables/css/dataTables.bootstrap4.min.css" rel="stylesheet">
+}
+
+@section Scripts {
+    <script src="~/lib/datatables/js/jquery.dataTables.min.js"></script>
+    <script src="~/lib/datatables/js/dataTables.bootstrap4.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            var table = $('#dataTable').DataTable({
+                serverSide: true,
+                ajax: {
+                    url: '@(Url.Action("TableData"))',
+                    type: 'POST',
+                    contentType: 'application/json',
+                    data: function (d) {
+                        return JSON.stringify(d);
+                    }
+                },
+                columns: [
+                    { name: "ApiField", data: "apiField", title: "API Field" },
+                    { name: "DisplayName", data: "displayName", title: "Display Name" },
+                    { title: "Manage", data: null, defaultContent: '<button class="btn btn-outline-primary">Edit</button> <button class="btn btn-outline-danger">Delete</button>' }
+                ]
+            });
+
+            $('#dataTable tbody').on('click', 'button', function () {
+                var button = $(this).text()
+                var data = table.row($(this).parents('tr')).data();
+
+                if (button == 'Edit') {
+                    window.location.href = '@(Url.Action("Edit", "Sensors"))/' + data.sensorId
+                } else {
+                    window.location.href = '@(Url.Action("Delete", "Sensors"))/' + data.sensorId
+                }
+            });
+        });
+    </script>
+}
