@@ -2,15 +2,17 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Venjix.DAL;
 
 namespace Venjix.Migrations
 {
     [DbContext(typeof(VenjixContext))]
-    partial class VenjixContextModelSnapshot : ModelSnapshot
+    [Migration("20201027092457_AddTriggersTelegram")]
+    partial class AddTelegram
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -55,19 +57,6 @@ namespace Venjix.Migrations
                     b.ToTable("Sensors");
                 });
 
-            modelBuilder.Entity("Venjix.DAL.Setting", b =>
-                {
-                    b.Property<string>("Key")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Value")
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("Key");
-
-                    b.ToTable("Settings");
-                });
-
             modelBuilder.Entity("Venjix.DAL.Telegram", b =>
                 {
                     b.Property<int>("TelegramId")
@@ -80,42 +69,6 @@ namespace Venjix.Migrations
                     b.HasKey("TelegramId");
 
                     b.ToTable("Telegrams");
-                });
-
-            modelBuilder.Entity("Venjix.DAL.Trigger", b =>
-                {
-                    b.Property<int>("TriggerId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("Event")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<bool>("HookEnabled")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<bool>("SendOnFirstMatch")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("SensorId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<bool>("TelegramEnabled")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("TelegramId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<double>("Value")
-                        .HasColumnType("REAL");
-
-                    b.HasKey("TriggerId");
-
-                    b.HasIndex("SensorId");
-
-                    b.HasIndex("TelegramId");
-
-                    b.ToTable("Triggers");
                 });
 
             modelBuilder.Entity("Venjix.DAL.User", b =>
@@ -181,21 +134,6 @@ namespace Venjix.Migrations
                     b.HasOne("Venjix.DAL.Sensor", "Sensor")
                         .WithMany()
                         .HasForeignKey("SensorId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("Venjix.DAL.Trigger", b =>
-                {
-                    b.HasOne("Venjix.DAL.Sensor", "Sensor")
-                        .WithMany()
-                        .HasForeignKey("SensorId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Venjix.DAL.Telegram", "Telegram")
-                        .WithMany()
-                        .HasForeignKey("TelegramId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

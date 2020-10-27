@@ -2,15 +2,17 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Venjix.DAL;
 
 namespace Venjix.Migrations
 {
     [DbContext(typeof(VenjixContext))]
-    partial class VenjixContextModelSnapshot : ModelSnapshot
+    [Migration("20201027092610_AddTriggers")]
+    partial class AddTriggers
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -53,19 +55,6 @@ namespace Venjix.Migrations
                     b.HasKey("SensorId");
 
                     b.ToTable("Sensors");
-                });
-
-            modelBuilder.Entity("Venjix.DAL.Setting", b =>
-                {
-                    b.Property<string>("Key")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Value")
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("Key");
-
-                    b.ToTable("Settings");
                 });
 
             modelBuilder.Entity("Venjix.DAL.Telegram", b =>

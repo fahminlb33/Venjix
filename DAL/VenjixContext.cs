@@ -9,6 +9,9 @@ namespace Venjix.DAL
         public DbSet<Sensor> Sensors { get; set; }
         public DbSet<Recording> Recordings { get; set; }
         public DbSet<Webhook> Webhooks { get; set; }
+        public DbSet<Telegram> Telegrams { get; set; }
+        public DbSet<Trigger> Triggers { get; set; }
+        public DbSet<Setting> Settings { get; set; }
 
         public VenjixContext(DbContextOptions<VenjixContext> options) : base(options)
         { }

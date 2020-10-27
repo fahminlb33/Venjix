@@ -1,7 +1,10 @@
-﻿namespace Venjix.DAL
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace Venjix.DAL
 {
     public class Webhook
     {
+        [Key]
         public int WebhookId { get; set; }
         public string Name { get; set; }
         public string UriFormat { get; set; }
