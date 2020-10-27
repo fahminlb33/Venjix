@@ -3,7 +3,6 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using AutoMapper;
-using BCrypt.Net;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -75,7 +74,7 @@ namespace Venjix.Controllers
             var user = await _context.Users.FindAsync(id);
             if (user == null)
             {
-                return RedirectToAction("Index", new  { message = "User does not exists.", success = false });
+                return RedirectToAction("Index", new { message = "User does not exists.", success = false });
             }
 
             var model = _mapper.Map<UserEditModel>(user);
@@ -100,8 +99,8 @@ namespace Venjix.Controllers
             return RedirectToAction("Index", new { message = "User deleted successfully.", success = true });
         }
 
-        [Authorize(Roles = Roles.AdminOrUser)]
         [HttpPost]
+        [Authorize(Roles = Roles.AdminOrUser)]
         public async Task<IActionResult> Save(UserEditModel model)
         {
             var role = User.FindFirst(ClaimTypes.Role).Value;
@@ -112,8 +111,6 @@ namespace Venjix.Controllers
             }
 
             var entity = _mapper.Map<User>(model);
-            entity.Password = BCrypt.Net.BCrypt.HashPassword(entity.Password);
-
             if (model.IsEdit)
             {
                 _context.Users.Update(entity);
@@ -122,10 +119,10 @@ namespace Venjix.Controllers
             {
                 _context.Users.Add(entity);
             }
-            
+
             await _context.SaveChangesAsync();
 
-            if (role== Roles.User)
+            if (role == Roles.User)
             {
                 return RedirectToAction("Profile", new { message = "Profile updated successfully.", success = true });
             }
@@ -133,11 +130,11 @@ namespace Venjix.Controllers
             {
                 return RedirectToAction("Index", new { message = "User saved successfully.", success = true });
             }
-            
+
         }
 
-        [Authorize(Roles = Roles.Admin)]
         [HttpPost]
+        [Authorize(Roles = Roles.Admin)]
         public async Task<IActionResult> TableData([FromBody] DataTablesRequestModel req)
         {
             return Json(await _dataTables.PopulateTable(req, _context.Users, x =>

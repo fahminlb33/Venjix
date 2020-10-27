@@ -10,7 +10,8 @@ namespace Venjix.Infrastructure.Mapper
         {
             CreateMap<User, UserEditModel>()
                 .ForMember(x => x.Password, options => options.Ignore());
-            CreateMap<UserEditModel, User>();
+            CreateMap<UserEditModel, User>()
+                .ForMember(x => x.Password, options => options.MapFrom<UserPasswordResolver>());
 
             CreateMap<Sensor, SensorEditModel>();
             CreateMap<SensorEditModel, Sensor>();
