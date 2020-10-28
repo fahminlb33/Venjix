@@ -32,14 +32,17 @@
                     <div class="form-group">
                         <label asp-for="Username">Username</label>
                         <input type="text" class="form-control" asp-for="Username">
+                        <span asp-validation-for="Username" class="text-danger"></span>
                     </div>
                     <div class="form-group">
                         <label asp-for="Password">Password</label>
                         <input type="password" class="form-control" asp-for="Password">
+                        <span asp-validation-for="Password" class="text-danger"></span>
                     </div>
                     <div class="form-group">
-                        <label asp-for="Password">Password</label>
+                        <label asp-for="Password">Role</label>
                         <select class="form-control" asp-for="Role" asp-items="Model.Roles" readonly-when="disableRole"></select>
+                        <span asp-validation-for="Role" class="text-danger"></span>
                     </div>
 
                     <button type="submit" class="btn btn-primary">Save</button>

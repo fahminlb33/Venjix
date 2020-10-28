@@ -84,6 +84,11 @@ namespace Venjix.Controllers
         [Authorize(Roles = Roles.Admin)]
         public async Task<IActionResult> Save(SensorEditModel model)
         {
+            if (!ModelState.IsValid)
+            {
+                return View("Edit", model);
+            }
+
             var entity = _mapper.Map<Sensor>(model);
             if (model.IsEdit)
             {

@@ -78,6 +78,11 @@ namespace Venjix.Controllers
         [Authorize(Roles = Roles.Admin)]
         public async Task<IActionResult> Save(WebhookEditModel model)
         {
+            if (!ModelState.IsValid)
+            {
+                return View("Edit", model);
+            }
+
             var entity = _mapper.Map<Webhook>(model);
             if (model.IsEdit)
             {

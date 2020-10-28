@@ -106,6 +106,12 @@ namespace Venjix.Controllers
         [Authorize(Roles = Roles.AdminOrUser)]
         public async Task<IActionResult> Save(UserEditModel model)
         {
+            if (!ModelState.IsValid)
+            {
+                model.Roles = _rolesSelectItems;
+                return View("Edit", model);
+            }
+
             var role = User.FindFirst(ClaimTypes.Role).Value;
             var username = User.FindFirst(ClaimTypes.Name).Value;
             if (role != Roles.Admin && username != model.Username)
