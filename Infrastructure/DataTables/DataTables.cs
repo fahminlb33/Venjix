@@ -57,15 +57,18 @@ namespace Venjix.Infrastructure.DataTables
             var sqlString = sql.ToString();
 
             var recordset = await data.FromSqlRaw(sqlString).ToListAsync();
-            var model = new DataTablesResponseModel()
+            if (project != null)
+            {
+                recordset = recordset.Select(x => project(x)).ToList();
+            }
+            
+            return new DataTablesResponseModel
             {
                 Draw = request.Draw + 1,
                 Data = recordset,
                 RecordsFiltered = recordset.Count,
                 RecordsTotal = await data.CountAsync()
             };
-
-            return model;
         }
 
         private string GetTableName<T>(DbSet<T> set) where T : class
