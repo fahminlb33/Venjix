@@ -83,10 +83,12 @@ namespace Venjix
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllers();
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
+                endpoints.MapControllerRoute(
+                  name: "APIs",
+                  pattern: "api/{controller=ApiData}/{action=SaveDataByQuery}/{id?}");
             });
         }
     }
