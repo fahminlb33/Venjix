@@ -506,6 +506,8 @@ MigrationBackup/
 
 # SQlite Database
 *.db
+*.db-shm
+*.db-wal
 
 # Libman Libraries
 wwwroot/lib
