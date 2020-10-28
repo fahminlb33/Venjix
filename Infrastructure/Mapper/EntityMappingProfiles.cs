@@ -18,6 +18,9 @@ namespace Venjix.Infrastructure.Mapper
 
             CreateMap<Webhook, WebhookEditModel>();
             CreateMap<WebhookEditModel, Webhook>();
+
+            CreateMap<Trigger, TriggerEditModel>();
+            CreateMap<TriggerEditModel, Trigger>();
         }
     }
 }

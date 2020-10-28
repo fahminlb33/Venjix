@@ -51,8 +51,6 @@
                 },
                 columns: [
                     { name: "Name", data: "name", title: "Trigger Name" },
-                    { name: "Event", data: "event", title: "Event" },
-                    { name: "Target", data: "target", title: "Target" },
                     { title: "Manage", data: null, defaultContent: '<button class="btn btn-outline-primary">Edit</button> <button class="btn btn-outline-danger">Delete</button>' }
                 ]
             });
@@ -62,9 +60,9 @@
                 var data = table.row($(this).parents('tr')).data();
 
                 if (button == 'Edit') {
-                    window.location.href = '@(Url.Action("Edit", "Triggers"))/' + data.webhookId
+                    window.location.href = '@(Url.Action("Edit", "Triggers"))/' + data.triggerId
                 } else {
-                    window.location.href = '@(Url.Action("Delete", "Triggers"))/' + data.webhookId
+                    window.location.href = '@(Url.Action("Delete", "Triggers"))/' + data.triggerId
                 }
             });
         });

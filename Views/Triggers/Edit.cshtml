@@ -1,5 +1,83 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model TriggerEditModel
 @{
+    ViewData[ViewKeys.Title] = Model.IsEdit ? "Edit trigger - Venjix" : "Add new trigger - Venjix";
+    ViewData[ViewKeys.PageHeading] = Model.IsEdit ? "Edit Trigger" : "Add Trigger";
+    ViewData[ViewKeys.PageSubheading] = Model.IsEdit ? "Edit trigger fields." : "Add trigger fields.";
+}
+
+<h1 class="h3 mb-2 text-gray-800">@ViewData[ViewKeys.PageHeading]</h1>
+<p class="mb-4">@ViewData[ViewKeys.PageSubheading]</p>
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card mb-4">
+            <div class="card-header">
+                <h6 class="m-0 font-weight-bold text-primary">@ViewData[ViewKeys.PageHeading]</h6>
+            </div>
+            <div class="card-body">
+                <form method="post" asp-action="Save">
+                    <input type="hidden" asp-for="IsEdit" />
+                    <input type="hidden" asp-for="TriggerId" />
+
+                    <div class="form-group">
+                        <label asp-for="Name">Trigger name</label>
+                        <input type="text" class="form-control" asp-for="Name">
+                        <span asp-validation-for="Name" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Event">Run when</label>
+                        <select class="form-control" asp-for="Event" asp-items="Model.Events"></select>
+                        <span asp-validation-for="Event" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Value">Condition</label>
+                        <input type="number" class="form-control" asp-for="Value" step=".001">
+                        <span asp-validation-for="Value" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="SensorId">On this sensor</label>
+                        <select class="form-control" asp-for="SensorId" asp-items="Model.Sensors"></select>
+                        <span asp-validation-for="SensorId" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Target">Runs</label>
+                        <select class="form-control" asp-for="Target" asp-items="Model.Targets"></select>
+                        <span asp-validation-for="Target" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="WebhookId">Webhook</label>
+                        <select class="form-control" asp-for="WebhookId" asp-items="Model.Webhooks"></select>
+                        <span asp-validation-for="WebhookId" class="text-danger"></span>
+                    </div>
+                    <div class="form-group form-check">
+                        <input type="checkbox" class="form-check-input" asp-for="ContinuousSend">
+                        <label class="form-check-label" asp-for="ContinuousSend">Continuously invoke this event on subsequent event</label>
+                        <span asp-validation-for="ContinuousSend" class="text-danger"></span>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">Save</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+<script>
+    $(document).ready(function () {
+        var conditionEnable = $('input[name=Value]');
+        var webhookEnable = $('select[name=WebhookId]');
+
+        conditionEnable.attr('disabled', $('select[name=Event] option:selected').text() === "New data");
+        webhookEnable.attr('disabled', $('select[name=Target] option:selected').text() !== "Webhook");
+
+        $('select[name=Event]').on('change', function () {
+            conditionEnable.attr('disabled', $(this).find(":selected").text() === "New data");
+        });
+
+        $('select[name=Target]').on('change', function () {
+            webhookEnable.attr('disabled', $(this).find(":selected").text() !== "Webhook");
+        });
+    });
+</script>
 }
