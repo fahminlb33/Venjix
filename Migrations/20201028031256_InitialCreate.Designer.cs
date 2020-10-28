@@ -9,8 +9,8 @@ using Venjix.Infrastructure.DAL;
 namespace Venjix.Migrations
 {
     [DbContext(typeof(VenjixContext))]
-    [Migration("20201027121317_InitialMigration")]
-    partial class InitialMigration
+    [Migration("20201028031256_InitialCreate")]
+    partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -82,16 +82,26 @@ namespace Venjix.Migrations
                     b.Property<int>("Event")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("Target")
+                    b.Property<string>("Name")
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("SensorId")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("TargetId")
+                    b.Property<int>("Target")
                         .HasColumnType("INTEGER");
 
                     b.Property<double>("Value")
                         .HasColumnType("REAL");
 
+                    b.Property<int?>("WebhookId")
+                        .HasColumnType("INTEGER");
+
                     b.HasKey("TriggerId");
+
+                    b.HasIndex("SensorId");
+
+                    b.HasIndex("WebhookId");
 
                     b.ToTable("Triggers");
                 });
@@ -161,6 +171,20 @@ namespace Venjix.Migrations
                         .HasForeignKey("SensorId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("Venjix.Infrastructure.DAL.Trigger", b =>
+                {
+                    b.HasOne("Venjix.Infrastructure.DAL.Sensor", "Sensor")
+                        .WithMany()
+                        .HasForeignKey("SensorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Venjix.Infrastructure.DAL.Webhook", "Webhook")
+                        .WithMany("Triggers")
+                        .HasForeignKey("WebhookId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618
         }

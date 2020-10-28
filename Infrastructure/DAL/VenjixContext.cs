@@ -29,6 +29,13 @@ namespace Venjix.Infrastructure.DAL
                     Username = "admin",
                     Password = "$2y$12$XIMeV8tAOoC7D0XRJF5TjOQNy0T9Wj71JkETAdEmrjH6X9nIf50ZO"
                 });
+
+            modelBuilder.Entity<Trigger>()
+                .HasOne(x => x.Webhook)
+                .WithMany(x => x.Triggers)
+                .OnDelete(DeleteBehavior.Cascade)
+                .HasForeignKey(x => x.WebhookId)
+                .IsRequired(false);
         }
     }
 }

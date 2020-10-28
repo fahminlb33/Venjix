@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Venjix.Migrations
 {
-    public partial class InitialMigration : Migration
+    public partial class InitialCreate : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -31,23 +31,6 @@ namespace Venjix.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Settings", x => x.Key);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Triggers",
-                columns: table => new
-                {
-                    TriggerId = table.Column<int>(nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    Event = table.Column<int>(nullable: false),
-                    Target = table.Column<int>(nullable: false),
-                    Value = table.Column<double>(nullable: false),
-                    TargetId = table.Column<int>(nullable: false),
-                    ContinuousSend = table.Column<bool>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Triggers", x => x.TriggerId);
                 });
 
             migrationBuilder.CreateTable(
@@ -103,6 +86,37 @@ namespace Venjix.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Triggers",
+                columns: table => new
+                {
+                    TriggerId = table.Column<int>(nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    Name = table.Column<string>(nullable: true),
+                    Event = table.Column<int>(nullable: false),
+                    Target = table.Column<int>(nullable: false),
+                    Value = table.Column<double>(nullable: false),
+                    ContinuousSend = table.Column<bool>(nullable: false),
+                    WebhookId = table.Column<int>(nullable: true),
+                    SensorId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Triggers", x => x.TriggerId);
+                    table.ForeignKey(
+                        name: "FK_Triggers_Sensors_SensorId",
+                        column: x => x.SensorId,
+                        principalTable: "Sensors",
+                        principalColumn: "SensorId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Triggers_Webhooks_WebhookId",
+                        column: x => x.WebhookId,
+                        principalTable: "Webhooks",
+                        principalColumn: "WebhookId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.InsertData(
                 table: "Users",
                 columns: new[] { "UserId", "Password", "Role", "Username" },
@@ -112,6 +126,16 @@ namespace Venjix.Migrations
                 name: "IX_Recordings_SensorId",
                 table: "Recordings",
                 column: "SensorId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Triggers_SensorId",
+                table: "Triggers",
+                column: "SensorId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Triggers_WebhookId",
+                table: "Triggers",
+                column: "WebhookId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Users_Username",
@@ -135,10 +159,10 @@ namespace Venjix.Migrations
                 name: "Users");
 
             migrationBuilder.DropTable(
-                name: "Webhooks");
+                name: "Sensors");
 
             migrationBuilder.DropTable(
-                name: "Sensors");
+                name: "Webhooks");
         }
     }
 }

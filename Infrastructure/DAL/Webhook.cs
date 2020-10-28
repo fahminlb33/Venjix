@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace Venjix.Infrastructure.DAL
 {
@@ -11,5 +12,7 @@ namespace Venjix.Infrastructure.DAL
         public string BodyFormat { get; set; }
         public bool JsonBody { get; set; }
         public string Method { get; set; }
+
+        public List<Trigger> Triggers { get; set; }
     }
 }
