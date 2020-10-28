@@ -22,14 +22,17 @@
                     <div class="form-group">
                         <label asp-for="Name">Webhook name</label>
                         <input type="text" class="form-control" asp-for="Name">
+                        <span asp-validation-for="Name" class="text-danger"></span>
                     </div>
                     <div class="form-group">
                         <label asp-for="Method">Method</label>
                         <select class="form-control" asp-for="Method" asp-items="Model.Methods"></select>
+                        <span asp-validation-for="Method" class="text-danger"></span>
                     </div>
                     <div class="form-group">
                         <label asp-for="UriFormat">URI format</label>
                         <input type="text" class="form-control" asp-for="UriFormat">
+                        <span asp-validation-for="UriFormat" class="text-danger"></span>
                     </div>
                     <div class="form-group form-check">
                         <input type="checkbox" class="form-check-input" asp-for="JsonBody">
@@ -38,6 +41,7 @@
                     <div class="form-group">
                         <label asp-for="BodyFormat">Body format</label>
                         <textarea class="form-control" asp-for="BodyFormat" rows="5"></textarea>
+                        <span asp-validation-for="BodyFormat" class="text-danger"></span>
                     </div>
 
                     <h4>How to string format?</h4>

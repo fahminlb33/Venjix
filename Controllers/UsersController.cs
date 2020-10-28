@@ -6,7 +6,7 @@ using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Venjix.DAL;
+using Venjix.Infrastructure.DAL;
 using Venjix.Infrastructure.Authentication;
 using Venjix.Infrastructure.DataTables;
 using Venjix.Infrastructure.Helpers;
@@ -106,6 +106,12 @@ namespace Venjix.Controllers
         [Authorize(Roles = Roles.AdminOrUser)]
         public async Task<IActionResult> Save(UserEditModel model)
         {
+            if (!ModelState.IsValid)
+            {
+                model.Roles = _rolesSelectItems;
+                return View("Edit", model);
+            }
+
             var role = User.FindFirst(ClaimTypes.Role).Value;
             var username = User.FindFirst(ClaimTypes.Name).Value;
             if (role != Roles.Admin && username != model.Username)

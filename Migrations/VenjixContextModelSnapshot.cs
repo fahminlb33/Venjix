@@ -3,7 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using Venjix.DAL;
+using Venjix.Infrastructure.DAL;
 
 namespace Venjix.Migrations
 {
@@ -16,7 +16,7 @@ namespace Venjix.Migrations
             modelBuilder
                 .HasAnnotation("ProductVersion", "3.1.9");
 
-            modelBuilder.Entity("Venjix.DAL.Recording", b =>
+            modelBuilder.Entity("Venjix.Infrastructure.DAL.Recording", b =>
                 {
                     b.Property<int>("RecordingId")
                         .ValueGeneratedOnAdd()
@@ -38,7 +38,7 @@ namespace Venjix.Migrations
                     b.ToTable("Recordings");
                 });
 
-            modelBuilder.Entity("Venjix.DAL.Sensor", b =>
+            modelBuilder.Entity("Venjix.Infrastructure.DAL.Sensor", b =>
                 {
                     b.Property<int>("SensorId")
                         .ValueGeneratedOnAdd()
@@ -55,7 +55,56 @@ namespace Venjix.Migrations
                     b.ToTable("Sensors");
                 });
 
-            modelBuilder.Entity("Venjix.DAL.User", b =>
+            modelBuilder.Entity("Venjix.Infrastructure.DAL.Setting", b =>
+                {
+                    b.Property<string>("Key")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Value")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Key");
+
+                    b.ToTable("Settings");
+                });
+
+            modelBuilder.Entity("Venjix.Infrastructure.DAL.Trigger", b =>
+                {
+                    b.Property<int>("TriggerId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<bool>("ContinuousSend")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("Event")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("SensorId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("Target")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<double>("Value")
+                        .HasColumnType("REAL");
+
+                    b.Property<int?>("WebhookId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("TriggerId");
+
+                    b.HasIndex("SensorId");
+
+                    b.HasIndex("WebhookId");
+
+                    b.ToTable("Triggers");
+                });
+
+            modelBuilder.Entity("Venjix.Infrastructure.DAL.User", b =>
                 {
                     b.Property<int>("UserId")
                         .ValueGeneratedOnAdd()
@@ -87,7 +136,7 @@ namespace Venjix.Migrations
                         });
                 });
 
-            modelBuilder.Entity("Venjix.DAL.Webhook", b =>
+            modelBuilder.Entity("Venjix.Infrastructure.DAL.Webhook", b =>
                 {
                     b.Property<int>("WebhookId")
                         .ValueGeneratedOnAdd()
@@ -113,13 +162,27 @@ namespace Venjix.Migrations
                     b.ToTable("Webhooks");
                 });
 
-            modelBuilder.Entity("Venjix.DAL.Recording", b =>
+            modelBuilder.Entity("Venjix.Infrastructure.DAL.Recording", b =>
                 {
-                    b.HasOne("Venjix.DAL.Sensor", "Sensor")
+                    b.HasOne("Venjix.Infrastructure.DAL.Sensor", "Sensor")
                         .WithMany()
                         .HasForeignKey("SensorId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("Venjix.Infrastructure.DAL.Trigger", b =>
+                {
+                    b.HasOne("Venjix.Infrastructure.DAL.Sensor", "Sensor")
+                        .WithMany()
+                        .HasForeignKey("SensorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Venjix.Infrastructure.DAL.Webhook", "Webhook")
+                        .WithMany("Triggers")
+                        .HasForeignKey("WebhookId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618
         }

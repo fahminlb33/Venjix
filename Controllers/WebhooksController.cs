@@ -2,7 +2,7 @@
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Venjix.DAL;
+using Venjix.Infrastructure.DAL;
 using Venjix.Infrastructure.Authentication;
 using Venjix.Infrastructure.DataTables;
 using Venjix.Infrastructure.Helpers;
@@ -78,6 +78,11 @@ namespace Venjix.Controllers
         [Authorize(Roles = Roles.Admin)]
         public async Task<IActionResult> Save(WebhookEditModel model)
         {
+            if (!ModelState.IsValid)
+            {
+                return View("Edit", model);
+            }
+
             var entity = _mapper.Map<Webhook>(model);
             if (model.IsEdit)
             {

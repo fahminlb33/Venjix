@@ -27,6 +27,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Infrastructure\DTO\" />
     <Folder Include="wwwroot\lib\" />
   </ItemGroup>
 

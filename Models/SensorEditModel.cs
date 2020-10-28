@@ -1,12 +1,17 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Venjix.DAL
+namespace Venjix.Models
 {
-    public class Sensor
+    public class SensorEditModel
     {
-        [Key]
         public int SensorId { get; set; }
+
+        [StringLength(100, MinimumLength = 3)]
         public string ApiField { get; set; }
+
+        [StringLength(100, MinimumLength = 3)]
         public string DisplayName { get; set; }
+
+        public bool IsEdit { get; set; }
     }
 }

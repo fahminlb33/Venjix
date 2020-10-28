@@ -1,10 +1,12 @@
-﻿namespace Venjix.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace Venjix.Infrastructure.DAL
 {
-    public class SensorEditModel
+    public class Sensor
     {
+        [Key]
         public int SensorId { get; set; }
         public string ApiField { get; set; }
         public string DisplayName { get; set; }
-        public bool IsEdit { get; set; }
     }
 }
