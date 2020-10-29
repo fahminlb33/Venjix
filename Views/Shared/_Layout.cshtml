@@ -152,12 +152,19 @@
                 </div>
             </li>
 
-            <!-- Nav Item - Settings -->
-            <li class="nav-item" active-when="/Home/Settings">
-                <a class="nav-link" active-when="/Home/Settings" asp-controller="Home" asp-action="Settings">
+            <!-- Nav Item - System -->
+            <li class="nav-item" active-when="/Sysman/">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseSystem" aria-expanded="true"
+                   aria-controls="collapseSystem" collapsed-when="/Sysman/">
                     <i class="fas fa-fw fa-cog"></i>
-                    <span>Settings</span>
+                    <span>System</span>
                 </a>
+                <div id="collapseSystem" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar" show-when="/Sysman/">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <a class="collapse-item" active-when="/Sysman/Index" asp-controller="Sysman" asp-action="Index">Settings</a>
+                        <a class="collapse-item" active-when="/Sysman/Logs" asp-controller="Sysman" asp-action="Logs">Logs</a>
+                    </div>
+                </div>
             </li>
 
             <!-- Nav Item - About -->
