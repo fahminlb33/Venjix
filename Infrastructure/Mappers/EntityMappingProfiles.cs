@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Venjix.Infrastructure.DAL;
+using Venjix.Infrastructure.DTO;
 using Venjix.Models;
 
 namespace Venjix.Infrastructure.Mappers
@@ -21,6 +22,9 @@ namespace Venjix.Infrastructure.Mappers
 
             CreateMap<Trigger, TriggerEditModel>();
             CreateMap<TriggerEditModel, Trigger>();
+
+            CreateMap<VenjixOptions, SettingsEditModel>();
+            CreateMap<SettingsEditModel, VenjixOptions>();
         }
     }
 }

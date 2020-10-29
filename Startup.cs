@@ -63,7 +63,7 @@ namespace Venjix
                 .AddDbContextCheck<VenjixContext>();
             services.AddHttpContextAccessor();
             services.AddAutoMapper(typeof(Startup));
-            services.ConfigureWritable<VenjixOptions>(VenjixOptions.SectionName, Program.GetAppSettingsPath());
+            services.ConfigureWritable<VenjixOptions>(Configuration.GetSection(VenjixOptions.SectionName), Program.GetAppSettingsPath());
 
             services.AddTransient<IDataTables, DataTables>();
         }
