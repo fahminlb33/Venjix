@@ -505,7 +505,7 @@ MigrationBackup/
 # End of https://www.gitignore.io/api/cake,dotnetcore,aspnetcore,visualstudio,visualstudiocode
 
 # SQlite Database
-/data
+/data/*
 *.db
 *.db-shm
 *.db-wal
@@ -518,4 +518,4 @@ wwwroot/css/sb-admin-2.css
 wwwroot/css/sb-admin-2.min.css
 
 # Logs
-/logs
+/logs/*
