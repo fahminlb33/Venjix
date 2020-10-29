@@ -7,6 +7,7 @@ namespace Venjix.Infrastructure.DAL
     {
         [Key]
         public int WebhookId { get; set; }
+
         public string Name { get; set; }
         public string UriFormat { get; set; }
         public string BodyFormat { get; set; }

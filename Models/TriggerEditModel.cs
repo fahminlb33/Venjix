@@ -24,6 +24,7 @@ namespace Venjix.Models
 
         [RequiredIf(nameof(Target), TriggerTarget.Webhook)]
         public int? WebhookId { get; set; }
+
         public bool IsEdit { get; set; }
 
         public List<SelectListItem> Events { get; set; }

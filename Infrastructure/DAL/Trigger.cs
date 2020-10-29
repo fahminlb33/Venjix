@@ -6,6 +6,7 @@ namespace Venjix.Infrastructure.DAL
     {
         [Key]
         public int TriggerId { get; set; }
+
         public string Name { get; set; }
         public TriggerEvent Event { get; set; }
         public TriggerTarget Target { get; set; }

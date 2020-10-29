@@ -4,8 +4,13 @@ namespace Venjix.Infrastructure.TagHelpers
 {
     public class NotNullOrWhiteSpaceAttribute : ValidationAttribute
     {
-        public NotNullOrWhiteSpaceAttribute() : base("Invalid Field") { }
-        public NotNullOrWhiteSpaceAttribute(string Message) : base(Message) { }
+        public NotNullOrWhiteSpaceAttribute() : base("Invalid Field")
+        {
+        }
+
+        public NotNullOrWhiteSpaceAttribute(string Message) : base(Message)
+        {
+        }
 
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {

@@ -10,6 +10,7 @@ namespace Venjix.Infrastructure.DataTables
     public interface IDataTables
     {
         Task<DataTablesResponseModel> PopulateTable<T>(DataTablesRequestModel request, DbSet<T> data) where T : class;
+
         Task<DataTablesResponseModel> PopulateTable<T>(DataTablesRequestModel request, DbSet<T> data, Func<T, T> project) where T : class;
     }
 
@@ -30,7 +31,7 @@ namespace Venjix.Infrastructure.DataTables
             if (!string.IsNullOrEmpty(request.Search.Value))
             {
                 sql.Append("WHERE ");
-                foreach(var column in request.Columns)
+                foreach (var column in request.Columns)
                 {
                     if (!column.Searchable) continue;
                     sql.AppendFormat("{0} LIKE '%{1}%' OR", column.Name, request.Search.Value);
@@ -51,7 +52,7 @@ namespace Venjix.Infrastructure.DataTables
                 sql.Remove(sql.Length - 2, 2);
                 sql.Append(" ");
             }
-            
+
             // build paging
             sql.AppendFormat("LIMIT {0} OFFSET {1}", request.Length, request.Start);
             var sqlString = sql.ToString();
@@ -61,7 +62,7 @@ namespace Venjix.Infrastructure.DataTables
             {
                 recordset = recordset.Select(x => project(x)).ToList();
             }
-            
+
             return new DataTablesResponseModel
             {
                 Draw = request.Draw + 1,

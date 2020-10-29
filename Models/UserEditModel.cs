@@ -14,7 +14,7 @@ namespace Venjix.Models
 
         [StringLength(100, MinimumLength = 3)]
         public string Password { get; set; }
-        
+
         [NotNullOrWhiteSpace]
         public string Role { get; set; }
 

@@ -6,6 +6,7 @@ namespace Venjix.Infrastructure.DAL
     {
         [Key]
         public int SensorId { get; set; }
+
         public string ApiField { get; set; }
         public string DisplayName { get; set; }
     }

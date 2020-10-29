@@ -1,16 +1,15 @@
-﻿using System.Security.Claims;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authentication;
+﻿using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Venjix.Infrastructure.DAL;
+using System.Security.Claims;
+using System.Threading.Tasks;
 using Venjix.Infrastructure.Authentication;
-using Venjix.Models;
-using Venjix.Infrastructure;
+using Venjix.Infrastructure.DAL;
 using Venjix.Infrastructure.TagHelpers;
+using Venjix.Models;
 
 namespace Venjix.Controllers
 {

@@ -1,12 +1,12 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Options;
+using System;
 using System.Collections.Generic;
 using System.Dynamic;
 using System.IO;
 using System.Text.Json;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Options;
 
 namespace Venjix.Infrastructure
 {
@@ -38,6 +38,7 @@ namespace Venjix.Infrastructure
         }
 
         public T Value => _options.CurrentValue;
+
         public T Get(string name) => _options.Get(name);
 
         public async Task Update(Action<T> applyChanges)

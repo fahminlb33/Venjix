@@ -1,11 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.AspNetCore.Razor.TagHelpers;
-using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace Venjix.Infrastructure.TagHelpers
 {
@@ -50,6 +47,5 @@ namespace Venjix.Infrastructure.TagHelpers
                 output.Attributes.SetAttribute("aria-expanded", true);
             }
         }
-
     }
 }

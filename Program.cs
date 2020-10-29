@@ -1,12 +1,11 @@
-using System;
-using System.IO;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Serilog;
-using Serilog.Events;
+using System;
+using System.IO;
 using Venjix.Infrastructure.DAL;
 
 namespace Venjix
@@ -78,7 +77,7 @@ namespace Venjix
         public static string GetAppSettingsPath()
         {
             var parentDir = Path.GetDirectoryName(AppDomain.CurrentDomain.BaseDirectory);
-            return Path.Join(parentDir, "data", $"appsettings.json"); 
+            return Path.Join(parentDir, "data", $"appsettings.json");
         }
     }
 }

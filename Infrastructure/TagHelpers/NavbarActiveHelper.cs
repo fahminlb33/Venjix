@@ -49,6 +49,5 @@ namespace Venjix.Infrastructure.TagHelpers
                 }
             }
         }
-
     }
 }

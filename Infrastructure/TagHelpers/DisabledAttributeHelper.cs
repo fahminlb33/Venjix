@@ -28,6 +28,5 @@ namespace Venjix.Infrastructure.TagHelpers
                 }
             }
         }
-
     }
 }
