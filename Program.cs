@@ -1,4 +1,5 @@
 using System;
+using System.IO;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -15,7 +16,7 @@ namespace Venjix
         public static int Main(string[] args)
         {
             var configuration = new ConfigurationBuilder()
-               .AddJsonFile("appsettings.json")
+               .AddJsonFile(GetAppSettingsPath())
                .Build();
 
             Log.Logger = new LoggerConfiguration()
@@ -63,11 +64,21 @@ namespace Venjix
         public static IHostBuilder CreateHostBuilder(string[] args)
         {
             return Host.CreateDefaultBuilder(args)
+                .ConfigureAppConfiguration((hostingContext, config) =>
+                {
+                    config.AddJsonFile(GetAppSettingsPath(), optional: false, reloadOnChange: true);
+                })
                 .UseSerilog()
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();
                 });
+        }
+
+        private static string GetAppSettingsPath()
+        {
+            var parentDir = Path.GetDirectoryName(AppDomain.CurrentDomain.BaseDirectory);
+            return Path.Join(parentDir, "data", "appsettings.json"); 
         }
     }
 }

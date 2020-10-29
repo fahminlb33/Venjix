@@ -30,7 +30,7 @@
 
   <ItemGroup>
     <Folder Include="Infrastructure\DTO\" />
-    <Folder Include="data\" />
+    <Folder Include="logs\" />
     <Folder Include="wwwroot\lib\" />
   </ItemGroup>
 
