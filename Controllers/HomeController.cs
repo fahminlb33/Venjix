@@ -25,5 +25,11 @@ namespace Venjix.Controllers
         {
             return View();
         }
+
+        [Authorize(Roles = Roles.Admin)]
+        public IActionResult Settings()
+        {
+            return View();
+        }
     }
 }
