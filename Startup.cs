@@ -1,9 +1,13 @@
 using System;
+using System.Linq;
+using System.Text.Json;
 using AutoMapper;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -55,7 +59,8 @@ namespace Venjix
 
             services.AddDbContext<VenjixContext>(options => options.UseSqlite(Configuration.GetConnectionString("VenjixContext")));
             services.AddRouting(options => options.LowercaseUrls = true);
-            services.AddHealthChecks();
+            services.AddHealthChecks()
+                .AddDbContextCheck<VenjixContext>();
             services.AddHttpContextAccessor();
             services.AddAutoMapper(typeof(Startup));
             services.ConfigureWritable<VenjixOptions>(VenjixOptions.SectionName, Program.GetAppSettingsPath());
@@ -72,7 +77,7 @@ namespace Venjix
             }
             else
             {
-                app.UseExceptionHandler("/Home/Error");
+                app.UseExceptionHandler("/error/index");
             }
 
             app.UseSerilogRequestLogging();
@@ -80,11 +85,31 @@ namespace Venjix
             app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();
-            app.UseHealthChecks("/status");
             app.UseCors(x => x
               .AllowAnyOrigin()
               .AllowAnyMethod()
               .AllowAnyHeader());
+
+            app.UseHealthChecks("/health", new HealthCheckOptions
+            {
+                ResponseWriter = async (context, report) =>
+                {
+                    var response = new HealthCheckDto
+                    {
+                        Status = report.Status.ToString(),
+                        HealthChecks = report.Entries.Select(x => new IndividualHealthCheckDto
+                        {
+                            Component = x.Key,
+                            Status = x.Value.Status.ToString(),
+                            Description = x.Value.Description
+                        }),
+                        HealthCheckDuration = report.TotalDuration
+                    };
+
+                    context.Response.ContentType = "application/json";
+                    await context.Response.WriteAsync(JsonSerializer.Serialize(response));
+                }
+            });
 
             app.UseEndpoints(endpoints =>
             {
