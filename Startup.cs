@@ -11,6 +11,8 @@ using Microsoft.Extensions.Hosting;
 using Serilog;
 using Venjix.Infrastructure.DAL;
 using Venjix.Infrastructure.DataTables;
+using Venjix.Infrastructure.DTO;
+using Venjix.Infrastructure.Options;
 
 namespace Venjix
 {
@@ -51,11 +53,12 @@ namespace Venjix
                 options.SuppressXFrameOptionsHeader = false;
             });
 
-            services.AddDbContext<VenjixContext>(options => options.UseSqlite(@"Data Source=data\main.db"));
+            services.AddDbContext<VenjixContext>(options => options.UseSqlite(Configuration.GetConnectionString("VenjixContext")));
             services.AddRouting(options => options.LowercaseUrls = true);
             services.AddHealthChecks();
             services.AddHttpContextAccessor();
             services.AddAutoMapper(typeof(Startup));
+            services.ConfigureWritable<VenjixOptions>(VenjixOptions.SectionName, Program.GetAppSettingsPath());
 
             services.AddTransient<IDataTables, DataTables>();
         }

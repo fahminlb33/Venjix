@@ -75,10 +75,10 @@ namespace Venjix
                 });
         }
 
-        private static string GetAppSettingsPath()
+        public static string GetAppSettingsPath()
         {
             var parentDir = Path.GetDirectoryName(AppDomain.CurrentDomain.BaseDirectory);
-            return Path.Join(parentDir, "data", "appsettings.json"); 
+            return Path.Join(parentDir, "data", $"appsettings.json"); 
         }
     }
 }
