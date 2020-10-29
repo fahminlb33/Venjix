@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Serilog;
 using Venjix.Infrastructure.DAL;
 using Venjix.Infrastructure.DataTables;
 
@@ -50,7 +51,7 @@ namespace Venjix
                 options.SuppressXFrameOptionsHeader = false;
             });
 
-            services.AddDbContext<VenjixContext>(options => options.UseSqlite(@"Data Source=main.db"));
+            services.AddDbContext<VenjixContext>(options => options.UseSqlite(@"Data Source=data\main.db"));
             services.AddRouting(options => options.LowercaseUrls = true);
             services.AddHealthChecks();
             services.AddHttpContextAccessor();
@@ -71,6 +72,7 @@ namespace Venjix
                 app.UseExceptionHandler("/Home/Error");
             }
 
+            app.UseSerilogRequestLogging();
             app.UseStaticFiles();
             app.UseRouting();
             app.UseAuthentication();
