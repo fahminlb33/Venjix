@@ -506,6 +506,7 @@ MigrationBackup/
 
 # SQlite Database
 /data/*
+!/data/appsettings.json
 *.db
 *.db-shm
 *.db-wal
