@@ -3,10 +3,10 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System.Threading.Tasks;
+using Venjix.Infrastructure;
 using Venjix.Infrastructure.Authentication;
 using Venjix.Infrastructure.DTO;
-using Venjix.Infrastructure.Helpers;
-using Venjix.Infrastructure.Options;
+using Venjix.Infrastructure.TagHelpers;
 using Venjix.Models;
 
 namespace Venjix.Controllers

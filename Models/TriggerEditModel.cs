@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using Venjix.Infrastructure.DAL;
-using Venjix.Infrastructure.Helpers;
+using Venjix.Infrastructure.TagHelpers;
 
 namespace Venjix.Models
 {

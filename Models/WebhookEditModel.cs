@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using Venjix.Infrastructure.Helpers;
+using Venjix.Infrastructure.TagHelpers;
 
 namespace Venjix.Models
 {

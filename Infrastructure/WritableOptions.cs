@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
 
-namespace Venjix.Infrastructure.Options
+namespace Venjix.Infrastructure
 {
     public interface IWritableOptions<out T> : IOptions<T> where T : class, new()
     {

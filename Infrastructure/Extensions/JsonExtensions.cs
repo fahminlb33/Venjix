@@ -2,7 +2,7 @@
 using System.Buffers;
 using System.Text.Json;
 
-namespace Venjix.Infrastructure.Helpers
+namespace Venjix.Infrastructure.TagHelpers
 {
     public static class JsonExtensions
     {

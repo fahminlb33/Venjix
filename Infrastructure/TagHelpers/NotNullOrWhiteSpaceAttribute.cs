@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Venjix.Infrastructure.Helpers
+namespace Venjix.Infrastructure.TagHelpers
 {
     public class NotNullOrWhiteSpaceAttribute : ValidationAttribute
     {

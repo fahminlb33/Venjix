@@ -8,8 +8,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Venjix.Infrastructure.DAL;
 using Venjix.Infrastructure.Authentication;
-using Venjix.Infrastructure.Helpers;
 using Venjix.Models;
+using Venjix.Infrastructure;
+using Venjix.Infrastructure.TagHelpers;
 
 namespace Venjix.Controllers
 {

@@ -1,4 +1,4 @@
-﻿using Venjix.Infrastructure.Helpers;
+﻿using Venjix.Infrastructure.TagHelpers;
 
 namespace Venjix.Models
 {

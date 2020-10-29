@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace Venjix.Infrastructure.Helpers
+namespace Venjix.Infrastructure.TagHelpers
 {
     [AttributeUsage(AttributeTargets.Property)]
     public class RequiredIfAttribute : RequiredAttribute

@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 using System.Linq;
 
-namespace Venjix.Infrastructure.Helpers
+namespace Venjix.Infrastructure.TagHelpers
 {
     [HtmlTargetElement("*", Attributes = "disabled-when")]
     public class DisabledAttributeHelper : TagHelper

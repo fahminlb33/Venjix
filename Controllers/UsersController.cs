@@ -9,8 +9,9 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Venjix.Infrastructure.DAL;
 using Venjix.Infrastructure.Authentication;
 using Venjix.Infrastructure.DataTables;
-using Venjix.Infrastructure.Helpers;
 using Venjix.Models;
+using Venjix.Infrastructure;
+using Venjix.Infrastructure.TagHelpers;
 
 namespace Venjix.Controllers
 {
