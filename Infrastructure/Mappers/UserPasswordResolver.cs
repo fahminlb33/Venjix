@@ -2,7 +2,7 @@
 using Venjix.Infrastructure.DAL;
 using Venjix.Models;
 
-namespace Venjix.Infrastructure.Mapper
+namespace Venjix.Infrastructure.Mappers
 {
     public class UserPasswordResolver : IValueResolver<UserEditModel, User, string>
     {
