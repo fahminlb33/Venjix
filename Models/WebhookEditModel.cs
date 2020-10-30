@@ -29,8 +29,7 @@ namespace Venjix.Models
         {
             new SelectListItem("GET", "GET"),
             new SelectListItem("POST", "POST"),
-            new SelectListItem("PUT", "PUT"),
-            new SelectListItem("DELETE", "DELETE"),
+            new SelectListItem("PUT", "PUT")
         };
     }
 }
