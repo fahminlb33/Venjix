@@ -62,12 +62,14 @@ namespace Venjix
             services.AddRouting(options => options.LowercaseUrls = true);
             services.AddHealthChecks()
                 .AddDbContextCheck<VenjixContext>();
+            services.AddMemoryCache();
             services.AddHttpContextAccessor();
             services.AddAutoMapper(typeof(Startup));
             services.ConfigureWritable<VenjixOptions>(Configuration.GetSection(VenjixOptions.SectionName), Program.GetAppSettingsPath());
 
             services.AddTransient<IDataTables, DataTables>();
             services.AddSingleton<ITelegramService, TelegramService>();
+            services.AddScoped<ITriggerRunnerService, TriggerRunnerService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
