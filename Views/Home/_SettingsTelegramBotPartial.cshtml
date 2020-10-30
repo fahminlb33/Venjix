@@ -11,6 +11,11 @@
     <a class="btn btn-outline-primary mb-2" asp-action="TelegramRefresh" asp-controller="Home">Refresh Activation</a>
 </form>
 
+@if (Model.IsTelegramTokenValid)
+{
+    <p class="mt-3">Bot name: @Model.TelegramBotCallName (@Model.TelegramBotUsername)</p>
+}
+
 <h5 class="mt-3">How to enable Telegram Bot</h5>
 <ol>
     <li>Create bot by chatting to BotFather.</li>

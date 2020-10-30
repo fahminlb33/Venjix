@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using Microsoft.CodeAnalysis.CSharp.Syntax;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -33,27 +34,15 @@ namespace Venjix.Infrastructure.Services
         {
             try
             {
-                var uri = $"https://api.telegram.org/bot{token}/getUpdates";
-                var result = await _httpClient.GetAsync(uri);
-                result.EnsureSuccessStatusCode();
-
-                var response = await result.Content.ReadAsStreamAsync();
-                var body = await JsonDocument.ParseAsync(response);
-                if (!body.RootElement.GetProperty("ok").GetBoolean())
-                {
-                    _logger.LogWarning("The provided Telegram token is invalid.");
-                    return;
-                }
-
-                var updates = body.RootElement.GetProperty("result");
-                var message = updates.EnumerateArray().FirstOrDefault(x => x.GetProperty("message").GetProperty("text").GetString().Contains(VerifyMessage));
-                var chatId = message.GetProperty("message").GetProperty("chat").GetProperty("id").GetInt32();
-
+                var chatId = await GetChatId(token);
+                var (callName, username) = await GetBotName(token);
                 await _options.Update(options =>
                 {
                     options.IsTelegramTokenValid = true;
                     options.TelegramToken = token;
                     options.TelegramChatId = chatId;
+                    options.TelegramBotCallName = callName;
+                    options.TelegramBotUsername = username;
                 });
                 _logger.LogInformation("Telegram Bot is activated.");
             }
@@ -89,5 +78,29 @@ namespace Venjix.Infrastructure.Services
             }
         }
 
+        private async Task<int> GetChatId(string token)
+        {
+            var uri = $"https://api.telegram.org/bot{token}/getUpdates?limit=5";
+            var result = await _httpClient.GetAsync(uri);
+            result.EnsureSuccessStatusCode();
+
+            var response = await result.Content.ReadAsStreamAsync();
+            var body = await JsonDocument.ParseAsync(response);
+            var updates = body.RootElement.GetProperty("result");
+            var message = updates.EnumerateArray().FirstOrDefault(x => x.GetProperty("message").GetProperty("text").GetString().Contains(VerifyMessage));
+            return message.GetProperty("message").GetProperty("chat").GetProperty("id").GetInt32();
+        }
+
+        private async Task<(string callName, string username)> GetBotName(string token)
+        {
+            var uri = $"https://api.telegram.org/bot{token}/getMe";
+            var result = await _httpClient.GetAsync(uri);
+            result.EnsureSuccessStatusCode();
+
+            var response = await result.Content.ReadAsStreamAsync();
+            var body = await JsonDocument.ParseAsync(response);
+            var user = body.RootElement.GetProperty("result");
+            return (user.GetProperty("first_name").GetString(), user.GetProperty("username").GetString());
+        }
     }
 }
