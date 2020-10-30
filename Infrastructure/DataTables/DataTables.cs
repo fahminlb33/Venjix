@@ -40,6 +40,9 @@ namespace Venjix.Infrastructure.DataTables
                 sql.Remove(sql.Length - 2, 2);
             }
 
+            // count filtered data
+            var filterCount = ExecuteScalar(data, sql.ToString());
+
             // build order by
             if (request.Ordering.Count > 0)
             {
@@ -67,9 +70,20 @@ namespace Venjix.Infrastructure.DataTables
             {
                 Draw = request.Draw + 1,
                 Data = recordset,
-                RecordsFiltered = recordset.Count,
+                RecordsFiltered = filterCount,
                 RecordsTotal = await data.CountAsync()
             };
+        }
+
+        private int ExecuteScalar<T>(DbSet<T> set, string sql) where T : class
+        {
+            var context = GetDbContext(set);
+            using var cmd = context.Database.GetDbConnection().CreateCommand();
+            cmd.CommandText = sql;
+            cmd.CommandType = System.Data.CommandType.Text;
+            context.Database.OpenConnection();
+
+            return (int)(long)cmd.ExecuteScalar();
         }
 
         private string GetTableName<T>(DbSet<T> set) where T : class
