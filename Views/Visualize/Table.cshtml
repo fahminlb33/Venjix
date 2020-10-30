@@ -1,4 +1,4 @@
-﻿@model VisualizeTableModel
+﻿@model VisualizeFilterModel
 @{
     ViewData[ViewKeys.Title] = "Table Visualizer - Venjix";
     ViewData[ViewKeys.PageHeading] = "Table Visualizer";
@@ -12,7 +12,6 @@
     </a>
 </h1>
 
-<!-- DataTales Example -->
 <div class="card shadow mb-4">
     <div class="card-body">
         <form method="post" asp-action="TableExport">
@@ -28,10 +27,10 @@
                 <label asp-for="StartDate">Date Range</label>
                 <div class="form-row">
                     <div class="col-6">
-                        <input type="datetime-local" class="form-control" asp-for="StartDate">
+                        <input type="datetime-local" class="form-control" asp-for="StartDate" step="1">
                     </div>
                     <div class="col-6">
-                        <input type="datetime-local" class="form-control" asp-for="EndDate">
+                        <input type="datetime-local" class="form-control" asp-for="EndDate" step="1">
                     </div>
                 </div>
             </div>
@@ -73,7 +72,7 @@
             var table = $('#dataTable').DataTable({
                 serverSide: true,
                 ajax: {
-                    url: '@(Url.Action("TableData", "Visualize"))',
+                    url: '@(Url.Action("TimeSeriesData"))',
                     processing: true,
                     searching: false,
                     orderMulti: false,
