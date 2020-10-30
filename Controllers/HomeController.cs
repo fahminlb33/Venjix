@@ -1,11 +1,14 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Logging;
+using System.Linq;
 using System.Threading.Tasks;
 using Venjix.Infrastructure;
 using Venjix.Infrastructure.Authentication;
 using Venjix.Infrastructure.DTO;
+using Venjix.Infrastructure.Services;
 using Venjix.Infrastructure.TagHelpers;
 using Venjix.Models;
 
@@ -16,12 +19,17 @@ namespace Venjix.Controllers
         private readonly ILogger<HomeController> _logger;
         private readonly IWritableOptions<VenjixOptions> _optionsWritable;
         private readonly IMapper _mapper;
+        private readonly ITelegramService _telegramService;
+        private readonly HealthCheckService _healthCheck;
 
-        public HomeController(ILogger<HomeController> logger, IWritableOptions<VenjixOptions> optionsWritable, IMapper mapper)
+        public HomeController(ILogger<HomeController> logger, IWritableOptions<VenjixOptions> optionsWritable, IMapper mapper, ITelegramService telegramService, HealthCheckService healthCheck)
         {
+
             _logger = logger;
             _optionsWritable = optionsWritable;
             _mapper = mapper;
+            _telegramService = telegramService;
+            _healthCheck = healthCheck;
         }
 
         [Authorize(Roles = Roles.AdminOrUser)]
@@ -37,19 +45,41 @@ namespace Venjix.Controllers
         }
 
         [Authorize(Roles = Roles.Admin)]
-        public IActionResult Settings()
+        public async Task<IActionResult> Settings()
         {
-            return View("Settings", _mapper.Map<SettingsEditModel>(_optionsWritable.Value));
+            var health = await _healthCheck.CheckHealthAsync();
+            var model = _mapper.Map<SettingsModel>(_optionsWritable.Value);
+            model.HealthChecks = health.Entries.ToDictionary(x => x.Key, y => y.Value.Status.ToString());
+            model.HealthStatus = health.Status.ToString();
+
+            return View("Settings", model);
         }
 
         [HttpPost]
         [Authorize(Roles = Roles.Admin)]
-        public async Task<IActionResult> Save(SettingsEditModel model)
+        public async Task<IActionResult> TelegramSave(SettingsModel model)
         {
-            await _optionsWritable.Update(options => _mapper.Map(model, options));
-            TempData[ViewKeys.Message] = "Settings updated successfully.";
-            TempData[ViewKeys.IsSuccess] = true;
+            if (!string.IsNullOrWhiteSpace(model.TelegramToken))
+            {
+                await _telegramService.VerifyAndSaveBot(model.TelegramToken);
+            }
+            else
+            {
+                await _optionsWritable.Update(options =>
+                {
+                    options.IsTelegramTokenValid = false;
+                    options.TelegramChatId = 0;
+                    options.TelegramToken = "";
+                });
+            }
+            
+            return RedirectToAction("Settings");
+        }
 
+        [Authorize(Roles = Roles.Admin)]
+        public async Task<IActionResult> TelegramRefresh()
+        {
+            await _telegramService.VerifyAndSaveBot(_optionsWritable.Value.TelegramToken);
             return RedirectToAction("Settings");
         }
     }

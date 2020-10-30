@@ -5,5 +5,7 @@
         public const string SectionName = "Venjix";
 
         public string TelegramToken { get; set; }
+        public int TelegramChatId { get; set; }
+        public bool IsTelegramTokenValid { get; set; }
     }
 }

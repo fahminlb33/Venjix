@@ -23,8 +23,8 @@ namespace Venjix.Infrastructure.Mappers
             CreateMap<Trigger, TriggerEditModel>();
             CreateMap<TriggerEditModel, Trigger>();
 
-            CreateMap<VenjixOptions, SettingsEditModel>();
-            CreateMap<SettingsEditModel, VenjixOptions>();
+            CreateMap<VenjixOptions, SettingsModel>();
+            CreateMap<SettingsModel, VenjixOptions>();
         }
     }
 }
