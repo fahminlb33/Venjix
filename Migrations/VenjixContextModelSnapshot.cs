@@ -55,19 +55,6 @@ namespace Venjix.Migrations
                     b.ToTable("Sensors");
                 });
 
-            modelBuilder.Entity("Venjix.Infrastructure.DAL.Setting", b =>
-                {
-                    b.Property<string>("Key")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Value")
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("Key");
-
-                    b.ToTable("Settings");
-                });
-
             modelBuilder.Entity("Venjix.Infrastructure.DAL.Trigger", b =>
                 {
                     b.Property<int>("TriggerId")

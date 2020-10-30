@@ -1,18 +1,16 @@
 ﻿using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.AspNetCore.Razor.TagHelpers;
-using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
-using System.Threading.Tasks;
 
-namespace Venjix.Infrastructure.Helpers
+namespace Venjix.Infrastructure.TagHelpers
 {
-    [HtmlTargetElement("a", Attributes = "collapsed-when")]
-    public class NavbarCollapsedHelper : TagHelper
+    [HtmlTargetElement("li", Attributes = "active-when")]
+    [HtmlTargetElement("a", Attributes = "active-when")]
+    public class NavbarActiveHelper : TagHelper
     {
-        public string CollapsedWhen { get; set; }
+        public string ActiveWhen { get; set; }
 
         [ViewContext]
         [HtmlAttributeNotBound]
@@ -20,11 +18,11 @@ namespace Venjix.Infrastructure.Helpers
 
         public override void Process(TagHelperContext context, TagHelperOutput output)
         {
-            if (CollapsedWhen == null)
+            if (ActiveWhen == null)
                 return;
 
-            var targetController = CollapsedWhen.Split("/")[1];
-            var targetAction = CollapsedWhen.Split("/")[2];
+            var targetController = ActiveWhen.Split("/")[1];
+            var targetAction = ActiveWhen.Split("/")[2];
             var actions = new List<string>();
             if (targetAction.Contains("|"))
             {
@@ -39,17 +37,17 @@ namespace Venjix.Infrastructure.Helpers
             var currentAction = ViewContextData.RouteData.Values["action"].ToString();
 
             if (!currentController.Equals(targetController)) return;
-            if (!actions.Any(x => x.Equals(currentAction)))
+            if (string.IsNullOrEmpty(targetAction) || actions.Any(x => x.Equals(currentAction)))
             {
                 if (output.Attributes.ContainsName("class"))
                 {
-                    var lastAttr = output.Attributes["class"].Value.ToString();
-                    output.Attributes.SetAttribute("class", lastAttr.Replace("collapsed", ""));
+                    output.Attributes.SetAttribute("class", $"{output.Attributes["class"].Value} active");
                 }
-
-                output.Attributes.SetAttribute("aria-expanded", true);
+                else
+                {
+                    output.Attributes.SetAttribute("class", "active");
+                }
             }
         }
-
     }
 }

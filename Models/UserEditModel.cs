@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using Venjix.Infrastructure.Helpers;
+using Venjix.Infrastructure.TagHelpers;
 
 namespace Venjix.Models
 {
@@ -14,7 +14,7 @@ namespace Venjix.Models
 
         [StringLength(100, MinimumLength = 3)]
         public string Password { get; set; }
-        
+
         [NotNullOrWhiteSpace]
         public string Role { get; set; }
 

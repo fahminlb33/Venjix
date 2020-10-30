@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 using System.Linq;
 
-namespace Venjix.Infrastructure.Helpers
+namespace Venjix.Infrastructure.TagHelpers
 {
     [HtmlTargetElement("*", Attributes = "readonly-when")]
     public class ReadOnlyAttributeHelper : TagHelper
@@ -28,6 +28,5 @@ namespace Venjix.Infrastructure.Helpers
                 }
             }
         }
-
     }
 }

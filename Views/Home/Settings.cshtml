@@ -1,5 +1,42 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model SettingsModel
 @{
+    ViewData[ViewKeys.Title] = "Settings - Venjix";
+    ViewData[ViewKeys.PageHeading] = "Settings";
+    ViewData[ViewKeys.PageSubheading] = "Change Venjix system settings and integration.";
 }
+
+<h1 class="h3 mb-2 text-gray-800">@ViewData[ViewKeys.PageHeading]</h1>
+<p class="mb-4">@ViewData[ViewKeys.PageSubheading]</p>
+
+<div class="row">
+    <div class="col-lg-6">
+        <div class="card mb-4">
+            <div class="card-header">
+                <h6 class="m-0 font-weight-bold text-primary">Telegram Bot <span class="badge badge-@(Model.IsTelegramTokenValid ? "success" : "danger")">@(Model.IsTelegramTokenValid ? "Activated" : "Disabled")</span></h6>
+            </div>
+            <div class="card-body">
+                <partial name="_SettingsTelegramBotPartial" />
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-6">
+        <div class="card mb-4">
+            <div class="card-header">
+                <h6 class="m-0 font-weight-bold text-primary">Health Checks</h6>
+            </div>
+            <div class="card-body">
+                <p>Venjix's system status: <b>@Model.HealthStatus</b></p>
+                <ul>
+                    @foreach(var entry in Model.HealthChecks)
+                    {
+                        <li>@entry.Key - @entry.Value</li>
+                    }
+                </ul>
+                <p>
+                    You can check Venjix's server health status in JSON by visiting <a href="/health">this link</a>.<br />
+                    You can also add this URL to your Dockerfile HEALTHCHECK.
+                </p>
+            </div>
+        </div>
+    </div>
+</div>

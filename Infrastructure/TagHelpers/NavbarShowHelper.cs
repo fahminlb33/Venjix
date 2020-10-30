@@ -4,13 +4,12 @@ using Microsoft.AspNetCore.Razor.TagHelpers;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Venjix.Infrastructure.Helpers
+namespace Venjix.Infrastructure.TagHelpers
 {
-    [HtmlTargetElement("li", Attributes = "active-when")]
-    [HtmlTargetElement("a", Attributes = "active-when")]
-    public class NavbarActiveHelper : TagHelper
+    [HtmlTargetElement("div", Attributes = "show-when")]
+    public class NavbarShowHelper : TagHelper
     {
-        public string ActiveWhen { get; set; }
+        public string ShowWhen { get; set; }
 
         [ViewContext]
         [HtmlAttributeNotBound]
@@ -18,11 +17,11 @@ namespace Venjix.Infrastructure.Helpers
 
         public override void Process(TagHelperContext context, TagHelperOutput output)
         {
-            if (ActiveWhen == null)
+            if (ShowWhen == null)
                 return;
 
-            var targetController = ActiveWhen.Split("/")[1];
-            var targetAction = ActiveWhen.Split("/")[2];
+            var targetController = ShowWhen.Split("/")[1];
+            var targetAction = ShowWhen.Split("/")[2];
             var actions = new List<string>();
             if (targetAction.Contains("|"))
             {
@@ -37,18 +36,14 @@ namespace Venjix.Infrastructure.Helpers
             var currentAction = ViewContextData.RouteData.Values["action"].ToString();
 
             if (!currentController.Equals(targetController)) return;
-            if (string.IsNullOrEmpty(targetAction) || actions.Any(x => x.Equals(currentAction)))
+            if (!actions.Any(x => x.Equals(currentAction)))
             {
-                if (output.Attributes.ContainsName("class"))
-                {
-                    output.Attributes.SetAttribute("class", $"{output.Attributes["class"].Value} active");
-                }
-                else
-                {
-                    output.Attributes.SetAttribute("class", "active");
-                }
+                output.Attributes.SetAttribute("class", "collapse show");
+            }
+            else
+            {
+                output.Attributes.SetAttribute("class", "collapsed");
             }
         }
-
     }
 }

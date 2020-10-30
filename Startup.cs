@@ -1,15 +1,23 @@
-using System;
 using AutoMapper;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Serilog;
+using System;
+using System.Linq;
+using System.Text.Json;
 using Venjix.Infrastructure.DAL;
 using Venjix.Infrastructure.DataTables;
+using Venjix.Infrastructure.DTO;
+using Venjix.Infrastructure.Options;
+using Venjix.Infrastructure.Services;
 
 namespace Venjix
 {
@@ -50,13 +58,16 @@ namespace Venjix
                 options.SuppressXFrameOptionsHeader = false;
             });
 
-            services.AddDbContext<VenjixContext>(options => options.UseSqlite(@"Data Source=main.db"));
+            services.AddDbContext<VenjixContext>(options => options.UseSqlite(Configuration.GetConnectionString("VenjixContext")));
             services.AddRouting(options => options.LowercaseUrls = true);
-            services.AddHealthChecks();
+            services.AddHealthChecks()
+                .AddDbContextCheck<VenjixContext>();
             services.AddHttpContextAccessor();
             services.AddAutoMapper(typeof(Startup));
+            services.ConfigureWritable<VenjixOptions>(Configuration.GetSection(VenjixOptions.SectionName), Program.GetAppSettingsPath());
 
             services.AddTransient<IDataTables, DataTables>();
+            services.AddSingleton<ITelegramService, TelegramService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -68,25 +79,48 @@ namespace Venjix
             }
             else
             {
-                app.UseExceptionHandler("/Home/Error");
+                app.UseExceptionHandler("/error/index");
             }
 
+            app.UseSerilogRequestLogging();
             app.UseStaticFiles();
             app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();
-            app.UseHealthChecks("/status");
             app.UseCors(x => x
               .AllowAnyOrigin()
               .AllowAnyMethod()
               .AllowAnyHeader());
 
+            app.UseHealthChecks("/health", new HealthCheckOptions
+            {
+                ResponseWriter = async (context, report) =>
+                {
+                    var response = new HealthCheckDto
+                    {
+                        Status = report.Status.ToString(),
+                        HealthChecks = report.Entries.Select(x => new IndividualHealthCheckDto
+                        {
+                            Component = x.Key,
+                            Status = x.Value.Status.ToString(),
+                            Description = x.Value.Description
+                        }),
+                        HealthCheckDuration = report.TotalDuration
+                    };
+
+                    context.Response.ContentType = "application/json";
+                    await context.Response.WriteAsync(JsonSerializer.Serialize(response));
+                }
+            });
+
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllers();
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
+                endpoints.MapControllerRoute(
+                  name: "APIs",
+                  pattern: "api/{controller=ApiData}/{action=SaveDataByQuery}/{id?}");
             });
         }
     }

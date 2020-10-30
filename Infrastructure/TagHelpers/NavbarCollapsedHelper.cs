@@ -1,18 +1,15 @@
 ﻿using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.AspNetCore.Razor.TagHelpers;
-using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
-using System.Threading.Tasks;
 
-namespace Venjix.Infrastructure.Helpers
+namespace Venjix.Infrastructure.TagHelpers
 {
-    [HtmlTargetElement("div", Attributes = "show-when")]
-    public class NavbarShowHelper : TagHelper
+    [HtmlTargetElement("a", Attributes = "collapsed-when")]
+    public class NavbarCollapsedHelper : TagHelper
     {
-        public string ShowWhen { get; set; }
+        public string CollapsedWhen { get; set; }
 
         [ViewContext]
         [HtmlAttributeNotBound]
@@ -20,11 +17,11 @@ namespace Venjix.Infrastructure.Helpers
 
         public override void Process(TagHelperContext context, TagHelperOutput output)
         {
-            if (ShowWhen == null)
+            if (CollapsedWhen == null)
                 return;
 
-            var targetController = ShowWhen.Split("/")[1];
-            var targetAction = ShowWhen.Split("/")[2];
+            var targetController = CollapsedWhen.Split("/")[1];
+            var targetAction = CollapsedWhen.Split("/")[2];
             var actions = new List<string>();
             if (targetAction.Contains("|"))
             {
@@ -41,11 +38,13 @@ namespace Venjix.Infrastructure.Helpers
             if (!currentController.Equals(targetController)) return;
             if (!actions.Any(x => x.Equals(currentAction)))
             {
-                output.Attributes.SetAttribute("class", "collapse show");
-            }
-            else
-            {
-                output.Attributes.SetAttribute("class", "collapsed");
+                if (output.Attributes.ContainsName("class"))
+                {
+                    var lastAttr = output.Attributes["class"].Value.ToString();
+                    output.Attributes.SetAttribute("class", lastAttr.Replace("collapsed", ""));
+                }
+
+                output.Attributes.SetAttribute("aria-expanded", true);
             }
         }
     }

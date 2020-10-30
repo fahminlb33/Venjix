@@ -1,4 +1,4 @@
-﻿namespace Venjix.Infrastructure.Helpers
+﻿namespace Venjix.Infrastructure.TagHelpers
 {
     public static class ViewKeys
     {

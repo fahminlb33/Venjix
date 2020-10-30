@@ -1,8 +1,9 @@
 ﻿using AutoMapper;
 using Venjix.Infrastructure.DAL;
+using Venjix.Infrastructure.DTO;
 using Venjix.Models;
 
-namespace Venjix.Infrastructure.Mapper
+namespace Venjix.Infrastructure.Mappers
 {
     public class EntityMappingProfiles : Profile
     {
@@ -21,6 +22,9 @@ namespace Venjix.Infrastructure.Mapper
 
             CreateMap<Trigger, TriggerEditModel>();
             CreateMap<TriggerEditModel, Trigger>();
+
+            CreateMap<VenjixOptions, SettingsModel>();
+            CreateMap<SettingsModel, VenjixOptions>();
         }
     }
 }

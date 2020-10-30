@@ -63,7 +63,7 @@
 </div>
 
 @section Scripts {
-<script>
+    <script>
     $(document).ready(function () {
         var conditionEnable = $('input[name=Value]');
         var webhookEnable = $('select[name=WebhookId]');
@@ -79,5 +79,5 @@
             webhookEnable.attr('disabled', $(this).find(":selected").text() !== "Webhook");
         });
     });
-</script>
+    </script>
 }

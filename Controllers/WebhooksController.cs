@@ -1,11 +1,11 @@
-﻿using System.Threading.Tasks;
-using AutoMapper;
+﻿using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Venjix.Infrastructure.DAL;
+using System.Threading.Tasks;
 using Venjix.Infrastructure.Authentication;
+using Venjix.Infrastructure.DAL;
 using Venjix.Infrastructure.DataTables;
-using Venjix.Infrastructure.Helpers;
+using Venjix.Infrastructure.TagHelpers;
 using Venjix.Models;
 
 namespace Venjix.Controllers

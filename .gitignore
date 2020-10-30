@@ -505,7 +505,11 @@ MigrationBackup/
 # End of https://www.gitignore.io/api/cake,dotnetcore,aspnetcore,visualstudio,visualstudiocode
 
 # SQlite Database
+/data/*
+!/data/appsettings.json
 *.db
+*.db-shm
+*.db-wal
 
 # Libman Libraries
 wwwroot/lib
@@ -513,3 +517,6 @@ wwwroot/lib
 # Precompiled CSS
 wwwroot/css/sb-admin-2.css
 wwwroot/css/sb-admin-2.min.css
+
+# Logs
+/logs/*

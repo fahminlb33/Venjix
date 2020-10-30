@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using Venjix.Infrastructure.DAL;
-using Venjix.Infrastructure.Helpers;
+using Venjix.Infrastructure.TagHelpers;
 
 namespace Venjix.Models
 {
@@ -10,6 +10,7 @@ namespace Venjix.Models
     {
         public int TriggerId { get; set; }
 
+        [Required]
         [StringLength(100, MinimumLength = 3)]
         public string Name { get; set; }
 
@@ -23,6 +24,7 @@ namespace Venjix.Models
 
         [RequiredIf(nameof(Target), TriggerTarget.Webhook)]
         public int? WebhookId { get; set; }
+
         public bool IsEdit { get; set; }
 
         public List<SelectListItem> Events { get; set; }
