@@ -3,14 +3,18 @@
     ViewData[ViewKeys.PageHeading] = "Manage Triggers";
     ViewData[ViewKeys.PageSubheading] = "Add, edit, and delete triggers to invoke webhooks and Telegram service.";
 }
+<div class="d-sm-flex align-items-center justify-content-between mb-3">
+    <h4 class="h4 mb-0 text-gray-800">
+        @ViewData[ViewKeys.PageHeading]
+        <a tabindex="0" class="btn btn-link" data-container="body" data-toggle="popover" data-trigger="focus" data-placement="right" data-content="@ViewData[ViewKeys.PageSubheading]">
+            <i class="fas fa-info fa-xs "></i>
+        </a>
+    </h4>
+    <a asp-action="Add" asp-controller="Triggers" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-plus fa-sm text-white-50"></i> Add Trigger</a>
+</div>
 
-<h1 class="h3 mb-2 text-gray-800">
-    @ViewData[ViewKeys.PageHeading]
-    <a tabindex="0" class="btn btn-link" data-container="body" data-toggle="popover" data-trigger="focus" data-placement="right" data-content="@ViewData[ViewKeys.PageSubheading]">
-        <i class="fas fa-info"></i>
-    </a>
-</h1>
-<div class="card shadow mb-4"> 
+
+<div class="card shadow mb-4">
     <div class="card-body">
         @if (TempData[ViewKeys.Message] != null)
         {
