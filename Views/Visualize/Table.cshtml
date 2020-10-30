@@ -15,7 +15,7 @@
 <!-- DataTales Example -->
 <div class="card shadow mb-4">
     <div class="card-body">
-        <form method="post" asp-action="Process">
+        <form method="post" asp-action="TableExport">
             <div class="form-group">
                 <label asp-for="SensorId">Sensor</label>
                 <div class="form-row">
@@ -75,6 +75,7 @@
                 ajax: {
                     url: '@(Url.Action("TableData", "Visualize"))',
                     processing: true,
+                    searching: false,
                     orderMulti: false,
                     type: 'POST',
                     contentType: 'application/json',

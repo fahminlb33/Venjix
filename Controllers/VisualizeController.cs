@@ -1,11 +1,15 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using CsvHelper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Data;
+using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Venjix.Infrastructure;
 using Venjix.Infrastructure.Authentication;
 using Venjix.Infrastructure.DAL;
 using Venjix.Infrastructure.DataTables;
@@ -31,6 +35,12 @@ namespace Venjix.Controllers
 
         [Authorize(Roles = Roles.AdminOrUser)]
         public IActionResult Scatter()
+        {
+            return View();
+        }
+
+        [Authorize(Roles = Roles.AdminOrUser)]
+        public IActionResult TimeSeries()
         {
             return View();
         }
@@ -83,12 +93,16 @@ namespace Venjix.Controllers
             });
         }
 
+        [HttpPost]
         [Authorize(Roles = Roles.AdminOrUser)]
-        public IActionResult TimeSeries()
+        public async Task<IActionResult> TableExport(VisualizeTableRequestDto model)
         {
-            return View();
+            var records = await _context.Recordings.Where(x => x.SensorId == model.SensorId)
+                .Where(x => x.Timestamp >= model.StartDate && x.Timestamp <= model.EndDate)
+                .Select(x => new CsvRecordDto { Timestamp = x.Timestamp, Value = x.Value })
+                .ToListAsync();
+
+            return File(await CommonHelpers.SerializeCsvRecords(records), "text/csv", "export.csv");
         }
-
-
     }
 }
