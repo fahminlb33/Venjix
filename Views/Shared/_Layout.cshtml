@@ -234,6 +234,13 @@
     <!-- Custom scripts for all pages-->
     <script src="~/js/sb-admin-2.js"></script>
 
+    <script> 
+        $(function () {
+            $('[data-toggle="popover"]').popover({
+                trigger: 'focus'
+            });
+        })
+    </script>
     @RenderSection("Scripts", false)
 </body>
 </html>

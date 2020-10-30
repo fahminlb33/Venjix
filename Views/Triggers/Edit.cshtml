@@ -5,15 +5,15 @@
     ViewData[ViewKeys.PageSubheading] = Model.IsEdit ? "Edit trigger fields." : "Add trigger fields.";
 }
 
-<h1 class="h3 mb-2 text-gray-800">@ViewData[ViewKeys.PageHeading]</h1>
-<p class="mb-4">@ViewData[ViewKeys.PageSubheading]</p>
-
+<h1 class="h3 mb-2 text-gray-800">
+    @ViewData[ViewKeys.PageHeading]
+    <a tabindex="0" class="btn btn-link" data-container="body" data-toggle="popover" data-trigger="focus" data-placement="right" data-content="@ViewData[ViewKeys.PageSubheading]">
+        <i class="fas fa-info"></i>
+    </a>
+</h1>
 <div class="row">
     <div class="col-lg-12">
-        <div class="card mb-4">
-            <div class="card-header">
-                <h6 class="m-0 font-weight-bold text-primary">@ViewData[ViewKeys.PageHeading]</h6>
-            </div>
+        <div class="card mb-4"> 
             <div class="card-body">
                 <form method="post" asp-action="Save">
                     <input type="hidden" asp-for="IsEdit" />
@@ -64,20 +64,20 @@
 
 @section Scripts {
     <script>
-    $(document).ready(function () {
-        var conditionEnable = $('input[name=Value]');
-        var webhookEnable = $('select[name=WebhookId]');
+        $(document).ready(function () {
+            var conditionEnable = $('input[name=Value]');
+            var webhookEnable = $('select[name=WebhookId]');
 
-        conditionEnable.attr('disabled', $('select[name=Event] option:selected').text() === "New data");
-        webhookEnable.attr('disabled', $('select[name=Target] option:selected').text() !== "Webhook");
+            conditionEnable.attr('disabled', $('select[name=Event] option:selected').text() === "New data");
+            webhookEnable.attr('disabled', $('select[name=Target] option:selected').text() !== "Webhook");
 
-        $('select[name=Event]').on('change', function () {
-            conditionEnable.attr('disabled', $(this).find(":selected").text() === "New data");
+            $('select[name=Event]').on('change', function () {
+                conditionEnable.attr('disabled', $(this).find(":selected").text() === "New data");
+            });
+
+            $('select[name=Target]').on('change', function () {
+                webhookEnable.attr('disabled', $(this).find(":selected").text() !== "Webhook");
+            });
         });
-
-        $('select[name=Target]').on('change', function () {
-            webhookEnable.attr('disabled', $(this).find(":selected").text() !== "Webhook");
-        });
-    });
     </script>
 }

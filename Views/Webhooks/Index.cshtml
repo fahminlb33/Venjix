@@ -1,16 +1,16 @@
 ﻿@{
-    ViewData[ViewKeys.Title] = "Manage Webhooks - Venjix";
-    ViewData[ViewKeys.PageHeading] = "Manage Webhooks";
+    ViewData[ViewKeys.Title] = "Webhooks - Venjix";
+    ViewData[ViewKeys.PageHeading] = "Webhooks";
     ViewData[ViewKeys.PageSubheading] = "Add, edit, and delete webhooks for wider integration with existing services.";
 }
 
-<h1 class="h3 mb-2 text-gray-800">@ViewData[ViewKeys.PageHeading]</h1>
-<p class="mb-4">@ViewData[ViewKeys.PageSubheading]</p>
-
+<h1 class="h3 mb-2 text-gray-800">
+    @ViewData[ViewKeys.PageHeading]
+    <a tabindex="0" class="btn btn-link" data-container="body" data-toggle="popover" data-trigger="focus" data-placement="right" data-content="@ViewData[ViewKeys.PageSubheading]">
+        <i class="fas fa-info"></i>
+    </a>
+</h1>
 <div class="card shadow mb-4">
-    <div class="card-header py-3">
-        <h6 class="m-0 font-weight-bold text-primary">@ViewData[ViewKeys.PageHeading]</h6>
-    </div>
     <div class="card-body">
         @if (TempData[ViewKeys.Message] != null)
         {
