@@ -65,6 +65,7 @@ namespace Venjix.Controllers
                 var count = 0;
                 var sensors = await _context.Sensors.ToListAsync();
                 var recordings = new List<Recording>();
+                var now = DateTime.Now;
                 foreach (var entry in dict)
                 {
                     var sensor = sensors.Find(x => x.ApiField == entry.Key);
@@ -72,7 +73,7 @@ namespace Venjix.Controllers
 
                     var record = new Recording
                     {
-                        Timestamp = DateTime.Now,
+                        Timestamp = now,
                         Sensor = sensor,
                         SensorId = sensor.SensorId,
                         Value = entry.Value
