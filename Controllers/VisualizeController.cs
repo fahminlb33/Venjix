@@ -39,23 +39,37 @@ namespace Venjix.Controllers
             return View();
         }
 
+        #region Time Series Route
+        
         [Authorize(Roles = Roles.AdminOrUser)]
-        public IActionResult TimeSeries()
+        public async Task<IActionResult> TimeSeries()
         {
-            return View();
+            return View("TimeSeries", await CreateFilterModel());
         }
+
+        [HttpPost]
+        [Authorize(Roles = Roles.AdminOrUser)]
+        public async Task<IActionResult> TimeSeriesData([FromBody] VisualizeTableRequestDto model)
+        {
+            var records = await _context.Recordings.Where(x => x.SensorId == model.SensorId)
+                .Where(x => x.Timestamp >= model.StartDate && x.Timestamp <= model.EndDate)
+                .ToListAsync();
+
+            return Json(new
+            {
+                x = records.Select(x => x.Timestamp),
+                y = records.Select(x => x.Value)
+            });
+        }
+
+        #endregion
+
+        #region Table Routes
 
         [Authorize(Roles = Roles.AdminOrUser)]
         public async Task<IActionResult> Table()
         {
-            var model = new VisualizeTableModel
-            {
-                StartDate = DateTime.Today,
-                EndDate = DateTime.Now,
-                Sensors = await _context.Sensors.Select(x => new SelectListItem(x.DisplayName, x.SensorId.ToString())).ToListAsync()
-            };
-
-            return View("Table", model);
+            return View("Table", await CreateFilterModel());
         }
 
         [HttpPost]
@@ -76,8 +90,8 @@ namespace Venjix.Controllers
                 }
                 else
                 {
-                    chain = ordering.Direction == DataTablesOrdering.Ascending 
-                        ? chain.OrderBy(x => x.Value) 
+                    chain = ordering.Direction == DataTablesOrdering.Ascending
+                        ? chain.OrderBy(x => x.Value)
                         : chain.OrderByDescending(x => x.Value);
                 }
             }
@@ -104,5 +118,22 @@ namespace Venjix.Controllers
 
             return File(await CommonHelpers.SerializeCsvRecords(records), "text/csv", "export.csv");
         }
+
+        #endregion
+
+        #region Common Methods 
+
+        private async Task<VisualizeFilterModel> CreateFilterModel()
+        {
+            return new VisualizeFilterModel
+            {
+                StartDate = DateTime.Today,
+                EndDate = DateTime.Now,
+                Sensors = await _context.Sensors.Select(x => new SelectListItem(x.DisplayName, x.SensorId.ToString())).ToListAsync()
+            };
+        }
+
+        #endregion
+
     }
 }

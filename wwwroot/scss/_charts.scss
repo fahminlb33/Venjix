@@ -1,7 +1,7 @@
 // Area Chart
 .chart-area {
     position: relative;
-    height: 10rem;
+    height: 13rem;
     width: 100%;
 
     @include media-breakpoint-up(md) {
@@ -12,7 +12,7 @@
 // Bar Chart
 .chart-bar {
     position: relative;
-    height: 10rem;
+    height: 13rem;
     width: 100%;
 
     @include media-breakpoint-up(md) {
@@ -23,7 +23,7 @@
 // Pie Chart
 .chart-pie {
     position: relative;
-    height: 15rem;
+    height: 13rem;
     width: 100%;
 
     @include media-breakpoint-up(md) {
