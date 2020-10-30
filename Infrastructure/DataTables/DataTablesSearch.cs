@@ -1,13 +1,13 @@
-﻿using System.Text.Json.Serialization;
+﻿using Newtonsoft.Json;
 
 namespace Venjix.Infrastructure.DataTables
 {
     public class DataTablesSearch
     {
-        [JsonPropertyName("value")]
+        [JsonProperty("value")]
         public string Value { get; set; }
 
-        [JsonPropertyName("regex")]
+        [JsonProperty("regex")]
         public bool Regex { get; set; }
     }
 }

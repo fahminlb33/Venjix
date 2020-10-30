@@ -1,22 +1,22 @@
-﻿using System.Text.Json.Serialization;
+﻿using Newtonsoft.Json;
 
 namespace Venjix.Infrastructure.DataTables
 {
     public class DataTablesResponseModel
     {
-        [JsonPropertyName("draw")]
+        [JsonProperty("draw")]
         public int Draw { get; set; }
 
-        [JsonPropertyName("recordsTotal")]
+        [JsonProperty("recordsTotal")]
         public int RecordsTotal { get; set; }
 
-        [JsonPropertyName("recordsFiltered")]
+        [JsonProperty("recordsFiltered")]
         public int RecordsFiltered { get; set; }
 
-        [JsonPropertyName("data")]
+        [JsonProperty("data")]
         public object Data { get; set; }
 
-        [JsonPropertyName("error")]
+        [JsonProperty("error")]
         public string Error { get; set; }
     }
 }

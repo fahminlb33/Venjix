@@ -1,26 +1,26 @@
-﻿using System.Collections.Generic;
-using System.Text.Json.Serialization;
+﻿using Newtonsoft.Json;
+using System.Collections.Generic;
 
 namespace Venjix.Infrastructure.DataTables
 {
     public class DataTablesRequestModel
     {
-        [JsonPropertyName("draw")]
+        [JsonProperty("draw")]
         public int Draw { get; set; }
 
-        [JsonPropertyName("start")]
+        [JsonProperty("start")]
         public int Start { get; set; }
 
-        [JsonPropertyName("length")]
+        [JsonProperty("length")]
         public int Length { get; set; }
 
-        [JsonPropertyName("search")]
+        [JsonProperty("search")]
         public DataTablesSearch Search { get; set; }
 
-        [JsonPropertyName("order")]
+        [JsonProperty("order")]
         public List<DataTablesOrder> Ordering { get; set; }
 
-        [JsonPropertyName("columns")]
+        [JsonProperty("columns")]
         public List<DataTablesColumn> Columns { get; set; }
     }
 }

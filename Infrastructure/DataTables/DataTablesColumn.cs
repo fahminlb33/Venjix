@@ -1,22 +1,22 @@
-﻿using System.Text.Json.Serialization;
+﻿using Newtonsoft.Json;
 
 namespace Venjix.Infrastructure.DataTables
 {
     public class DataTablesColumn
     {
-        [JsonPropertyName("data")]
+        [JsonProperty("data")]
         public string Data { get; set; }
 
-        [JsonPropertyName("name")]
+        [JsonProperty("name")]
         public string Name { get; set; }
 
-        [JsonPropertyName("searchable")]
+        [JsonProperty("searchable")]
         public bool Searchable { get; set; }
 
-        [JsonPropertyName("orderable")]
+        [JsonProperty("orderable")]
         public bool Orderable { get; set; }
 
-        [JsonPropertyName("search")]
+        [JsonProperty("search")]
         public DataTablesSearch Search { get; set; }
     }
 }

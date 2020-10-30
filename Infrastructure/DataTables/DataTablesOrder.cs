@@ -1,13 +1,13 @@
-﻿using System.Text.Json.Serialization;
+﻿using Newtonsoft.Json;
 
 namespace Venjix.Infrastructure.DataTables
 {
     public class DataTablesOrder
     {
-        [JsonPropertyName("column")]
+        [JsonProperty("column")]
         public int Column { get; set; }
 
-        [JsonPropertyName("dir")]
+        [JsonProperty("dir")]
         [JsonConverter(typeof(OrderingConverter))]
         public DataTablesOrdering Direction { get; set; }
     }
