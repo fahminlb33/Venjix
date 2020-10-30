@@ -17,6 +17,7 @@ using Venjix.Infrastructure.DAL;
 using Venjix.Infrastructure.DataTables;
 using Venjix.Infrastructure.DTO;
 using Venjix.Infrastructure.Options;
+using Venjix.Infrastructure.Services;
 
 namespace Venjix
 {
@@ -66,6 +67,7 @@ namespace Venjix
             services.ConfigureWritable<VenjixOptions>(Configuration.GetSection(VenjixOptions.SectionName), Program.GetAppSettingsPath());
 
             services.AddTransient<IDataTables, DataTables>();
+            services.AddSingleton<ITelegramService, TelegramService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
