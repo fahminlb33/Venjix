@@ -2,11 +2,11 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text.Json;
 using System.Threading.Tasks;
 using Venjix.Infrastructure.DAL;
 using Venjix.Infrastructure.Services;
@@ -53,11 +53,11 @@ namespace Venjix.Controllers
                     {
                         // check body
                         using var body = HttpContext.Request.Body;
-                        using var ms = new MemoryStream();
-                        await body.CopyToAsync(ms);
+                        using var sr = new StreamReader(body);
+                        using var jr = new JsonTextReader(sr);
 
-                        ms.Seek(0, SeekOrigin.Begin);
-                        dict = await JsonSerializer.DeserializeAsync<Dictionary<string, double>>(ms);
+                        var serializer = new JsonSerializer();
+                        dict = serializer.Deserialize<Dictionary<string, double>>(jr);
                     }
                 }
 

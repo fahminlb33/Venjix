@@ -1,18 +1,18 @@
 ﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 using System;
 using System.Collections.Generic;
 using System.Dynamic;
 using System.IO;
-using System.Text.Json;
-using System.Threading.Tasks;
 
 namespace Venjix.Infrastructure
 {
     public interface IWritableOptions<out T> : IOptions<T> where T : class, new()
     {
-        Task Update(Action<T> applyChanges);
+        void Update(Action<T> applyChanges);
     }
 
     public class WritableOptions<T> : IWritableOptions<T> where T : class, new()
@@ -41,18 +41,16 @@ namespace Venjix.Infrastructure
 
         public T Get(string name) => _options.Get(name);
 
-        public async Task Update(Action<T> applyChanges)
+        public void Update(Action<T> applyChanges)
         {
             applyChanges(Value);
             ExpandoObject obj;
 
             if (File.Exists(_file))
             {
-                using (var reader = File.OpenRead(_file))
-                {
-                    obj = await JsonSerializer.DeserializeAsync<ExpandoObject>(reader);
-                    ((IDictionary<string, object>)obj)[_section] = Value;
-                }
+                var converter = new ExpandoObjectConverter();
+                obj = JsonConvert.DeserializeObject<ExpandoObject>(File.ReadAllText(_file), converter);
+                ((IDictionary<string, object>)obj)[_section] = Value;
             }
             else
             {
@@ -60,12 +58,7 @@ namespace Venjix.Infrastructure
                 ((IDictionary<string, object>)obj).Add(_section, Value);
             }
 
-            using (var writer = File.OpenWrite(_file))
-            {
-                writer.SetLength(0);
-                await JsonSerializer.SerializeAsync(writer, obj, new JsonSerializerOptions { WriteIndented = true });
-            }
-
+            File.WriteAllText(_file, JsonConvert.SerializeObject(obj));
             _configuration.Reload();
         }
     }

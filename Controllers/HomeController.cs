@@ -65,7 +65,7 @@ namespace Venjix.Controllers
             }
             else
             {
-                await _optionsWritable.Update(options =>
+                _optionsWritable.Update(options =>
                 {
                     options.IsTelegramTokenValid = false;
                     options.TelegramChatId = 0;

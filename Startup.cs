@@ -9,10 +9,10 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Newtonsoft.Json;
 using Serilog;
 using System;
 using System.Linq;
-using System.Text.Json;
 using Venjix.Infrastructure.DAL;
 using Venjix.Infrastructure.DataTables;
 using Venjix.Infrastructure.DTO;
@@ -111,7 +111,7 @@ namespace Venjix
                     };
 
                     context.Response.ContentType = "application/json";
-                    await context.Response.WriteAsync(JsonSerializer.Serialize(response));
+                    await context.Response.WriteAsync(JsonConvert.SerializeObject(response));
                 }
             });
 

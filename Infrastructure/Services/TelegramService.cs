@@ -1,10 +1,10 @@
 ﻿using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
-using System.Text.Json;
 using System.Threading.Tasks;
 using Venjix.Infrastructure.DTO;
 
@@ -36,7 +36,7 @@ namespace Venjix.Infrastructure.Services
             {
                 var chatId = await GetChatId(token);
                 var (callName, username) = await GetBotName(token);
-                await _options.Update(options =>
+                _options.Update(options =>
                 {
                     options.IsTelegramTokenValid = true;
                     options.TelegramToken = token;
@@ -49,7 +49,7 @@ namespace Venjix.Infrastructure.Services
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Error when verifying Telegram token.");
-                await _options.Update(options =>
+                _options.Update(options =>
                 {
                     options.IsTelegramTokenValid = false;
                     options.TelegramToken = token;
@@ -84,11 +84,10 @@ namespace Venjix.Infrastructure.Services
             var result = await _httpClient.GetAsync(uri);
             result.EnsureSuccessStatusCode();
 
-            var response = await result.Content.ReadAsStreamAsync();
-            var body = await JsonDocument.ParseAsync(response);
-            var updates = body.RootElement.GetProperty("result");
-            var message = updates.EnumerateArray().FirstOrDefault(x => x.GetProperty("message").GetProperty("text").GetString().Contains(VerifyMessage));
-            return message.GetProperty("message").GetProperty("chat").GetProperty("id").GetInt32();
+            var response = await result.Content.ReadAsStringAsync();
+            var body = JToken.Parse(response);
+            var message = body["result"].FirstOrDefault(x => x["message"]["text"].Value<string>().Contains(VerifyMessage));
+            return message["message"]["chat"]["id"].Value<int>();
         }
 
         private async Task<(string callName, string username)> GetBotName(string token)
@@ -97,10 +96,10 @@ namespace Venjix.Infrastructure.Services
             var result = await _httpClient.GetAsync(uri);
             result.EnsureSuccessStatusCode();
 
-            var response = await result.Content.ReadAsStreamAsync();
-            var body = await JsonDocument.ParseAsync(response);
-            var user = body.RootElement.GetProperty("result");
-            return (user.GetProperty("first_name").GetString(), user.GetProperty("username").GetString());
+            var response = await result.Content.ReadAsStringAsync();
+            var body = JToken.Parse(response);
+            var user = body["result"];
+            return (user["first_name"].Value<string>(), user["username"].Value<string>());
         }
     }
 }
