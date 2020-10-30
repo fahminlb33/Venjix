@@ -9,7 +9,7 @@ using Venjix.Infrastructure.DTO;
 
 namespace Venjix.Infrastructure.Services
 {
-    public interface ITelegramService : IDisposable
+    public interface ITelegramService
     {
         Task SendMessage(string message);
         Task VerifyAndSaveBot(string token);
@@ -20,7 +20,6 @@ namespace Venjix.Infrastructure.Services
         private readonly ILogger<TelegramService> _logger;
         private readonly IWritableOptions<VenjixOptions> _options;
         private static HttpClient _httpClient = new HttpClient();
-        private bool _disposedValue;
 
         private const string VerifyMessage = "VENJIX";
 
@@ -90,25 +89,5 @@ namespace Venjix.Infrastructure.Services
             }
         }
 
-        #region IDisposable
-
-        protected virtual void Dispose(bool disposing)
-        {
-            if (_disposedValue) return;
-            if (disposing)
-            {
-                _httpClient?.Dispose();
-            }
-
-            _disposedValue = true;
-        }
-
-        public void Dispose()
-        {
-            Dispose(disposing: true);
-            GC.SuppressFinalize(this);
-        }
-
-        #endregion
     }
 }

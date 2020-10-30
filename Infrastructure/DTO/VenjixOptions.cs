@@ -7,5 +7,7 @@
         public string TelegramToken { get; set; }
         public int TelegramChatId { get; set; }
         public bool IsTelegramTokenValid { get; set; }
+
+        public int TriggerCooldown { get; set; }
     }
 }

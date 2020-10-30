@@ -9,6 +9,7 @@ using System.Linq;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Venjix.Infrastructure.DAL;
+using Venjix.Infrastructure.Services;
 
 namespace Venjix.Controllers
 {
@@ -18,10 +19,12 @@ namespace Venjix.Controllers
     public class ApiDataController : ControllerBase
     {
         private readonly VenjixContext _context;
+        private readonly ITriggerRunnerService _triggerRunner;
 
-        public ApiDataController(VenjixContext context)
+        public ApiDataController(VenjixContext context, ITriggerRunnerService triggerRunner)
         {
             _context = context;
+            _triggerRunner = triggerRunner;
         }
 
         [HttpGet, HttpPost]
@@ -61,6 +64,7 @@ namespace Venjix.Controllers
                 // store to db
                 var count = 0;
                 var sensors = await _context.Sensors.ToListAsync();
+                var recordings = new List<Recording>();
                 foreach (var entry in dict)
                 {
                     var sensor = sensors.Find(x => x.ApiField == entry.Key);
@@ -74,11 +78,17 @@ namespace Venjix.Controllers
                         Value = entry.Value
                     };
 
+                    recordings.Add(record);
                     _context.Recordings.Add(record);
                     count++;
                 }
 
+                // save
                 await _context.SaveChangesAsync();
+
+                // run triggers
+               _triggerRunner.RunTriggers(recordings);
+
                 return Ok(count);
             }
             catch (Exception)
