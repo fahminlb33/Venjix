@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace Venjix.Models
 {
-    public class VisualizeTableModel
+    public class VisualizeFilterModel
     {
         public int SensorId { get; set; }
         public DateTime StartDate { get; set; }
