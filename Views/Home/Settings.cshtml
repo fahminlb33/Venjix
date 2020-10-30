@@ -5,9 +5,13 @@
     ViewData[ViewKeys.PageSubheading] = "Change Venjix system settings and integration.";
 }
 
-<h1 class="h3 mb-2 text-gray-800">@ViewData[ViewKeys.PageHeading]</h1>
-<p class="mb-4">@ViewData[ViewKeys.PageSubheading]</p>
 
+<h1 class="h3 mb-2 text-gray-800">
+    @ViewData[ViewKeys.PageHeading]
+    <a tabindex="0" class="btn btn-link" data-container="body" data-toggle="popover" data-trigger="focus" data-placement="right" data-content="@ViewData[ViewKeys.PageSubheading]">
+        <i class="fas fa-info"></i>
+    </a>
+</h1>
 <div class="row">
     <div class="col-lg-6">
         <div class="card mb-4">
@@ -27,7 +31,7 @@
             <div class="card-body">
                 <p>Venjix's system status: <b>@Model.HealthStatus</b></p>
                 <ul>
-                    @foreach(var entry in Model.HealthChecks)
+                    @foreach (var entry in Model.HealthChecks)
                     {
                         <li>@entry.Key - @entry.Value</li>
                     }

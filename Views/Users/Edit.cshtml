@@ -8,15 +8,16 @@
     var disableRole = loggedRole != Venjix.Infrastructure.Authentication.Roles.Admin;
 }
 
-<h1 class="h3 mb-2 text-gray-800">@ViewData[ViewKeys.PageHeading]</h1>
-<p class="mb-4">@ViewData[ViewKeys.PageSubheading]</p>
 
+<h1 class="h3 mb-2 text-gray-800">
+    @ViewData[ViewKeys.PageHeading]
+    <a tabindex="0" class="btn btn-link" data-container="body" data-toggle="popover" data-trigger="focus" data-placement="right" data-content="@ViewData[ViewKeys.PageSubheading]">
+        <i class="fas fa-info"></i>
+    </a>
+</h1>
 <div class="row">
     <div class="col-lg-12">
-        <div class="card mb-4">
-            <div class="card-header">
-                <h1 class="h3 mb-2 text-gray-800">@ViewData[ViewKeys.PageHeading]</h1>
-            </div>
+        <div class="card mb-4"> 
             <div class="card-body">
                 @if (TempData[ViewKeys.Message] != null)
                 {
