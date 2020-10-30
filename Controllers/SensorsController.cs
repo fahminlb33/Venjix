@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using System.Linq;
 using System.Threading.Tasks;
 using Venjix.Infrastructure.Authentication;
 using Venjix.Infrastructure.DAL;
@@ -30,9 +32,24 @@ namespace Venjix.Controllers
         }
 
         [Authorize(Roles = Roles.AdminOrUser)]
-        public IActionResult Statistics()
+        public async Task<IActionResult> Statistics()
         {
-            return View("Statistics");
+            var records = await _context.Recordings
+                .GroupBy(x => x.SensorId).Select(x => new SensorsStatisticsModel
+                {
+                    DisplayName = x.Key.ToString(),
+                    LastUpdated = x.Max(x => x.Timestamp),
+                    RecordedData = x.Count()
+                }).ToListAsync();
+
+            var sensors = (await _context.Sensors.ToListAsync()).ToDictionary(x => x.SensorId, y => y.DisplayName);
+            records = records.Select(x =>
+            {
+                x.DisplayName = sensors[int.Parse(x.DisplayName)];
+                return x;
+            }).ToList();
+
+            return View("Statistics", records);
         }
 
         [Authorize(Roles = Roles.Admin)]
