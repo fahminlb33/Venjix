@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Threading.Tasks;
+using Venjix.Infrastructure;
 using Venjix.Infrastructure.Authentication;
 using Venjix.Infrastructure.DAL;
 using Venjix.Infrastructure.DataTables;
@@ -37,7 +38,7 @@ namespace Venjix.Controllers
             var records = await _context.Recordings
                 .GroupBy(x => x.SensorId).Select(x => new SensorsStatisticsModel
                 {
-                    DisplayName = x.Key.ToString(),
+                    SensorId = x.Key,
                     LastUpdated = x.Max(x => x.Timestamp),
                     RecordedData = x.Count()
                 }).ToListAsync();
@@ -45,11 +46,33 @@ namespace Venjix.Controllers
             var sensors = (await _context.Sensors.ToListAsync()).ToDictionary(x => x.SensorId, y => y.DisplayName);
             records = records.Select(x =>
             {
-                x.DisplayName = sensors[int.Parse(x.DisplayName)];
+                x.DisplayName = sensors[x.SensorId];
                 return x;
             }).ToList();
 
             return View("Statistics", records);
+        }
+
+        [Authorize(Roles = Roles.AdminOrUser)]
+        public async Task<IActionResult> Download(int sensorId)
+        {
+            var sensor = await _context.Sensors.FindAsync(sensorId);
+            if (sensor == null)
+            {
+                TempData[ViewKeys.Message] = "Can't export, sensor does not exists.";
+                TempData[ViewKeys.IsSuccess] = false;
+
+                return RedirectToAction("Index");
+            }
+
+            var records = await _context.Recordings.Where(x => x.SensorId == sensorId)
+                .Select(x => new
+                {
+                    Timestamp = x.Timestamp,
+                    Value = x.Value
+                })
+                .ToListAsync();
+            return File(await CommonHelpers.SerializeCsvRecords(records), "text/csv", sensor.DisplayName + ".csv");
         }
 
         [Authorize(Roles = Roles.Admin)]

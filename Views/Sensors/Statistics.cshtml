@@ -14,29 +14,31 @@
 <div class="card shadow mb-4">
     <div class="card-body">
         <div class="table-responsive">
+            @if (TempData[ViewKeys.Message] != null)
+            {
+                <div class="alert alert-@((bool)TempData[ViewKeys.IsSuccess] == true ? "success" : "danger")" role="alert">
+                    @TempData[ViewKeys.Message]
+                </div>
+            }
+
             <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                 <thead>
                     <tr>
                         <th>Sensor</th>
                         <th>Recorded Data</th>
                         <th>Last Update</th>
+                        <th>Export</th>
                     </tr>
                 </thead>
-                <tfoot>
-                    <tr>
-                        <th>Sensor</th>
-                        <th>Recorded Data</th>
-                        <th>Last Update</th>
-                    </tr>
-                </tfoot>
                 <tbody>
                     @foreach (var sensor in Model)
                     {
-                    <tr>
-                        <td>@sensor.DisplayName</td>
-                        <td>@sensor.RecordedData</td>
-                        <td>@sensor.LastUpdated</td>
-                    </tr>
+                        <tr>
+                            <td>@sensor.DisplayName</td>
+                            <td>@sensor.RecordedData</td>
+                            <td>@sensor.LastUpdated</td>
+                            <td><a class="btn btn-outline-primary" asp-action="Download" asp-route-sensorId="@sensor.SensorId">Export</a></td>
+                        </tr>
                     }
                 </tbody>
             </table>
