@@ -5,7 +5,6 @@
     ViewData[ViewKeys.PageSubheading] = "Change Venjix system settings and integration.";
 }
 
-
 <h1 class="h3 mb-2 text-gray-800">
     @ViewData[ViewKeys.PageHeading]
     <a tabindex="0" class="btn btn-link" data-container="body" data-toggle="popover" data-trigger="focus" data-placement="right" data-content="@ViewData[ViewKeys.PageSubheading]">
@@ -29,17 +28,7 @@
                 <h6 class="m-0 font-weight-bold text-primary">Health Checks</h6>
             </div>
             <div class="card-body">
-                <p>Venjix's system status: <b>@Model.HealthStatus</b></p>
-                <ul>
-                    @foreach (var entry in Model.HealthChecks)
-                    {
-                        <li>@entry.Key - @entry.Value</li>
-                    }
-                </ul>
-                <p>
-                    You can check Venjix's server health status in JSON by visiting <a href="/health">this link</a>.<br />
-                    You can also add this URL to your Dockerfile HEALTHCHECK.
-                </p>
+                <partial name="_SettingsHealthPartial" />
             </div>
         </div>
     </div>
