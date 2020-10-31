@@ -34,6 +34,21 @@
                     </div>
                 </div>
             </div>
+            <div class="form-group">
+                <label asp-for="UpdateInterval">Auto Update</label>
+                <div class="form-row">
+                    <div class="col-5">
+                        <select class="form-control" asp-for="UpdateInterval" asp-items="Model.UpdateIntervals"></select>
+                    </div>
+                    <div class="col-1">
+                        <a tabindex="0" class="btn btn-link" data-container="body" data-toggle="popover" data-trigger="focus" data-placement="right" 
+                           data-content="This auto update respect all the filter above. Make sure to extend the End Date to a time in the future">
+                            <i class="fas fa-info"></i>
+                        </a>
+                    </div>
+                </div>
+                
+            </div>
 
             <button type="button" class="btn btn-primary btn-icon-split" id="showButton">
                 <span class="icon text-white-50">
@@ -43,8 +58,8 @@
             </button>
         </form>
 
-        <div class="chart-area mt-4">
-            <canvas id="myAreaChart"></canvas>
+        <div class="mt-4">
+            <div id="chart"></div>
         </div>
     </div>
 </div>
@@ -55,17 +70,67 @@
 
 @section Scripts {
     <script src="~/lib/moment.js/moment.min.js"></script>
-    <script src="~/lib/Chart.js/Chart.min.js"></script>
+    <script src="~/lib/apexcharts/apexcharts.min.js"></script>
     <script>
-        var ctx = document.getElementById("myAreaChart");
-        var myLineChart = null;
+        var data = [];
+        var options = {
+            series: [{
+                name: $('#SensorId option:selected').text(),
+                data: data.slice()
+            }],
+            chart: {
+                id: 'realtime',
+                height: 350,
+                type: 'line'
+            },
+            dataLabels: {
+                enabled: false
+            },
+            xaxis: {
+                type: 'datetime',
+                tooltip: {
+                    enabled: false
+                }
+            },
+            legend: {
+                show: false
+            },
+            markers: {
+                size: 4
+            },
+            tooltip: {
+                x: {
+                    formatter: function (value, { series, seriesIndex, dataPointIndex, w }) {
+                        return moment(value).format("DD/MM/YYYY hh:mm:ss");
+                    }
+                }
+            }
+        };
 
-        Chart.defaults.global.defaultFontFamily = 'Nunito', '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';
-        Chart.defaults.global.defaultFontColor = '#858796';        
+        var chart = new ApexCharts(document.querySelector("#chart"), options);
+        chart.render();
+
+        var interval = null;
 
         $("#showButton").on("click", function (e) {
             e.preventDefault();
+            fetch_new_data();
+        });
 
+        $('#UpdateInterval').on("change", function () {
+            if (interval !== null) {
+                clearInterval(interval);
+            }
+
+            var selectedInterval = parseInt(this.value);
+            if (selectedInterval == 0) return;
+
+            interval = window.setInterval(function () {
+                fetch_new_data();
+            }, selectedInterval * 1000);
+        });
+
+        function fetch_new_data() {
             d = {
                 sensorId: $('#SensorId option:selected').val(),
                 startDate: $('#StartDate').val(),
@@ -78,99 +143,12 @@
                 data: JSON.stringify(d),
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
-                success: draw_graph
-            });
-        });
-
-        function draw_graph(response) {
-            if (myLineChart !== null) {
-                myLineChart.destroy();
-            }
-
-            myLineChart = new Chart(ctx, {
-                type: 'line',
-                data: {
-                    labels: response.x,
-                    datasets: [{
-                        label: "Value",
-                        lineTension: 0.3,
-                        backgroundColor: "rgba(78, 115, 223, 0.05)",
-                        borderColor: "rgba(78, 115, 223, 1)",
-                        pointRadius: 3,
-                        pointBackgroundColor: "rgba(78, 115, 223, 1)",
-                        pointBorderColor: "rgba(78, 115, 223, 1)",
-                        pointHoverRadius: 3,
-                        pointHoverBackgroundColor: "rgba(78, 115, 223, 1)",
-                        pointHoverBorderColor: "rgba(78, 115, 223, 1)",
-                        pointHitRadius: 10,
-                        pointBorderWidth: 2,
-                        data: response.y,
-                    }],
-                },
-                options: {
-                    maintainAspectRatio: false,
-                    layout: {
-                        padding: {
-                            left: 10,
-                            right: 25,
-                            top: 25,
-                            bottom: 0
-                        }
-                    },
-                    scales: {
-                        xAxes: [{
-                            type: 'time',
-                            ticks: {
-                                maxTicksLimit: 10
-                            },
-                            gridLines: {
-                                display: false,
-                                drawBorder: false
-                            },
-                            time: {
-                                unit: 'minute',
-                                displayFormats: {
-                                    minute: 'DD/MM hh:mm:ss'
-                                }
-                            }
-                        }],
-                        yAxes: [{
-                            ticks: {
-                                maxTicksLimit: 5,
-                                padding: 10
-                            },
-                            gridLines: {
-                                color: "rgb(234, 236, 244)",
-                                zeroLineColor: "rgb(234, 236, 244)",
-                                drawBorder: false,
-                                borderDash: [2],
-                                zeroLineBorderDash: [2]
-                            }
-                        }],
-                    },
-                    legend: {
-                        display: false
-                    },
-                    tooltips: {
-                        backgroundColor: "rgb(255,255,255)",
-                        bodyFontColor: "#858796",
-                        titleMarginBottom: 10,
-                        titleFontColor: '#6e707e',
-                        titleFontSize: 14,
-                        borderColor: '#dddfeb',
-                        borderWidth: 1,
-                        xPadding: 15,
-                        yPadding: 15,
-                        displayColors: false,
-                        intersect: false,
-                        mode: 'index',
-                        caretPadding: 10,
-                        callbacks: {
-                            title: function (tooltipItem, chart) {
-                                return moment(tooltipItem[0].xLabel).format("DD/MM/YYYY hh:mm:ss");
-                            }
-                        }
-                    }
+                success: function (response) {
+                    data = response;
+                    chart.updateSeries([{
+                        name: $('#SensorId option:selected').text(),
+                        data: response
+                    }])
                 }
             });
         }

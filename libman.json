@@ -8,10 +8,6 @@
       "destination": "wwwroot/lib/bootstrap/"
     },
     {
-      "library": "Chart.js@2.9.4",
-      "destination": "wwwroot/lib/Chart.js/"
-    },
-    {
       "library": "datatables@1.10.21",
       "destination": "wwwroot/lib/datatables/"
     },
@@ -31,6 +27,10 @@
     {
       "library": "moment.js@2.29.1",
       "destination": "wwwroot/lib/moment.js/"
+    },
+    {
+      "library": "apexcharts@3.22.0",
+      "destination": "wwwroot/lib/apexcharts/"
     }
   ]
 }

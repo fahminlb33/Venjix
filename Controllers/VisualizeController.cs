@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Globalization;
 using System.IO;
@@ -21,10 +22,23 @@ namespace Venjix.Controllers
     public class VisualizeController : Controller
     {
         private readonly VenjixContext _context;
+        private readonly List<SelectListItem> _updateIntervals;
 
         public VisualizeController(VenjixContext context)
         {
             _context = context;
+            _updateIntervals = new List<SelectListItem>
+            {
+                new SelectListItem("Don't auto update", "0"),
+                new SelectListItem("Every 10 seconds", "10"),
+                new SelectListItem("Every 30 seconds", "30"),
+                new SelectListItem("Every minute", "60"),
+                new SelectListItem("Every 5 minutes", "300"),
+                new SelectListItem("Every 10 minutes", "600"),
+                new SelectListItem("Every 15 minutes", "900"),
+                new SelectListItem("Every 30 minutes", "1800"),
+                new SelectListItem("Every hour", "3600")
+            };
         }
 
         [Authorize(Roles = Roles.AdminOrUser)]
@@ -55,11 +69,11 @@ namespace Venjix.Controllers
                 .Where(x => x.Timestamp >= model.StartDate && x.Timestamp <= model.EndDate)
                 .ToListAsync();
 
-            return Json(new
+            return Json(records.Select(p => new
             {
-                x = records.Select(x => x.Timestamp),
-                y = records.Select(x => x.Value)
-            });
+                x = p.Timestamp,
+                y = p.Value
+            }));
         }
 
         #endregion
@@ -129,7 +143,8 @@ namespace Venjix.Controllers
             {
                 StartDate = DateTime.Today,
                 EndDate = DateTime.Now,
-                Sensors = await _context.Sensors.Select(x => new SelectListItem(x.DisplayName, x.SensorId.ToString())).ToListAsync()
+                Sensors = await _context.Sensors.Select(x => new SelectListItem(x.DisplayName, x.SensorId.ToString())).ToListAsync(),
+                UpdateIntervals = _updateIntervals
             };
         }
 
