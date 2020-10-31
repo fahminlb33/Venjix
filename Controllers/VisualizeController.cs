@@ -1,13 +1,10 @@
-﻿using CsvHelper;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Globalization;
-using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Venjix.Infrastructure;
@@ -47,14 +44,42 @@ namespace Venjix.Controllers
             return View();
         }
 
+        #region Scatter Route
+
         [Authorize(Roles = Roles.AdminOrUser)]
-        public IActionResult Scatter()
+        public async Task<IActionResult> Scatter()
         {
-            return View();
+            return View("Scatter", await CreateScatterModel());
         }
 
+        [HttpPost]
+        [Authorize(Roles = Roles.AdminOrUser)]
+        public async Task<IActionResult> ScatterData([FromBody] VisualizeScatterModel model)
+        {
+            var aRecords = await _context.Recordings.Where(x => x.SensorId == model.SensorAId)
+                .Where(x => x.Timestamp >= model.StartDate && x.Timestamp <= model.EndDate)
+                .ToListAsync();
+            var bRecords = await _context.Recordings.Where(x => x.SensorId == model.SensorBId)
+                .Where(x => x.Timestamp >= model.StartDate && x.Timestamp <= model.EndDate)
+                .ToListAsync();
+
+            var minCount = Math.Min(aRecords.Count, bRecords.Count);
+            if (aRecords.Count > minCount)
+            {
+                aRecords.RemoveRange(minCount, aRecords.Count - minCount);
+            }
+            if (bRecords.Count > minCount)
+            {
+                bRecords.RemoveRange(minCount, bRecords.Count - minCount);
+            }
+
+            return Json(aRecords.Zip(bRecords).Select(x => new[] { x.First.Value, x.Second.Value }));
+        }
+
+        #endregion
+
         #region Time Series Route
-        
+
         [Authorize(Roles = Roles.AdminOrUser)]
         public async Task<IActionResult> TimeSeries()
         {
@@ -63,7 +88,7 @@ namespace Venjix.Controllers
 
         [HttpPost]
         [Authorize(Roles = Roles.AdminOrUser)]
-        public async Task<IActionResult> TimeSeriesData([FromBody] VisualizeTableRequestDto model)
+        public async Task<IActionResult> TimeSeriesData([FromBody] VisualizeFilterModel model)
         {
             var records = await _context.Recordings.Where(x => x.SensorId == model.SensorId)
                 .Where(x => x.Timestamp >= model.StartDate && x.Timestamp <= model.EndDate)
@@ -145,6 +170,16 @@ namespace Venjix.Controllers
                 EndDate = DateTime.Now,
                 Sensors = await _context.Sensors.Select(x => new SelectListItem(x.DisplayName, x.SensorId.ToString())).ToListAsync(),
                 UpdateIntervals = _updateIntervals
+            };
+        }
+
+        private async Task<VisualizeScatterModel> CreateScatterModel()
+        {
+            return new VisualizeScatterModel
+            {
+                StartDate = DateTime.Today,
+                EndDate = DateTime.Now,
+                Sensors = await _context.Sensors.Select(x => new SelectListItem(x.DisplayName, x.SensorId.ToString())).ToListAsync()
             };
         }
 
