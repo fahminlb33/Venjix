@@ -87,7 +87,14 @@ namespace Venjix.Infrastructure.Services
             var response = await result.Content.ReadAsStringAsync();
             var body = JToken.Parse(response);
             var message = body["result"].FirstOrDefault(x => x["message"]["text"].Value<string>().Contains(VerifyMessage));
-            return message["message"]["chat"]["id"].Value<int>();
+            var id = message?["message"]?["chat"]?["id"]?.Value<int>();
+
+            if (!id.HasValue)
+            {
+                throw new Exception("No recent chat to bot.");
+            }
+
+            return id.Value;
         }
 
         private async Task<(string callName, string username)> GetBotName(string token)
