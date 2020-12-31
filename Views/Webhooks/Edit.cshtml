@@ -20,20 +20,26 @@
                     <input type="hidden" asp-for="IsEdit" />
                     <input type="hidden" asp-for="WebhookId" />
 
-                    <div class="form-group">
-                        <label asp-for="Name">Webhook name</label>
-                        <input type="text" class="form-control" asp-for="Name">
-                        <span asp-validation-for="Name" class="text-danger"></span>
+                    <div class="form-row">
+                        <div class="form-group col-md-3">
+                            <label asp-for="Name">Webhook name</label>
+                            <input type="text" class="form-control" asp-for="Name">
+                            <span asp-validation-for="Name" class="text-danger"></span>
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label asp-for="Method">Method</label>
-                        <select class="form-control" asp-for="Method" asp-items="Model.Methods"></select>
-                        <span asp-validation-for="Method" class="text-danger"></span>
+                    <div class="form-row">
+                        <div class="form-group col-md-1">
+                            <label asp-for="Method">Method</label>
+                            <select class="form-control" asp-for="Method" asp-items="Model.Methods"></select>
+                            <span asp-validation-for="Method" class="text-danger"></span>
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label asp-for="UriFormat">URI format</label>
-                        <input type="text" class="form-control" asp-for="UriFormat">
-                        <span asp-validation-for="UriFormat" class="text-danger"></span>
+                    <div class="form-row">
+                        <div class="form-group col-md-12">
+                            <label asp-for="UriFormat">URI format</label>
+                            <input type="text" class="form-control" asp-for="UriFormat">
+                            <span asp-validation-for="UriFormat" class="text-danger"></span>
+                        </div>
                     </div>
                     <div class="form-group form-check">
                         <input type="checkbox" class="form-check-input" asp-for="JsonBody">

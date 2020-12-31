@@ -19,35 +19,47 @@
                     <input type="hidden" asp-for="IsEdit" />
                     <input type="hidden" asp-for="TriggerId" />
 
-                    <div class="form-group">
-                        <label asp-for="Name">Trigger name</label>
-                        <input type="text" class="form-control" asp-for="Name">
-                        <span asp-validation-for="Name" class="text-danger"></span>
+                    <div class="form-row">
+                        <div class="form-group col-md-3">
+                            <label asp-for="Name">Trigger name</label>
+                            <input type="text" class="form-control" asp-for="Name">
+                            <span asp-validation-for="Name" class="text-danger"></span>
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label asp-for="Event">Run when</label>
-                        <select class="form-control" asp-for="Event" asp-items="Model.Events"></select>
-                        <span asp-validation-for="Event" class="text-danger"></span>
+                    <div class="form-row">
+                        <div class="form-group col-md-2">
+                            <label asp-for="Event">Run when</label>
+                            <select class="form-control" asp-for="Event" asp-items="Model.Events"></select>
+                            <span asp-validation-for="Event" class="text-danger"></span>
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label asp-for="Value">Condition</label>
-                        <input type="number" class="form-control" asp-for="Value" step=".001">
-                        <span asp-validation-for="Value" class="text-danger"></span>
+                    <div class="form-row">
+                        <div class="form-group col-md-1">
+                            <label asp-for="Value">Condition</label>
+                            <input type="number" class="form-control" asp-for="Value" step=".001">
+                            <span asp-validation-for="Value" class="text-danger"></span>
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label asp-for="SensorId">On this sensor</label>
-                        <select class="form-control" asp-for="SensorId" asp-items="Model.Sensors"></select>
-                        <span asp-validation-for="SensorId" class="text-danger"></span>
+                    <div class="form-row">
+                        <div class="form-group col-md-3">
+                            <label asp-for="SensorId">On this sensor</label>
+                            <select class="form-control" asp-for="SensorId" asp-items="Model.Sensors"></select>
+                            <span asp-validation-for="SensorId" class="text-danger"></span>
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label asp-for="Target">Runs</label>
-                        <select class="form-control" asp-for="Target" asp-items="Model.Targets"></select>
-                        <span asp-validation-for="Target" class="text-danger"></span>
+                    <div class="form-row">
+                        <div class="form-group col-md-2">
+                            <label asp-for="Target">Runs</label>
+                            <select class="form-control" asp-for="Target" asp-items="Model.Targets"></select>
+                            <span asp-validation-for="Target" class="text-danger"></span>
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label asp-for="WebhookId">Webhook</label>
-                        <select class="form-control" asp-for="WebhookId" asp-items="Model.Webhooks"></select>
-                        <span asp-validation-for="WebhookId" class="text-danger"></span>
+                    <div class="form-row">
+                        <div class="form-group col-md-3">
+                            <label asp-for="WebhookId">Webhook</label>
+                            <select class="form-control" asp-for="WebhookId" asp-items="Model.Webhooks"></select>
+                            <span asp-validation-for="WebhookId" class="text-danger"></span>
+                        </div>
                     </div>
                     <div class="form-group form-check">
                         <input type="checkbox" class="form-check-input" asp-for="ContinuousSend">
