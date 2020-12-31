@@ -29,7 +29,7 @@ namespace Venjix.Controllers
 
         [HttpGet, HttpPost]
         [Route("save")]
-        public async Task<IActionResult> SaveDataByQuery()
+        public async Task<IActionResult> SaveData()
         {
             try
             {
