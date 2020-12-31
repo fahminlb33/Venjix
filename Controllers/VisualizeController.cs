@@ -38,12 +38,6 @@ namespace Venjix.Controllers
             };
         }
 
-        [Authorize(Roles = Roles.AdminOrUser)]
-        public IActionResult Geomap()
-        {
-            return View();
-        }
-
         #region Scatter Route
 
         [Authorize(Roles = Roles.AdminOrUser)]
