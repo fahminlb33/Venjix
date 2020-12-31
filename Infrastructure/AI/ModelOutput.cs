@@ -2,10 +2,10 @@
 {
     public class ModelOutput
     {
-        public double[] ForecastedValues { get; set; }
+        public float[] ForecastedValues { get; set; }
 
-        public double[] LowerBounds { get; set; }
+        public float[] LowerBounds { get; set; }
 
-        public double[] UpperBounds { get; set; }
+        public float[] UpperBounds { get; set; }
     }
 }

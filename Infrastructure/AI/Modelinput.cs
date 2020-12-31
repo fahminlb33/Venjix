@@ -6,6 +6,6 @@ namespace Venjix.Infrastructure.AI
     {
         public DateTime RecordTime { get; set; }
 
-        public double Value { get; set; }
+        public float Value { get; set; }
     }
 }

@@ -64,9 +64,9 @@ namespace Venjix.Infrastructure.AI
         private (double mae, double rmse) EvaluateForecast(IDataView testData, ITransformer model, MLContext mlContext)
         {
             IDataView predictions = model.Transform(testData);
-            IEnumerable<double> actual = mlContext.Data.CreateEnumerable<ModelInput>(testData, true)
+            var actual = mlContext.Data.CreateEnumerable<ModelInput>(testData, true)
                 .Select(observed => observed.Value);
-            IEnumerable<double> forecast = mlContext.Data.CreateEnumerable<ModelOutput>(predictions, true)
+            var forecast = mlContext.Data.CreateEnumerable<ModelOutput>(predictions, true)
                 .Select(prediction => prediction.ForecastedValues[0]);
 
             var metrics = actual.Zip(forecast, (actualValue, forecastValue) => actualValue - forecastValue);
