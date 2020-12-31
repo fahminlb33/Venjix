@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Venjix.Infrastructure.AI;
 using Venjix.Infrastructure.DAL;
 using Venjix.Infrastructure.DTO;
 using Venjix.Models;
@@ -25,6 +26,11 @@ namespace Venjix.Infrastructure.Mappers
 
             CreateMap<VenjixOptions, SettingsModel>();
             CreateMap<SettingsModel, VenjixOptions>();
+
+            CreateMap<ForecastModel, ForecastingOptions>()
+                .ForMember(x => x.ConfidenceLevel, options => options.MapFrom<ForecastingOptionsConfidenceLevelResolver>())
+                .ForMember(x => x.TestSize, options => options.MapFrom<ForecastingOptionsTestSizeResolver>());
+            
         }
     }
 }

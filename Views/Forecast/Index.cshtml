@@ -1,5 +1,230 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model ForecastModel
 @{
+    ViewData[ViewKeys.Title] = "Forecast Tool - Venjix";
+    ViewData[ViewKeys.PageHeading] = "Forecast Data";
+    ViewData[ViewKeys.PageSubheading] = "Forecast time series data to predict next events.";
+}
+
+<h1 class="h3 mb-2 text-gray-800">
+    @ViewData[ViewKeys.PageHeading]
+    <a tabindex="0" class="btn btn-link" data-container="body" data-toggle="popover" data-trigger="focus" data-placement="right" data-content="@ViewData[ViewKeys.PageSubheading]">
+        <i class="fas fa-info"></i>
+    </a>
+</h1>
+
+<div class="card shadow mb-4">
+    <div class="card-body">
+        <form>
+            <div class="form-row">
+                <div class="form-group col-md-3">
+                    <label asp-for="SensorId">Sensor</label>
+                    <select class="form-control" asp-for="SensorId" asp-items="Model.Sensors"></select>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group col-md-2">
+                    <label asp-for="SeriesLength">Series length</label>
+                    <input type="number" class="form-control" asp-for="SeriesLength">
+                </div>
+                <div class="form-group col-md-2">
+                    <label asp-for="WindowSize">Window size</label>
+                    <input type="number" class="form-control" asp-for="WindowSize">
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group col-md-2">
+                    <label asp-for="Horizon">Horizon</label>
+                    <input type="number" class="form-control" asp-for="Horizon">
+                </div>
+                <div class="form-group col-md-2">
+                    <label asp-for="TestSize">Test size (%)</label>
+                    <input type="number" class="form-control" asp-for="TestSize">
+                </div>
+                <div class="form-group col-md-2">
+                    <label asp-for="ConfidenceLevel">Confidence level (%)</label>
+                    <input type="number" class="form-control" asp-for="ConfidenceLevel">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="StartDate">Date range</label>
+                <div class="form-row">
+                    <div class="col-3">
+                        <input type="datetime-local" class="form-control" asp-for="StartDate" step="1">
+                    </div>
+                    <div class="col-3">
+                        <input type="datetime-local" class="form-control" asp-for="EndDate" step="1">
+                    </div>
+                </div>
+            </div>
+
+            <button type="button" class="btn btn-primary btn-icon-split" id="showButton">
+                <span class="icon text-white-50">
+                    <i class="fas fa-eye"></i>
+                </span>
+                <span class="text">Forecast</span>
+            </button>
+        </form>
+
+        <p id="forecastResult" class="mt-3">Run forecast to see results.</p>
+
+        <div class="mt-4">
+            <div id="chart"></div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="errorModal" tabindex="-1" role="dialog" aria-labelledby="errorModal" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="errorModal">Forecasting Error</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="forecastError">
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Styles {
+    <link href="~/lib/Chart.js/Chart.min.css" rel="stylesheet">
+}
+
+@section Scripts {
+    <script src="~/lib/moment.js/moment.min.js"></script>
+    <script src="~/lib/apexcharts/apexcharts.min.js"></script>
+    <script>
+        var intervals = [];
+        var forecasted = [];
+        var upperBound = [];
+        var lowerBound = [];
+
+        var options = {
+            series: [
+                {
+                    name: 'Forecasted',
+                    data: forecasted
+                },
+                {
+                    name: 'Upper bound',
+                    data: upperBound
+                },
+                {
+                    name: 'Lower bound',
+                    data: lowerBound
+                }
+            ],
+            chart: {
+                id: 'realtime',
+                height: 350,
+                type: 'line'
+            },
+            dataLabels: {
+                enabled: false
+            },
+            xaxis: {
+                categories: intervals,
+                tooltip: {
+                    enabled: false
+                }
+            },
+            legend: {
+                show: false
+            },
+            markers: {
+                size: 4
+            },
+            tooltip: {
+                x: {
+                    formatter: function (value, { series, seriesIndex, dataPointIndex, w }) {
+                        return moment(value).format("DD/MM/YYYY hh:mm:ss");
+                    }
+                }
+            }
+        };
+
+        var chart = new ApexCharts(document.querySelector("#chart"), options);
+        chart.render();
+
+        var interval = null;
+
+        $("#showButton").on("click", function (e) {
+            e.preventDefault();
+            fetch_new_data();
+        });
+
+        $('#UpdateInterval').on("change", function () {
+            if (interval !== null) {
+                clearInterval(interval);
+            }
+
+            var selectedInterval = parseInt(this.value);
+            if (selectedInterval == 0) return;
+
+            interval = window.setInterval(function () {
+                fetch_new_data();
+            }, selectedInterval * 1000);
+        });
+
+        function fetch_new_data() {
+            $('#showButton').attr('disabled', 'disabled');
+
+            d = {
+                sensorId: $('#SensorId option:selected').val(),
+                startDate: $('#StartDate').val(),
+                endDate: $('#EndDate').val()
+            };
+
+            $.ajax({
+                type: "POST",
+                url: "@Url.Action("ForecastData")",
+                data: JSON.stringify(d),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (data, textStatus, jqXHR) {
+                    var intervals = data.intervals;
+                    var forecasted = data.forecasted;
+                    var upperBound = data.upperBound;
+                    var lowerBound = data.lowerBound;
+                    $("#forecastResult").html(`MAE: ${response.mae}<br>RMSE: ${data.rmse}`);
+
+                    chart.updateOptions({
+                        xaxis: {
+                            categories: intervals
+                        }
+                    });
+                    chart.updateSeries([
+                        {
+                            name: 'Forecasted',
+                            data: forecasted
+                        },
+                        {
+                            name: 'Upper bound',
+                            data: upperBound
+                        },
+                        {
+                            name: 'Lower bound',
+                            data: lowerBound
+                        }
+                    ]);
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    $("#forecastError").text(jqXHR.responseJSON.message);
+                    $('#errorModal').modal('show')
+                },
+                complete: function () {
+                    $('#showButton').removeAttr('disabled');
+                }
+            });
+        }
+    </script>
 }

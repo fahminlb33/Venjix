@@ -13,6 +13,7 @@ using Newtonsoft.Json;
 using Serilog;
 using System;
 using System.Linq;
+using Venjix.Infrastructure.AI;
 using Venjix.Infrastructure.DAL;
 using Venjix.Infrastructure.DataTables;
 using Venjix.Infrastructure.DTO;
@@ -67,7 +68,9 @@ namespace Venjix
             services.AddAutoMapper(typeof(Startup));
             services.ConfigureWritable<VenjixOptions>(Configuration.GetSection(VenjixOptions.SectionName), Program.GetAppSettingsPath());
 
+            // register services
             services.AddTransient<IDataTables, DataTables>();
+            services.AddTransient<IForecastingService, ForecastingService>();
             services.AddSingleton<ITelegramService, TelegramService>();
             services.AddScoped<ITriggerRunnerService, TriggerRunnerService>();
         }
