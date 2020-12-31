@@ -103,7 +103,7 @@ namespace Venjix.Controllers
 
         [HttpPost]
         [Authorize(Roles = Roles.AdminOrUser)]
-        public async Task<IActionResult> TableData(DataTablesRequestModel req)
+        public async Task<IActionResult> TableData([FromBody]  DataTablesRequestModel req)
         {
             return Json(await _dataTables.PopulateTable(req, _context.Webhooks));
         }
