@@ -45,8 +45,9 @@ namespace Venjix.Controllers
         {
             var health = await _healthCheck.CheckHealthAsync();
             var model = _mapper.Map<SettingsModel>(_optionsService.Options);
-            model.HealthChecks = health.Entries.ToDictionary(x => x.Key, y => y.Value.Status.ToString());
+
             model.HealthStatus = health.Status.ToString();
+            model.HealthChecks = health.Entries.ToDictionary(x => x.Key, y => y.Value.Status.ToString());
 
             return View("Settings", model);
         }
@@ -55,6 +56,7 @@ namespace Venjix.Controllers
         [Authorize(Roles = Roles.Admin)]
         public async Task<IActionResult> TelegramSave(SettingsModel model)
         {
+            
             if (!string.IsNullOrWhiteSpace(model.TelegramToken))
             {
                 await _telegramService.VerifyAndSaveBot(model.TelegramToken);
@@ -67,6 +69,16 @@ namespace Venjix.Controllers
                 await _optionsService.Save();
             }
             
+            return RedirectToAction("Settings");
+        }
+
+        [HttpPost]
+        [Authorize(Roles = Roles.Admin)]
+        public async Task<IActionResult> KeySave(SettingsModel model)
+        {
+            _optionsService.Options.ApiKey = model.ApiKey;
+            await _optionsService.Save();
+
             return RedirectToAction("Settings");
         }
 

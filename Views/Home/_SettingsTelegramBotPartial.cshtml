@@ -1,15 +1,14 @@
 ﻿@model SettingsModel
 
-<form method="post" asp-action="TelegramSave" asp-controller="Home">
-    <div class="form-group">
-        <label asp-for="TelegramToken">Telegram Token</label>
-        <input type="text" class="form-control" asp-for="TelegramToken">
-        <span asp-validation-for="TelegramToken" class="text-danger"></span>
-    </div>
+<form class="form-inline" method="post" asp-action="TelegramSave" asp-controller="Home">
+    <label asp-for="TelegramToken" class="mr-2">Telegram Token</label>
+    <input type="text" class="flex-fill form-control mr-2" asp-for="TelegramToken">
 
-    <button type="submit" class="btn btn-primary mb-2">Save</button>
-    <a class="btn btn-outline-primary mb-2" asp-action="TelegramRefresh" asp-controller="Home">Refresh Activation</a>
+    <button type="submit" class="btn btn-primary mr-2 my-1">Save</button>
+    <a class="btn btn-outline-primary mr-2 my-1" asp-action="TelegramRefresh" asp-controller="Home">Reactivate</a>
 </form>
+
+<span asp-validation-for="TelegramToken" class="text-danger"></span>
 
 @if (Model.IsTelegramTokenValid)
 {

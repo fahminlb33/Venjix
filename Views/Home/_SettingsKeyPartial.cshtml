@@ -1,0 +1,11 @@
+﻿@model SettingsModel
+
+<form class="form-inline" method="post" asp-action="KeySave" asp-controller="Home">
+    <label asp-for="ApiKey" class="mr-2">API Key</label>
+    <input type="text" class="flex-fill form-control mr-2" asp-for="ApiKey">
+    <button type="submit" class="btn btn-primary my-1">Save</button>
+
+    <span asp-validation-for="ApiKey" class="text-danger ml-2"></span>
+</form>
+
+<p class="mt-3">This API key will be used when you call <b>POST /api/data</b>. Make sure to keep it secret.</p>

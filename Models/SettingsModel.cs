@@ -8,7 +8,10 @@ namespace Venjix.Models
         public string TelegramBotCallName { get; set; }
         public string TelegramBotUsername { get; set; }
         public bool IsTelegramTokenValid { get; set; }
-        public Dictionary<string, string> HealthChecks { get; set; }
+
+        public string ApiKey { get; set; }
+        
         public string HealthStatus { get; set; }
+        public Dictionary<string, string> HealthChecks { get; set; }
     }
 }
