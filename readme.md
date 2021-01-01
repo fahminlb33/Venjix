@@ -1,8 +1,12 @@
 <h1 align="center">Venjix</h1>
 
-
-![ASP.NET Core 5](https://img.shields.io/badge/ASP.NET-%20CORE%205-green.svg)
-[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)	
+<div align="center">
+  <img src="https://img.shields.io/badge/ASP.NET-%20CORE%205-green.svg"
+    alt="ASP.NET Core 5" />   
+  <a href="https://opensource.org/licenses/MIT">
+     <img src="https://img.shields.io/badge/License-MIT-green.svg" alt="License: MIT" />
+  </a> 
+</div>
 
 <div align="center">
   <strong>Multipurpose IOT data collection, visualization, and forecasting tool using ASP.NET Core MVC.</strong>
