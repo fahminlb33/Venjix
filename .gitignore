@@ -504,9 +504,13 @@ MigrationBackup/
 
 # End of https://www.gitignore.io/api/cake,dotnetcore,aspnetcore,visualstudio,visualstudiocode
 
-# SQlite Database
+# Data Directory
 /data/*
-!/data/appsettings.json
+
+# Application Writable Settings
+!/data/settings.json
+
+# SQlite Database
 *.db
 *.db-shm
 *.db-wal

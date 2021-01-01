@@ -1,0 +1,8 @@
+﻿{
+  "IsTelegramTokenValid": false,
+  "TelegramToken": "",
+  "TelegramBotCallName": "",
+  "TelegramBotUsername": "",
+  "TelegramChatId": 0,
+  "TriggerCooldown": 0
+}
