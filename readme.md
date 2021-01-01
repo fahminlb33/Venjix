@@ -13,11 +13,11 @@ IoT devices, acting as a server hub for centralized IoT data collection.
 You can think this app is like ThingSpeak but hosed in your local server.
 </div>
 
-<br />
-
 <div align="center">
   <sub>This project is maintained with ❤︎ by <i><strong>Kodesiana</strong></i>
 </div>
+
+<br />
 
 ## Build
 
