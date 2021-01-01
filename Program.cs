@@ -15,7 +15,7 @@ namespace Venjix
         public static int Main(string[] args)
         {
             var configuration = new ConfigurationBuilder()
-               .AddJsonFile(GetAppSettingsPath())
+               .AddJsonFile("appsettings.json")
                .Build();
 
             Log.Logger = new LoggerConfiguration()
@@ -26,6 +26,8 @@ namespace Venjix
             {
                 Log.Information("Starting web host");
                 var host = CreateHostBuilder(args).Build();
+
+                CreateDataDirecoryIfNotExists();
                 CreateDbIfNotExists(host);
 
                 host.Run();
@@ -40,6 +42,16 @@ namespace Venjix
             {
                 Log.CloseAndFlush();
             }
+        }
+
+        public static IHostBuilder CreateHostBuilder(string[] args)
+        {
+            return Host.CreateDefaultBuilder(args)
+                .UseSerilog()
+                .ConfigureWebHostDefaults(webBuilder =>
+                {
+                    webBuilder.UseStartup<Startup>();
+                });
         }
 
         private static void CreateDbIfNotExists(IHost host)
@@ -60,32 +72,10 @@ namespace Venjix
             }
         }
 
-        public static IHostBuilder CreateHostBuilder(string[] args)
-        {
-            var appsettingsPath = GetAppSettingsPath();
-            if (!File.Exists(appsettingsPath))
-            {
-                Log.Error("App settings not found in: {0}", appsettingsPath);
-                throw new FileNotFoundException("Application settings is not found.");
-            }
-
-            Log.Debug("App settings found in: {0}", appsettingsPath);
-            return Host.CreateDefaultBuilder(args)
-                .ConfigureAppConfiguration((hostingContext, config) =>
-                {
-                    config.AddJsonFile(appsettingsPath, optional: false, reloadOnChange: true);
-                })
-                .UseSerilog()
-                .ConfigureWebHostDefaults(webBuilder =>
-                {
-                    webBuilder.UseStartup<Startup>();
-                });
-        }
-
-        public static string GetAppSettingsPath()
+        public static void CreateDataDirecoryIfNotExists()
         {
             var parentDir = Path.GetDirectoryName(AppDomain.CurrentDomain.BaseDirectory);
-            return Path.Join(parentDir, "data", $"appsettings.json");
+            Directory.CreateDirectory(parentDir);
         }
     }
 }

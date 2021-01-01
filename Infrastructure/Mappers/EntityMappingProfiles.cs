@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using Venjix.Infrastructure.AI;
 using Venjix.Infrastructure.DAL;
-using Venjix.Infrastructure.DTO;
+using Venjix.Infrastructure.Services;
 using Venjix.Models;
 
 namespace Venjix.Infrastructure.Mappers

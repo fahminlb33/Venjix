@@ -5,11 +5,8 @@ using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Logging;
 using System.Linq;
 using System.Threading.Tasks;
-using Venjix.Infrastructure;
 using Venjix.Infrastructure.Authentication;
-using Venjix.Infrastructure.DTO;
 using Venjix.Infrastructure.Services;
-using Venjix.Infrastructure.TagHelpers;
 using Venjix.Models;
 
 namespace Venjix.Controllers
@@ -17,16 +14,15 @@ namespace Venjix.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-        private readonly IWritableOptions<VenjixOptions> _optionsWritable;
+        private readonly IVenjixOptionsService _optionsService;
         private readonly IMapper _mapper;
         private readonly ITelegramService _telegramService;
         private readonly HealthCheckService _healthCheck;
 
-        public HomeController(ILogger<HomeController> logger, IWritableOptions<VenjixOptions> optionsWritable, IMapper mapper, ITelegramService telegramService, HealthCheckService healthCheck)
+        public HomeController(ILogger<HomeController> logger, IVenjixOptionsService optionsService, IMapper mapper, ITelegramService telegramService, HealthCheckService healthCheck)
         {
-
             _logger = logger;
-            _optionsWritable = optionsWritable;
+            _optionsService = optionsService;
             _mapper = mapper;
             _telegramService = telegramService;
             _healthCheck = healthCheck;
@@ -48,7 +44,7 @@ namespace Venjix.Controllers
         public async Task<IActionResult> Settings()
         {
             var health = await _healthCheck.CheckHealthAsync();
-            var model = _mapper.Map<SettingsModel>(_optionsWritable.Value);
+            var model = _mapper.Map<SettingsModel>(_optionsService.Options);
             model.HealthChecks = health.Entries.ToDictionary(x => x.Key, y => y.Value.Status.ToString());
             model.HealthStatus = health.Status.ToString();
 
@@ -65,12 +61,10 @@ namespace Venjix.Controllers
             }
             else
             {
-                _optionsWritable.Update(options =>
-                {
-                    options.IsTelegramTokenValid = false;
-                    options.TelegramChatId = 0;
-                    options.TelegramToken = "";
-                });
+                _optionsService.Options.IsTelegramTokenValid = false;
+                _optionsService.Options.TelegramChatId = 0;
+                _optionsService.Options.TelegramToken = "";
+                await _optionsService.Save();
             }
             
             return RedirectToAction("Settings");
@@ -79,7 +73,7 @@ namespace Venjix.Controllers
         [Authorize(Roles = Roles.Admin)]
         public async Task<IActionResult> TelegramRefresh()
         {
-            await _telegramService.VerifyAndSaveBot(_optionsWritable.Value.TelegramToken);
+            await _telegramService.VerifyAndSaveBot(_optionsService.Options.TelegramToken);
             return RedirectToAction("Settings");
         }
     }

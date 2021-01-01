@@ -26,15 +26,15 @@ namespace Venjix.Infrastructure.Services
         private readonly ITelegramService _telegram;
         private readonly IMemoryCache _cache;
         private readonly IServiceScopeFactory _scopeFactory;
-        private readonly VenjixOptions _options;
+        private readonly IVenjixOptionsService _optionsService;
 
-        public TriggerRunnerService(ILogger<TriggerRunnerService> logger, IMemoryCache cache, ITelegramService telegram, IServiceScopeFactory scopeFactory, IOptions<VenjixOptions> options)
+        public TriggerRunnerService(ILogger<TriggerRunnerService> logger, IMemoryCache cache, ITelegramService telegram, IServiceScopeFactory scopeFactory, IVenjixOptionsService optionsService)
         {
             _logger = logger;
             _cache = cache;
             _telegram = telegram;
             _scopeFactory = scopeFactory;
-            _options = options.Value;
+            _optionsService = optionsService;
         }
 
         public void RunTriggers(IEnumerable<Recording> recordings)
@@ -61,7 +61,7 @@ namespace Venjix.Infrastructure.Services
 
                         try
                         {
-                            _cache.Set(trigger.Name, record.Value, TimeSpan.FromSeconds(_options.TriggerCooldown));
+                            _cache.Set(trigger.Name, record.Value, TimeSpan.FromSeconds(_optionsService.Options.TriggerCooldown));
                             if (trigger.Target == TriggerTarget.Telegram)
                             {
                                 await ExecuteTelegram(record);

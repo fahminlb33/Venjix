@@ -17,7 +17,6 @@ using Venjix.Infrastructure.AI;
 using Venjix.Infrastructure.DAL;
 using Venjix.Infrastructure.DataTables;
 using Venjix.Infrastructure.DTO;
-using Venjix.Infrastructure.Options;
 using Venjix.Infrastructure.Services;
 
 namespace Venjix
@@ -66,13 +65,18 @@ namespace Venjix
             services.AddMemoryCache();
             services.AddHttpContextAccessor();
             services.AddAutoMapper(typeof(Startup));
-            services.ConfigureWritable<VenjixOptions>(Configuration.GetSection(VenjixOptions.SectionName), Program.GetAppSettingsPath());
 
             // register services
             services.AddTransient<IDataTables, DataTables>();
             services.AddTransient<IForecastingService, ForecastingService>();
-            services.AddSingleton<ITelegramService, TelegramService>();
             services.AddScoped<ITriggerRunnerService, TriggerRunnerService>();
+            services.AddSingleton<ITelegramService, TelegramService>();
+            services.AddSingleton<IVenjixOptionsService, VenjixOptionsService>(options =>
+            {
+                var instance = new VenjixOptionsService();
+                instance.Reload().GetAwaiter().GetResult();
+                return instance;
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -124,8 +128,8 @@ namespace Venjix
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
                 endpoints.MapControllerRoute(
-                  name: "APIs",
-                  pattern: "api/{controller=ApiData}/{action=SaveDataByQuery}/{id?}");
+                    name: "APIs",
+                    pattern: "api/{controller=ApiData}/{action=SaveDataByQuery}/{id?}");
             });
         }
     }

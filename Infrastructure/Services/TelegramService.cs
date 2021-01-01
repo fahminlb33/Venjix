@@ -1,12 +1,10 @@
-﻿using Microsoft.CodeAnalysis.CSharp.Syntax;
-using Microsoft.Extensions.Logging;
+﻿using Microsoft.Extensions.Logging;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
-using Venjix.Infrastructure.DTO;
 
 namespace Venjix.Infrastructure.Services
 {
@@ -19,15 +17,15 @@ namespace Venjix.Infrastructure.Services
     public class TelegramService : ITelegramService
     {
         private readonly ILogger<TelegramService> _logger;
-        private readonly IWritableOptions<VenjixOptions> _options;
+        private readonly IVenjixOptionsService _optionsService;
         private static HttpClient _httpClient = new HttpClient();
 
         private const string VerifyMessage = "VENJIX";
 
-        public TelegramService(ILogger<TelegramService> logger, IWritableOptions<VenjixOptions> options)
+        public TelegramService(ILogger<TelegramService> logger, IVenjixOptionsService optionsService)
         {
             _logger = logger;
-            _options = options;
+            _optionsService = optionsService;
         }
 
         public async Task VerifyAndSaveBot(string token)
@@ -36,25 +34,23 @@ namespace Venjix.Infrastructure.Services
             {
                 var chatId = await GetChatId(token);
                 var (callName, username) = await GetBotName(token);
-                _options.Update(options =>
-                {
-                    options.IsTelegramTokenValid = true;
-                    options.TelegramToken = token;
-                    options.TelegramChatId = chatId;
-                    options.TelegramBotCallName = callName;
-                    options.TelegramBotUsername = username;
-                });
+
+                _optionsService.Options.IsTelegramTokenValid = true;
+                _optionsService.Options.TelegramToken = token;
+                _optionsService.Options.TelegramChatId = chatId;
+                _optionsService.Options.TelegramBotCallName = callName;
+                _optionsService.Options.TelegramBotUsername = username;
+                await _optionsService.Save();
+
                 _logger.LogInformation("Telegram Bot is activated.");
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Error when verifying Telegram token.");
-                _options.Update(options =>
-                {
-                    options.IsTelegramTokenValid = false;
-                    options.TelegramToken = token;
-                    options.TelegramChatId = 0;
-                });
+                _optionsService.Options.IsTelegramTokenValid = false;
+                _optionsService.Options.TelegramToken = token;
+                _optionsService.Options.TelegramChatId = 0;
+                await _optionsService.Save();
             }
         }
 
@@ -62,10 +58,10 @@ namespace Venjix.Infrastructure.Services
         {
             try
             {
-                var uri = $"https://api.telegram.org/bot{_options.Value.TelegramToken}/sendMessage";
+                var uri = $"https://api.telegram.org/bot{_optionsService.Options.TelegramToken}/sendMessage";
                 var body = new FormUrlEncodedContent(new[]
                 {
-                    new KeyValuePair<string, string>("chat_id", _options.Value.TelegramChatId.ToString()),
+                    new KeyValuePair<string, string>("chat_id", _optionsService.Options.TelegramChatId.ToString()),
                     new KeyValuePair<string, string>("text", message)
                 });
 
