@@ -79,7 +79,7 @@ namespace Venjix.Infrastructure.Services
 
             var response = await result.Content.ReadAsStringAsync();
             var body = JToken.Parse(response);
-            var message = body["result"].FirstOrDefault(x => x["message"]["text"].Value<string>().Contains(VerifyMessage));
+            var message = body["result"].FirstOrDefault(x => x["message"]["text"].Value<string>().Contains(VerifyMessage, StringComparison.InvariantCultureIgnoreCase));
             var id = message?["message"]?["chat"]?["id"]?.Value<int>();
 
             if (!id.HasValue)
