@@ -18,14 +18,15 @@ namespace Venjix.Infrastructure.Services
     {
         private readonly ILogger<TelegramService> _logger;
         private readonly IVenjixOptionsService _optionsService;
-        private static HttpClient _httpClient = new HttpClient();
+        private readonly IHttpClientFactory _httpClientFactory;
 
         private const string VerifyMessage = "VENJIX";
 
-        public TelegramService(ILogger<TelegramService> logger, IVenjixOptionsService optionsService)
+        public TelegramService(ILogger<TelegramService> logger, IVenjixOptionsService optionsService, IHttpClientFactory httpClientFactory)
         {
             _logger = logger;
             _optionsService = optionsService;
+            _httpClientFactory = httpClientFactory;
         }
 
         public async Task VerifyAndSaveBot(string token)
@@ -56,28 +57,24 @@ namespace Venjix.Infrastructure.Services
 
         public async Task SendMessage(string message)
         {
-            try
+            var uri = $"https://api.telegram.org/bot{_optionsService.Options.TelegramToken}/sendMessage";
+            var body = new FormUrlEncodedContent(new[]
             {
-                var uri = $"https://api.telegram.org/bot{_optionsService.Options.TelegramToken}/sendMessage";
-                var body = new FormUrlEncodedContent(new[]
-                {
-                    new KeyValuePair<string, string>("chat_id", _optionsService.Options.TelegramChatId.ToString()),
-                    new KeyValuePair<string, string>("text", message)
-                });
+                new KeyValuePair<string, string>("chat_id", _optionsService.Options.TelegramChatId.ToString()),
+                new KeyValuePair<string, string>("text", message)
+            });
 
-                var result = await _httpClient.PostAsync(uri, body);
-                result.EnsureSuccessStatusCode();
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "Error when sending Telegram message.");
-            }
+            var client = _httpClientFactory.CreateClient();
+            var result = await client.PostAsync(uri, body);
+            result.EnsureSuccessStatusCode();
         }
 
         private async Task<int> GetChatId(string token)
         {
             var uri = $"https://api.telegram.org/bot{token}/getUpdates?limit=5";
-            var result = await _httpClient.GetAsync(uri);
+
+            var client = _httpClientFactory.CreateClient();
+            var result = await client.GetAsync(uri);
             result.EnsureSuccessStatusCode();
 
             var response = await result.Content.ReadAsStringAsync();
@@ -96,7 +93,9 @@ namespace Venjix.Infrastructure.Services
         private async Task<(string callName, string username)> GetBotName(string token)
         {
             var uri = $"https://api.telegram.org/bot{token}/getMe";
-            var result = await _httpClient.GetAsync(uri);
+
+            var client = _httpClientFactory.CreateClient();
+            var result = await client.GetAsync(uri);
             result.EnsureSuccessStatusCode();
 
             var response = await result.Content.ReadAsStringAsync();

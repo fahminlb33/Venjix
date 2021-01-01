@@ -2,7 +2,6 @@
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +9,6 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using Venjix.Infrastructure.DAL;
-using Venjix.Infrastructure.DTO;
 
 namespace Venjix.Infrastructure.Services
 {
@@ -21,20 +19,21 @@ namespace Venjix.Infrastructure.Services
 
     public class TriggerRunnerService : ITriggerRunnerService
     {
-        private static HttpClient _httpClient = new HttpClient();
+        private readonly IHttpClientFactory _httpClientFactory;
         private readonly ILogger<TriggerRunnerService> _logger;
         private readonly ITelegramService _telegram;
         private readonly IMemoryCache _cache;
         private readonly IServiceScopeFactory _scopeFactory;
         private readonly IVenjixOptionsService _optionsService;
 
-        public TriggerRunnerService(ILogger<TriggerRunnerService> logger, IMemoryCache cache, ITelegramService telegram, IServiceScopeFactory scopeFactory, IVenjixOptionsService optionsService)
+        public TriggerRunnerService(ILogger<TriggerRunnerService> logger, IMemoryCache cache, ITelegramService telegram, IServiceScopeFactory scopeFactory, IVenjixOptionsService optionsService, IHttpClientFactory httpClientFactory)
         {
             _logger = logger;
             _cache = cache;
             _telegram = telegram;
             _scopeFactory = scopeFactory;
             _optionsService = optionsService;
+            _httpClientFactory = httpClientFactory;
         }
 
         public void RunTriggers(IEnumerable<Recording> recordings)
@@ -106,18 +105,19 @@ namespace Venjix.Infrastructure.Services
                 body = new StringContent(content, Encoding.UTF8, "application/json");
             }
 
+            var client = _httpClientFactory.CreateClient();
             var uri = webhook.UriFormat.Replace("{{value}}", record.Value.ToString());
             if (webhook.Method == "GET")
             {
-                (await _httpClient.GetAsync(uri)).EnsureSuccessStatusCode();
+                (await client.GetAsync(uri)).EnsureSuccessStatusCode();
             } 
             else if (webhook.Method == "POST")
             {
-                (await _httpClient.PostAsync(uri, body)).EnsureSuccessStatusCode();
+                (await client.PostAsync(uri, body)).EnsureSuccessStatusCode();
             }
             else
             {
-                (await _httpClient.PutAsync(uri, body)).EnsureSuccessStatusCode();
+                (await client.PutAsync(uri, body)).EnsureSuccessStatusCode();
             }
         }
 

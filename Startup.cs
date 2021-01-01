@@ -63,6 +63,7 @@ namespace Venjix
             services.AddHealthChecks()
                 .AddDbContextCheck<VenjixContext>();
             services.AddMemoryCache();
+            services.AddHttpClient();
             services.AddHttpContextAccessor();
             services.AddAutoMapper(typeof(Startup));
 
