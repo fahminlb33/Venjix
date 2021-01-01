@@ -7,7 +7,7 @@
      <img src="https://img.shields.io/badge/License-MIT-green.svg" alt="License: MIT" />
   </a> 
 </div>
-
+<br />
 <div align="center">
   <strong>Multipurpose IOT data collection, visualization, and forecasting tool using ASP.NET Core MVC.</strong>
 </div>
