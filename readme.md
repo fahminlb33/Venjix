@@ -19,6 +19,7 @@ You can think this app is like ThingSpeak but hosed in your local server.
   <sub>This project is maintained with ❤︎ by <i><strong>Kodesiana</strong></i>
 </div>
 
+## Build
 
 Configuration  | Branch | Build Status
 ---------------|--------|-------------
