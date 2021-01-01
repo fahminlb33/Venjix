@@ -41,7 +41,8 @@ namespace Venjix.Infrastructure.DataTables
             }
 
             // count filtered data
-            var filterCount = ExecuteScalar(data, sql.ToString());
+            var countSql = "SELECT COUNT(*) " + sql.ToString(9, sql.Length - 9);
+            var filterCount = ExecuteScalar(data, countSql);
 
             // build order by
             if (request.Ordering.Count > 0)
@@ -53,7 +54,7 @@ namespace Venjix.Infrastructure.DataTables
                 }
 
                 sql.Remove(sql.Length - 2, 2);
-                sql.Append(" ");
+                sql.Append(' ');
             }
 
             // build paging
@@ -75,7 +76,7 @@ namespace Venjix.Infrastructure.DataTables
             };
         }
 
-        private int ExecuteScalar<T>(DbSet<T> set, string sql) where T : class
+        private long ExecuteScalar<T>(DbSet<T> set, string sql) where T : class
         {
             var context = GetDbContext(set);
             using var cmd = context.Database.GetDbConnection().CreateCommand();
@@ -83,7 +84,8 @@ namespace Venjix.Infrastructure.DataTables
             cmd.CommandType = System.Data.CommandType.Text;
             context.Database.OpenConnection();
 
-            return (int)(long)cmd.ExecuteScalar();
+            var result = cmd.ExecuteScalar();
+            return result == null ? 0 : (long)result;
         }
 
         private string GetTableName<T>(DbSet<T> set) where T : class

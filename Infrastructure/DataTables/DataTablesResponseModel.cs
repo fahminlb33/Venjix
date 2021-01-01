@@ -8,10 +8,10 @@ namespace Venjix.Infrastructure.DataTables
         public int Draw { get; set; }
 
         [JsonProperty("recordsTotal")]
-        public int RecordsTotal { get; set; }
+        public long RecordsTotal { get; set; }
 
         [JsonProperty("recordsFiltered")]
-        public int RecordsFiltered { get; set; }
+        public long RecordsFiltered { get; set; }
 
         [JsonProperty("data")]
         public object Data { get; set; }
