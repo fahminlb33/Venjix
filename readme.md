@@ -12,11 +12,10 @@ Release AnyCPU | master | ![.NET Core](https://github.com/fahminlb33/Venjix/work
 
 1. Built using ASP.NET Core MVC (.NET 5).
 2. SQLite database.
-3. ML.NET integration to run forecasting.
+3. ML.NET integration to forecast sensor data.
 4. Basic table and chart visualization.
-5. Export/import collected data.
-6. Telegram Bot integration based on event trigger.
-7. Webhooks based on event trigger.
+5. Export collected data.
+6. Telegram and Webhooks integration for notification.
 
 ## Deploying
 
