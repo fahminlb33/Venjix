@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
@@ -6,9 +6,9 @@
     <DockerfileContext>.</DockerfileContext>
   </PropertyGroup>
 
-  <ItemGroup>
-    <Content Remove="compilerconfig.json" />
-  </ItemGroup>
+  <PropertyGroup>
+    <DockerfileRunArguments>-v "myvolume:/data"</DockerfileRunArguments>
+  </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="10.1.1" />
@@ -39,13 +39,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Remove="compilerconfig.json" />
     <None Include="compilerconfig.json" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Content Update="data\appsettings.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
   </ItemGroup>
 
 </Project>

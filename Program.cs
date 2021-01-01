@@ -62,10 +62,18 @@ namespace Venjix
 
         public static IHostBuilder CreateHostBuilder(string[] args)
         {
+            var appsettingsPath = GetAppSettingsPath();
+            if (!File.Exists(appsettingsPath))
+            {
+                Log.Error("App settings not found in: {0}", appsettingsPath);
+                throw new FileNotFoundException("Application settings is not found.");
+            }
+
+            Log.Debug("App settings found in: {0}", appsettingsPath);
             return Host.CreateDefaultBuilder(args)
                 .ConfigureAppConfiguration((hostingContext, config) =>
                 {
-                    config.AddJsonFile(GetAppSettingsPath(), optional: false, reloadOnChange: true);
+                    config.AddJsonFile(appsettingsPath, optional: false, reloadOnChange: true);
                 })
                 .UseSerilog()
                 .ConfigureWebHostDefaults(webBuilder =>
