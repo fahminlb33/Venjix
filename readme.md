@@ -10,7 +10,7 @@ Release AnyCPU | master | ![.NET Core](https://github.com/fahminlb33/Venjix/work
 
 ## Features
 
-1. Built using ASP.NET Core MVC (.NET 3.1).
+1. Built using ASP.NET Core MVC (.NET 5).
 2. SQLite database.
 3. ML.NET integration to run forecasting.
 4. Basic table and chart visualization.
