@@ -12,32 +12,40 @@
     </a>
 </h1>
 <div class="row">
-    <div class="col-lg-6">
-        <div class="card mb-4">
-            <div class="card-header">
-                <h6 class="m-0 font-weight-bold text-primary">Telegram Bot <span class="badge badge-@(Model.IsTelegramTokenValid ? "success" : "danger")">@(Model.IsTelegramTokenValid ? "Activated" : "Disabled")</span></h6>
-            </div>
-            <div class="card-body">
-                <partial name="_SettingsTelegramBotPartial" />
+
+    <div class="col">
+       
+        <div class="card"> 
+            <div class="card-body p-1">
+                <ul class="nav nav-borders" id="cardTab" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active" id="bot-tab" href="#bot" data-toggle="tab" role="tab" aria-controls="bot" aria-selected="true">Telegram Bot</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="api-tab" href="#api" data-toggle="tab" role="tab" aria-controls="api" aria-selected="false">API Key</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="health-tab" href="#health" data-toggle="tab" role="tab" aria-controls="health" aria-selected="false">Health Checks</a>
+                    </li>
+                </ul>
+
+                <div class="tab-content mt-2 p-4" id="cardTabContent">
+                    <div class="tab-pane fade show active" id="bot" role="tabpanel" aria-labelledby="bot-tab">
+                        <h6 class="mb-3">Status : <span class="badge badge-@(Model.IsTelegramTokenValid ? "success" : "danger")">@(Model.IsTelegramTokenValid ? "Activated" : "Disabled")</span></h6>
+                        <partial name="_SettingsTelegramBotPartial" />
+                    </div>
+                    <div class="tab-pane fade" id="api" role="tabpanel" aria-labelledby="api-tab">
+                        <h6 class="m-0 font-weight-bold text-primary card-title">API Key</h6>
+                        <partial name="_SettingsKeyPartial" />
+                    </div>
+                    <div class="tab-pane fade" id="health" role="tabpanel" aria-labelledby="health-tab">
+
+                        <h6 class="m-0 font-weight-bold text-primary card-title">Health Checks</h6>
+                        <partial name="_SettingsHealthPartial" />
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-    <div class="col-lg-6">
-        <div class="card mb-4">
-            <div class="card-header">
-                <h6 class="m-0 font-weight-bold text-primary">API Key</h6>
-            </div>
-            <div class="card-body">
-                <partial name="_SettingsKeyPartial" />
-            </div>
-        </div>
-        <div class="card mb-4">
-            <div class="card-header">
-                <h6 class="m-0 font-weight-bold text-primary">Health Checks</h6>
-            </div>
-            <div class="card-body">
-                <partial name="_SettingsHealthPartial" />
-            </div>
-        </div>
-    </div>
+       
 </div>
