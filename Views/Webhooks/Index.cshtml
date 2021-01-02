@@ -44,6 +44,7 @@
     <script>
         $(document).ready(function () {
             var table = $('#dataTable').DataTable({
+                
                 serverSide: true,
                 ajax: {
                     url: '@(Url.Action("TableData"))',
@@ -57,7 +58,9 @@
                     { name: "Name", data: "name", title: "Webhook Name" },
                     { name: "Method", data: "method", title: "Method" },
                     { name: "UriFormat", data: "uriFormat", title: "URI" },
-                    { title: "Manage", data: null, defaultContent: '<button class="btn btn-outline-primary btn-sm">Edit</button> <button class="btn btn-outline-danger btn-sm">Delete</button>' }
+                    {
+                        title: "Manage",
+                        width: '200px', data: null, defaultContent: '<button class="btn btn-outline-primary btn-sm">Edit</button> <button class="btn btn-outline-danger btn-sm">Delete</button>' }
                 ]
             });
 

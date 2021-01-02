@@ -11,7 +11,8 @@
             <i class="fas fa-info fa-xs "></i>
         </a>
     </h4>
-    <a asp-action="Add" asp-controller="Users" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-plus fa-sm text-white-50"></i> Add Sensors</a>
+
+    <a asp-action="Add" asp-controller="Users" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-plus fa-sm text-white-50"></i> Add User</a>
 </div>
 
 <div class="card shadow mb-4">
@@ -58,7 +59,9 @@
                 columns: [
                     { name: "Username", data: "username", title: "Username" },
                     { name: "Role", data: "role", title: "Role" },
-                    { title: "Manage", data: null, defaultContent: '<button id="Edit" class="btn btn-transparent-dark mr-2">Edit</button><button class="btn btn-transparent-dark mr-2">Delete</button>' }
+                    {
+                        title: "Manage",
+                        width: '200px', data: null, defaultContent: '<button id="Edit" class="btn btn-transparent-dark mr-2 btn-sm">Edit</button><button class="btn btn-transparent-dark mr-2 btn-sm">Delete</button>' }
                 ]
             });
 

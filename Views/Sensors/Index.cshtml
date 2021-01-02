@@ -56,7 +56,12 @@
                 columns: [
                     { name: "ApiField", data: "apiField", title: "API Field" },
                     { name: "DisplayName", data: "displayName", title: "Display Name" },
-                    { title: "Manage", data: null, defaultContent: '<button class="btn btn-outline-primary btn-sm">Edit</button> <button class="btn btn-outline-danger btn-sm">Delete</button>' }
+                    {
+                        title: "Manage",
+                        width: '200px',
+                        data: null,
+                        defaultContent: '<button class="btn btn-outline-primary btn-sm">Edit</button> <button class="btn btn-outline-danger btn-sm">Delete</button>'
+                    }
                 ]
             });
 

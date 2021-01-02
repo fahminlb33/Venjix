@@ -134,21 +134,13 @@
             </li>
 
             <!-- Nav Item - Users -->
-            <li class="nav-item" active-when="/Users/">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUsers" aria-expanded="true"
-                   aria-controls="collapseUsers" collapsed-when="/Users/">
-                    <i class="fas fa-fw fa-users"></i>
+            <li class="nav-item" active-when="/Users/Index">
+                <a class="nav-link" active-when="/Users/Index" asp-controller="Users" asp-action="Index">
+                    <i class="fas fa-fw fa-user"></i>
                     <span>Users</span>
                 </a>
-                <div id="collapseUsers" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar" show-when="/Users/">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" active-when="/Users/Profile" asp-controller="Users" asp-action="Profile">Profile</a>
-                        <a class="collapse-item" active-when="/Users/Add|Edit" asp-controller="Users" asp-action="Add">Add User</a>
-                        <a class="collapse-item" active-when="/Users/Index" asp-controller="Users" asp-action="Index">Users</a>
-                    </div>
-                </div>
             </li>
-
+             
             <!-- Nav Item - Settings -->
             <li class="nav-item" active-when="/Home/Settings">
                 <a class="nav-link" active-when="/Home/Settings" asp-controller="Home" asp-action="Settings">
