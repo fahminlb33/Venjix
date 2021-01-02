@@ -16,59 +16,77 @@
     <div class="card-body">
         <form>
             <div class="form-row">
-                <div class="form-group col-md-3">
+                <div class="form-group col">
                     <label asp-for="SensorId">Sensor</label>
                     <select class="form-control" asp-for="SensorId" asp-items="Model.Sensors"></select>
                 </div>
             </div>
 
             <div class="form-row">
-                <div class="form-group col-md-2">
+                <div class="form-group col">
                     <label asp-for="SeriesLength">Series length</label>
                     <input type="number" class="form-control" asp-for="SeriesLength">
                 </div>
-                <div class="form-group col-md-2">
+                <div class="form-group col">
                     <label asp-for="WindowSize">Window size</label>
                     <input type="number" class="form-control" asp-for="WindowSize">
                 </div>
             </div>
 
             <div class="form-row">
-                <div class="form-group col-md-2">
+                <div class="form-group col">
                     <label asp-for="Horizon">Horizon</label>
                     <input type="number" class="form-control" asp-for="Horizon">
                 </div>
-                <div class="form-group col-md-1">
+                <div class="form-group col">
                     <label asp-for="TestSize">Test size (%)</label>
                     <input type="number" class="form-control" asp-for="TestSize">
                 </div>
-                <div class="form-group col-md-1">
+                <div class="form-group col">
                     <label asp-for="ConfidenceLevel">Confidence (%)</label>
                     <input type="number" class="form-control" asp-for="ConfidenceLevel">
                 </div>
             </div>
 
+            <div class="form-row">
+                <div class="form-group col">
+                    <label asp-for="TestSize">Test size (%)</label>
+                    <input type="range" min="1" max="100" class="form-control" asp-for="TestSize">
+                </div>
+            </div>
             <div class="form-group">
                 <label asp-for="StartDate">Date range</label>
                 <div class="form-row">
-                    <div class="col-3">
-                        <input type="datetime-local" class="form-control" asp-for="StartDate" step="1">
+                    <div class="col-3" hidden>
+                        <input id="startdate" type="datetime-local" class="form-control" asp-for="StartDate" step="1">
                     </div>
-                    <div class="col-3">
-                        <input type="datetime-local" class="form-control" asp-for="EndDate" step="1">
+                    <div class="col-3" hidden>
+                        <input id="enddate" type="datetime-local" class="form-control" asp-for="EndDate" step="1">
+                    </div>
+                    <div class="col">
+                        <button type="button" class="btn btn-light btn-sm line-height-normal p-3" id="reportrange">
+                            <i class="mr-2 text-primary" data-feather="calendar"></i>
+                            <span></span>
+                            <i class="ml-1" data-feather="chevron-down"></i>
+                        </button>
                     </div>
                 </div>
             </div>
 
-            <button type="button" class="btn btn-success btn-icon-split" id="showButton">
+            <button type="button" class="btn btn-success btn-icon-split btn-lg" id="showButton">
                 <span class="icon text-white-50">
                     <i class="fas fa-chart-line"></i>
                 </span>
                 <span class="text">Forecast</span>
             </button>
         </form>
+    </div>
+</div>
 
-        <p id="forecastResult" class="mt-3">Run forecast to see results.</p>
+<div class="card shadow mb-4">
+
+    <div class="card-body">
+        <p id="forecastResult" class="mt-3 card-img-overlay">Run forecast to see results.</p>
 
         <div class="mt-4">
             <div id="chart"></div>
@@ -101,6 +119,7 @@
 
 @section Scripts {
     <script src="~/lib/moment.js/moment.min.js"></script>
+    <script src="~/lib/daterangepicker/daterangepicker.js"></script>
     <script src="~/lib/apexcharts/apexcharts.min.js"></script>
     <script>
         var intervals = [];
@@ -226,5 +245,49 @@
                 }
             });
         }
+
+
+        // Date Range Picker Example
+        $(function () {
+            var start = moment().subtract(29, "days");
+            var end = moment();
+
+            function cb(start, end) {
+
+                $("#startdate").val(start.format("yyyy-MM-DD") + "T00:00:00");
+                $("#enddate").val(end.format("yyyy-MM-DD")+ "T23:59:59");
+                $("#reportrange span").html(
+                    start.format("MMMM D, YYYY") + " - " + end.format("MMMM D, YYYY")
+                );
+            }
+
+            $("#reportrange").daterangepicker(
+                {
+                    startDate: start,
+                    endDate: end,
+                    ranges: {
+                        Today: [moment(), moment()],
+                        Yesterday: [
+                            moment().subtract(1, "days"),
+                            moment().subtract(1, "days"),
+                        ],
+                        "Last 7 Days": [moment().subtract(6, "days"), moment()],
+                        "Last 30 Days": [moment().subtract(29, "days"), moment()],
+                        "This Month": [
+                            moment().startOf("month"),
+                            moment().endOf("month"),
+                        ],
+                        "Last Month": [
+                            moment().subtract(1, "month").startOf("month"),
+                            moment().subtract(1, "month").endOf("month"),
+                        ],
+                    },
+                },
+                cb
+            );
+
+            cb(start, end);
+        });
+
     </script>
 }
