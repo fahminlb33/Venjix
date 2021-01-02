@@ -1,11 +1,14 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Logging;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 using Venjix.Infrastructure.Authentication;
+using Venjix.Infrastructure.DAL;
 using Venjix.Infrastructure.Services;
 using Venjix.Models;
 
@@ -13,25 +16,34 @@ namespace Venjix.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
-        private readonly IVenjixOptionsService _optionsService;
         private readonly IMapper _mapper;
-        private readonly ITelegramService _telegramService;
+        private readonly VenjixContext _context;
+        private readonly ILogger<HomeController> _logger;
         private readonly HealthCheckService _healthCheck;
+        private readonly ITelegramService _telegramService;
+        private readonly IVenjixOptionsService _optionsService;
 
-        public HomeController(ILogger<HomeController> logger, IVenjixOptionsService optionsService, IMapper mapper, ITelegramService telegramService, HealthCheckService healthCheck)
+        public HomeController(ILogger<HomeController> logger, IVenjixOptionsService optionsService, IMapper mapper, ITelegramService telegramService, HealthCheckService healthCheck, VenjixContext context)
         {
             _logger = logger;
             _optionsService = optionsService;
             _mapper = mapper;
             _telegramService = telegramService;
             _healthCheck = healthCheck;
+            _context = context;
         }
 
         [Authorize(Roles = Roles.AdminOrUser)]
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            var model = new DashboardModel
+            {
+                SensorsCount = await _context.Sensors.CountAsync(),
+                RecordedDataCount = await _context.Recordings.LongCountAsync(),
+                LastUpdate = (await _context.Recordings.OrderByDescending(x=>x.RecordingId).FirstOrDefaultAsync())?.Timestamp
+            };
+
+            return View(model);
         }
 
         [Authorize(Roles = Roles.AdminOrUser)]
