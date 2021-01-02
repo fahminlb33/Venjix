@@ -21,14 +21,14 @@
                     <input type="hidden" asp-for="SensorId" />
 
                     <div class="form-row">
-                        <div class="form-group col-md-2">
+                        <div class="form-group col">
                             <label asp-for="ApiField">API field</label>
                             <input type="text" class="form-control" asp-for="ApiField">
                             <span asp-validation-for="ApiField" class="text-danger"></span>
                         </div>
                     </div>
                     <div class="form-row">
-                        <div class="form-group col-md-2">
+                        <div class="form-group col">
                             <label asp-for="DisplayName">Display name</label>
                             <input type="text" class="form-control" asp-for="DisplayName">
                             <span asp-validation-for="DisplayName" class="text-danger"></span>
@@ -41,10 +41,16 @@
         </div>
     </div>
     <div class="col-12 col-sm-12 col-md-5 col-lg-3">
-
-        <div class="card">
-            <div class="card-body">
+        <div class="nav-sticky">
+            <div class="card">
+                <div class="card-body">
+                    <ul class="nav flex-column" id="stickyNav"> 
+                        <li class="nav-item"><a class="nav-link" href="#sidenavComponent">Side Navigation</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#stickNavComponent">Sticky Navigation</a></li>
+                    </ul>
+                </div>
             </div>
         </div>
+        
     </div>
 </div>
