@@ -14,8 +14,11 @@
     <link href="~/css/Nunito.css" rel="stylesheet preload" as="style">
     <link href="~/lib/fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet">
 
-    <!-- Custom styles for this template-->
+    <!-- SB ADMIN 2-->
     <link href="~/css/sb-admin-2.min.css" rel="stylesheet">
+
+    <!-- UI Template -->
+    <link href="~/css/styles.css" rel="stylesheet">
 
     <link href="~/img/favicon.ico" rel="icon" type="image/x-icon">
     <meta name="theme-color" content="#4e73df">
@@ -24,11 +27,10 @@
 
 <body id="page-top">
 
-    <div id="loader">
-        <iframe src="~/img/venjix.svg" width="500" height="500">
-
+    <!--<div id="loader" style="height:100vh">
+        <iframe src="~/img/venjix.svg" style="height:100vh;width:100%">
         </iframe>
-    </div>
+    </div>-->
     <!-- Page Wrapper -->
     <div id="wrapper">
 
@@ -218,13 +220,13 @@
 
     <!-- Bootstrap core JavaScript-->
     <script src="~/lib/jquery/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script defer src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 
     <!-- Core plugin JavaScript-->
     <script src="~/lib/jquery-easing/jquery.easing.min.js"></script>
 
     <!-- Custom scripts for all pages-->
-    <script src="~/js/sb-admin-2.js"></script>
+    <script defer src="~/js/sb-admin-2.js"></script>
 
     <script>
 
@@ -233,9 +235,10 @@
                 trigger: 'focus'
             });
         })
-        $(document).ready(function () {
-            document.getElementById("loader").style.display = "none";
-        });
+        //$(document).ready(function () {
+        //    document.getElementById("loader").style.display = "none";
+        //    document.getElementById("wrapper").style.display = "flex";
+        //});
     </script>
     @RenderSection("Scripts", false)
 </body>
