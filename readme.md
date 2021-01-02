@@ -1,8 +1,8 @@
 <h1 align="center">Venjix</h1>
 
 <div align="center">
-  <img src="https://img.shields.io/badge/ASP.NET-%20CORE%205-green.svg"
-    alt="ASP.NET Core 5" />   
+  <img src="https://img.shields.io/badge/ASP.NET%20Core-.NET%205-green.svg"
+    alt="ASP.NET Core .NET 5" />   
   <a href="https://opensource.org/licenses/MIT">
      <img src="https://img.shields.io/badge/License-MIT-green.svg" alt="License: MIT" />
   </a> 
