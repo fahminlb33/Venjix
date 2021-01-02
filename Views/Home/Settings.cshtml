@@ -34,13 +34,11 @@
                         <h6 class="mb-3">Status : <span class="badge badge-@(Model.IsTelegramTokenValid ? "success" : "danger")">@(Model.IsTelegramTokenValid ? "Activated" : "Disabled")</span></h6>
                         <partial name="_SettingsTelegramBotPartial" />
                     </div>
-                    <div class="tab-pane fade" id="api" role="tabpanel" aria-labelledby="api-tab">
-                        <h6 class="m-0 font-weight-bold text-primary card-title">API Key</h6>
+                    <div class="tab-pane fade" id="api" role="tabpanel" aria-labelledby="api-tab"> 
                         <partial name="_SettingsKeyPartial" />
                     </div>
                     <div class="tab-pane fade" id="health" role="tabpanel" aria-labelledby="health-tab">
-
-                        <h6 class="m-0 font-weight-bold text-primary card-title">Health Checks</h6>
+                         
                         <partial name="_SettingsHealthPartial" />
                     </div>
                 </div>

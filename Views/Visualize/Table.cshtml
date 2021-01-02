@@ -15,7 +15,7 @@
 
 <div class="row">
     <div class="col-xxl-3 col-xl-4 col-lg-12">
-        <div class="card shadow mb-4">
+        <div class="card shadow mb-4" style="min-height:450px;">
             <div class="card-body">
                 <form method="post" asp-action="TableExport">
                     <div class="form-row">
@@ -43,25 +43,26 @@
                         </div>
                     </div>
 
-                    <button type="button" class="btn btn-success  btn-lg btn-icon-split" id="showButton">
-                        <span class="icon text-white-50">
-                            <i class="fas fa-eye"></i>
-                        </span>
-                        <span class="text">Apply Filter</span>
-                    </button>
-                    <button type="submit" class="btn btn-primary  btn-lg btn-icon-split mt-2">
-                        <span class="icon text-white-50">
-                            <i class="fas fa-download"></i>
-                        </span>
-                        <span class="text">Download as CSV</span>
-                    </button>
                 </form>
+                <div class="row">
+                    <div class="col">
+                        <button type="button" class="btn btn-success btn-block  text-xs" id="showButton">
+                            <i data-feather="filter"></i> <span class="ml-2">Apply Filter</span>
+                        </button>
+                    </div>
+                    <div class="col">
+                        <button type="button" class="btn  btn-primary btn-block  text-xs">
+                            <i data-feather="download"></i> <span class="ml-2">Download</span>
+                        </button>
+                    </div>
+
+                </div>
             </div>
         </div>
     </div>
 
     <div class="col-xxl-9 col-xl-8 col-lg-12">
-        <div class="card shadow mb-4">
+        <div class="card shadow mb-4" style="min-height:450px;">
             <div class="card-body">
                 <div class="table-responsive mt-5">
                     <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
