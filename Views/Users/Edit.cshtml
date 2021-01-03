@@ -9,15 +9,8 @@
 }
 
 
-<div class="d-sm-flex align-items-center justify-content-between mb-3">
-    <h4 class="h4 mb-0 text-gray-800">
-        @ViewData[ViewKeys.PageHeading]
-        <a tabindex="0" class="btn btn-link" data-container="body" data-toggle="popover" data-trigger="focus" data-placement="right" data-content="@ViewData[ViewKeys.PageSubheading]">
-            <i class="fas fa-info fa-xs "></i>
-        </a>
-    </h4>
-   
-</div>
+<vc:header-panel page-heading="@ViewData[ViewKeys.PageHeading]" page-subheading="@ViewData[ViewKeys.PageSubheading]"
+                 action="" action-label="" controller="" action-icon=""></vc:header-panel>
 <div class="row">
     <div class="col-lg-8 col-12">
         <div class="card mb-4"> 

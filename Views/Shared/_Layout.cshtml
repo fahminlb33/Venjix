@@ -10,30 +10,28 @@
 
     <title>@ViewData[ViewKeys.Title]</title>
 
-    <!-- Custom fonts for this template-->
+    <!-- Custom css-->
     <link href="~/css/Nunito.css" rel="stylesheet preload" as="style">
+
+    <link defer href="~/css/sb-admin-2.min.css" rel="stylesheet">
+    <link defer  href="~/css/styles.min.css" rel="stylesheet">
+    <link href="~/lib/daterangepicker/daterangepicker.css" rel="stylesheet">
     <link href="~/lib/fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet">
 
-    <!-- SB ADMIN 2-->
-    <link href="~/css/sb-admin-2.min.css" rel="stylesheet">
-
-    <!-- UI Template -->
-    <link href="~/css/styles.css" rel="stylesheet">
-
-    <link href="~/lib/daterangepicker/daterangepicker.css" rel="stylesheet">
-    <link href="~/img/favicon.ico" rel="icon" type="image/x-icon">
-
     <script src="https://unpkg.com/feather-icons"></script>
+
+    <link rel="icon shortcut" runat="server" href="~/img/favicon.ico" type="image/x-icon">
     <meta name="theme-color" content="#4e73df">
+    <link rel="apple-touch-icon" sizes="180x180" href="~/img/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="~/img/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="~/img/favicon-16x16.png">
+    <link rel="manifest" href="~/manifest.json">
+
     @RenderSection("Styles", false)
 </head>
 
 <body id="page-top">
 
-    <!--<div id="loader" style="height:100vh">
-        <iframe src="~/img/venjix.svg" style="height:100vh;width:100%">
-        </iframe>
-    </div>-->
     <!-- Page Wrapper -->
     <div id="wrapper">
 
@@ -140,7 +138,7 @@
                     <span>Users</span>
                 </a>
             </li>
-             
+
             <!-- Nav Item - Settings -->
             <li class="nav-item" active-when="/Home/Settings">
                 <a class="nav-link" active-when="/Home/Settings" asp-controller="Home" asp-action="Settings">
@@ -215,6 +213,7 @@
 
     <!-- Bootstrap core JavaScript-->
     <script src="~/lib/jquery/jquery.min.js"></script>
+    <script src="~/lib/jquery/jquery.min.js"></script>
     <script defer src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 
     <!-- Core plugin JavaScript-->
@@ -230,11 +229,12 @@
                 trigger: 'focus'
             });
         })
-                //$(document).ready(function () {
-                //    document.getElementById("loader").style.display = "none";
-                //    document.getElementById("wrapper").style.display = "flex";
-                //});
+        //$(document).ready(function () {
+        //    document.getElementById("loader").style.display = "none";
+        //    document.getElementById("wrapper").style.display = "flex";
+        //});
     </script>
     @RenderSection("Scripts", false)
+   
 </body>
 </html>

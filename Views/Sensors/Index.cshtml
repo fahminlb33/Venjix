@@ -1,10 +1,11 @@
 ﻿@{
     ViewData[ViewKeys.Title] = "Sensors - Venjix";
     ViewData[ViewKeys.PageHeading] = "Manage Sensors";
-    ViewData[ViewKeys.PageSubheading] = "Add, edit, and delete monitored sensors.";
-@using Venjix.Views.Components;
+    ViewData[ViewKeys.PageSubheading] = "Add, edit, and delete monitored sensors."; 
 }
  
+<vc:header-panel page-heading="@ViewData[ViewKeys.PageHeading]" page-subheading = "@ViewData[ViewKeys.PageSubheading]"
+    action = "Add" action-label = "Add Sensors"  controller = "Sensors" action-icon= "fas fa-plus" ></vc:header-panel>
 
 <div class="card shadow mb-4">
     <div class="card-body">
@@ -24,7 +25,7 @@
             </table>
         </div>
     </div>
-</div> 
+</div>
 
 @section Styles {
     <link href="~/lib/datatables/css/dataTables.bootstrap4.min.css" rel="stylesheet">

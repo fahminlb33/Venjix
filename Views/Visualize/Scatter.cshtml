@@ -5,12 +5,8 @@
     ViewData[ViewKeys.PageSubheading] = "View relations between two measurement in a scatter plot.";
 }
 
-<h1 class="h3 mb-2 text-gray-800">
-    @ViewData[ViewKeys.PageHeading]
-    <a tabindex="0" class="btn btn-link" data-container="body" data-toggle="popover" data-trigger="focus" data-placement="right" data-content="@ViewData[ViewKeys.PageSubheading]">
-        <i class="fas fa-info"></i>
-    </a>
-</h1>
+<vc:header-panel page-heading="@ViewData[ViewKeys.PageHeading]" page-subheading="@ViewData[ViewKeys.PageSubheading]"
+                 action="" action-label="" controller="" action-icon=""></vc:header-panel>
 
 <div class="row">
     <div class="col-xxl-3 col-xl-4 col-12">

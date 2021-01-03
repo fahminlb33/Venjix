@@ -3,19 +3,11 @@
     ViewData[ViewKeys.PageHeading] = "Manage Users";
     ViewData[ViewKeys.PageSubheading] = "Add, edit, and delete users.";
 }
+<vc:header-panel page-heading="@ViewData[ViewKeys.PageHeading]" page-subheading="@ViewData[ViewKeys.PageSubheading]"
+                 action="Add" action-label="Add User" controller="Users" action-icon="fas fa-plus"></vc:header-panel>
 
-<div class="d-sm-flex align-items-center justify-content-between mb-3">
-    <h4 class="h4 mb-0 text-gray-800">
-        @ViewData[ViewKeys.PageHeading]
-        <a tabindex="0" class="btn btn-link" data-container="body" data-toggle="popover" data-trigger="focus" data-placement="right" data-content="@ViewData[ViewKeys.PageSubheading]">
-            <i class="fas fa-info fa-xs "></i>
-        </a>
-    </h4>
 
-    <a asp-action="Add" asp-controller="Users" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-plus fa-sm text-white-50"></i> Add User</a>
-</div>
-
-<div class="card shadow mb-4">
+<div class="card shadow mb-4 animated--fade-in">
 
     <div class="card-body">
         @if (TempData[ViewKeys.Message] != null)

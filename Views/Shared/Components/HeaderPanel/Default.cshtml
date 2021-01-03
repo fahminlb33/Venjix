@@ -1,0 +1,16 @@
+﻿<div class="d-sm-flex align-items-center justify-content-between mb-3 ">
+    <h4 class="h4 mb-0 text-gray-800 animated--fade-in">
+        @Model.PageHeading    
+        <a tabindex="0" class="btn btn-link" data-container="body" data-toggle="popover" data-trigger="focus" data-placement="right" data-content="@Model.PageSubheading">
+            <i data-feather="info" class="feather-sm"></i>
+        </a>
+    </h4>
+    @if (!String.IsNullOrEmpty(Model.Action))
+    {
+        <a asp-action="@Model.Action" asp-controller="@Model.Controller" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow animated--fade-in" style="min-width:0.3em">
+    
+            <i class="@Model.ActionIcon fa-sm text-white-50"></i>
+            &nbsp; @Model.ActionLabel
+        </a>
+    }
+</div>

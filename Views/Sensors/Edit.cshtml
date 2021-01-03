@@ -5,12 +5,8 @@
     ViewData[ViewKeys.PageSubheading] = Model.IsEdit ? "Edit sensor fields." : "Add sensor fields.";
 }
 
-<h4 class="h4 mb-2 text-gray-800">
-    @ViewData[ViewKeys.PageHeading]
-    <a tabindex="0" class="btn btn-link btn-sm" data-container="body" data-toggle="popover" data-trigger="focus" data-placement="right" data-content="@ViewData[ViewKeys.PageSubheading]">
-        <i class="fas fa-info fa-xs"></i>
-    </a>
-</h4>
+<vc:header-panel page-heading="@ViewData[ViewKeys.PageHeading]" page-subheading="@ViewData[ViewKeys.PageSubheading]"
+                 action="" action-label="" controller="" action-icon=""></vc:header-panel>
 
 <div class="row">
     <div class="col-sm-12 col-12 col-md-7 col-lg-9">

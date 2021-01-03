@@ -5,12 +5,9 @@
     ViewData[ViewKeys.PageSubheading] = "Forecast time series data to predict next events.";
 }
 
-<h1 class="h3 mb-2 text-gray-800">
-    @ViewData[ViewKeys.PageHeading]
-    <a tabindex="0" class="btn btn-link" data-container="body" data-toggle="popover" data-trigger="focus" data-placement="right" data-content="@ViewData[ViewKeys.PageSubheading]">
-        <i class="fas fa-info"></i>
-    </a>
-</h1>
+<vc:header-panel page-heading="@ViewData[ViewKeys.PageHeading]" page-subheading="@ViewData[ViewKeys.PageSubheading]"
+                 action="" action-label="" controller="" action-icon=""></vc:header-panel>
+
 <div class="row">
     <div class="col-xxl-4 col-xl-5 col-lg-12">
         <div class="card shadow mb-4" style="min-height:450px">
@@ -70,14 +67,14 @@
 
                     <button type="button" class="btn btn-success btn-block" id="showButton">
                         <i data-feather="bar-chart"></i> <span class="ml-2 text-xs">Start Forecasting</span>
-                    </button> 
+                    </button>
                 </form>
             </div>
         </div>
     </div>
 
     <div class="col-xxl-8 col-xl-7 col-lg-12">
-        <div class="card shadow mb-4"  style="min-height:450px"> 
+        <div class="card shadow mb-4" style="min-height:450px">
             <div class="card-body">
                 <p id="forecastResult">Run forecast to see results.</p>
 
@@ -241,7 +238,7 @@
             });
         }
 
-         
+
         $(function () {
             var start = moment().subtract(29, "days");
             var end = moment();

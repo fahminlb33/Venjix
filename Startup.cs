@@ -1,4 +1,5 @@
 using AutoMapper;
+
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
@@ -9,15 +10,21 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+
 using Newtonsoft.Json;
+
 using Serilog;
+
 using System;
 using System.Linq;
+
 using Venjix.Infrastructure.AI;
 using Venjix.Infrastructure.DAL;
 using Venjix.Infrastructure.DataTables;
 using Venjix.Infrastructure.DTO;
 using Venjix.Infrastructure.Services;
+
+using WebEssentials.AspNetCore.Pwa;
 
 namespace Venjix
 {
@@ -80,6 +87,14 @@ namespace Venjix
             });
 
 
+            services.AddServiceWorker(new PwaOptions{
+                OfflineRoute = "/offline",
+                Strategy = ServiceWorkerStrategy.Minimal
+            }
+            );
+
+
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -132,8 +147,7 @@ namespace Venjix
                     pattern: "{controller=Home}/{action=Index}/{id?}");
                 endpoints.MapControllerRoute(
                     name: "APIs",
-                    pattern: "api/{controller=ApiData}/{action=SaveDataByQuery}/{id?}"); 
-                endpoints.MapBlazorHub();
+                    pattern: "api/{controller=ApiData}/{action=SaveDataByQuery}/{id?}");
             });
         }
     }
