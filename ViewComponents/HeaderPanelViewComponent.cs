@@ -30,7 +30,7 @@ namespace Venjix.ViewComponents
 
         public IViewComponentResult Invoke(string pageHeading , string pageSubheading, string action = "", string actionLabel = "", string controller = "", string actionIcon = "")
         {
-            Model m = new Model() { PageHeading = pageHeading, PageSubheading = pageSubheading, Action = action, ActionLabel = actionLabel, Controller = controller, ActionIcon = actionIcon };
+            Model m = new() { PageHeading = pageHeading, PageSubheading = pageSubheading, Action = action, ActionLabel = actionLabel, Controller = controller, ActionIcon = actionIcon };
 
             return View("Default", m);
         }
