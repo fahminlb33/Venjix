@@ -78,6 +78,8 @@ namespace Venjix
                 instance.Reload().GetAwaiter().GetResult();
                 return instance;
             });
+
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -130,7 +132,8 @@ namespace Venjix
                     pattern: "{controller=Home}/{action=Index}/{id?}");
                 endpoints.MapControllerRoute(
                     name: "APIs",
-                    pattern: "api/{controller=ApiData}/{action=SaveDataByQuery}/{id?}");
+                    pattern: "api/{controller=ApiData}/{action=SaveDataByQuery}/{id?}"); 
+                endpoints.MapBlazorHub();
             });
         }
     }
