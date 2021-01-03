@@ -53,10 +53,10 @@
                     { name: "Role", data: "role", title: "Role" },
                     {
                         title: "Manage",
-                        width: '200px', data: null, defaultContent: '<button id="Edit" class="btn btn-transparent-dark mr-2 btn-sm">Edit</button><button class="btn btn-transparent-dark mr-2 btn-sm">Delete</button>' }
+                        width: '200px', data: null, defaultContent: '<button class="btn btn-sm btn-outline-primary">Edit</button> <button class="btn btn-sm btn-outline-danger">Delete</button>' }
                 ]
             });
-
+             
             $('#dataTable tbody').on('click', 'button', function () {
                 var button = $(this).text()
                 var data = table.row($(this).parents('tr')).data();

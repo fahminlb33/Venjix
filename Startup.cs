@@ -23,8 +23,7 @@ using Venjix.Infrastructure.DAL;
 using Venjix.Infrastructure.DataTables;
 using Venjix.Infrastructure.DTO;
 using Venjix.Infrastructure.Services;
-
-using WebEssentials.AspNetCore.Pwa;
+ 
 
 namespace Venjix
 {
@@ -85,15 +84,7 @@ namespace Venjix
                 instance.Reload().GetAwaiter().GetResult();
                 return instance;
             });
-
-
-            services.AddServiceWorker(new PwaOptions{
-                OfflineRoute = "/offline",
-                Strategy = ServiceWorkerStrategy.Minimal
-            }
-            );
-
-
+             
 
         }
 
