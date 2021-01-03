@@ -43,3 +43,65 @@
         }
     }
 }
+
+
+.nav {
+    .nav-link {
+        .nav-link-icon {
+            margin-right: 0.5rem;
+        }
+    }
+}
+
+.sidenav-menu {
+    .nav-link {
+        .nav-link-icon {
+            margin-right: 0.5rem;
+        }
+    }
+}
+
+.nav-borders {
+    .nav-link {
+        color: #69707a;
+        border-bottom-width: 0.125rem;
+        border-bottom-style: solid;
+        border-bottom-color: transparent;
+        padding-top: 0.5rem;
+        padding-bottom: 0.5rem;
+        padding-left: 0;
+        padding-right: 0;
+        margin-left: 1rem;
+        margin-right: 1rem;
+    }
+
+    .nav-link.active {
+        color: #0061f2;
+        border-bottom-color: #0061f2;
+    }
+
+    .nav-link.disabled {
+        color: #c5ccd6;
+    }
+}
+
+.nav-borders.flex-column {
+    .nav-link {
+        padding-top: 0;
+        padding-bottom: 0;
+        padding-right: 1rem;
+        padding-left: 1rem;
+        margin-top: 0.5rem;
+        margin-bottom: 0.5rem;
+        margin-right: 0;
+        margin-left: 0;
+        border-bottom: none;
+        border-right-width: 0.125rem;
+        border-right-style: solid;
+        border-right-color: transparent;
+    }
+
+    .nav-link.active {
+        border-right-color: #0061f2;
+    }
+}

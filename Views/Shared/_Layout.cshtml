@@ -10,13 +10,13 @@
 
     <title>@(ViewData[ViewKeys.Title] ?? "Venjix")</title>
 
+    @RenderSection("Styles", false)
     <!-- Custom css-->
     <link href="~/css/Nunito.css" rel="stylesheet preload" as="style">
 
-    <link defer href="~/css/sb-admin-2.min.css" rel="stylesheet">
-    <link defer  href="~/css/styles.min.css" rel="stylesheet">
     <link href="~/lib/daterangepicker/daterangepicker.css" rel="stylesheet">
     <link href="~/lib/fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet">
+    <link defer href="~/css/sb-admin-2.min.css" rel="stylesheet">
 
     <script src="https://unpkg.com/feather-icons"></script>
 
@@ -27,7 +27,6 @@
     <link rel="icon" type="image/png" sizes="16x16" href="~/img/favicon-16x16.png">
     <link rel="manifest" href="~/manifest.json">
 
-    @RenderSection("Styles", false)
 </head>
 
 <body id="page-top">

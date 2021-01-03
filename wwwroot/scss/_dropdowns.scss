@@ -20,3 +20,131 @@
         display: none;
     }
 }
+
+.no-caret {
+    .dropdown-toggle::after {
+        display: none;
+    }
+}
+
+.dropdown-user {
+    .dropdown-menu {
+        min-width: 13rem;
+
+        .dropdown-header {
+            text-transform: none;
+            letter-spacing: normal;
+
+            .dropdown-user-img {
+                height: 2.5rem;
+                width: 2.5rem;
+                margin-right: 1rem;
+                border-radius: 100%;
+            }
+
+            .dropdown-user-details {
+                font-weight: 400;
+
+                .dropdown-user-details-name {
+                    color: #212832;
+                    font-weight: 500;
+                    font-size: 0.9rem;
+                    max-width: 10rem;
+                    white-space: nowrap;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                }
+
+                .dropdown-user-details-email {
+                    color: #69707a;
+                    font-size: 0.75rem;
+                    max-width: 10rem;
+                    white-space: nowrap;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                }
+            }
+        }
+
+        .dropdown-item {
+            align-items: center;
+
+            .dropdown-item-icon {
+                color: #a7aeb8;
+
+                svg {
+                    vertical-align: inherit;
+                }
+            }
+
+            &:active {
+                .dropdown-item-icon {
+                    color: #fff;
+                }
+            }
+        }
+    }
+}
+
+
+.dropdown-menu {
+    font-size: 0.9rem;
+    border: none;
+    box-shadow: 0 0.15rem 1.75rem 0 rgba(33, 40, 50, 0.15);
+
+    .dropdown-header {
+        font-size: 0.75rem;
+        font-weight: 700;
+        display: flex;
+        align-items: center;
+    }
+
+    .dropdown-item {
+        display: flex;
+        align-items: center;
+
+        .dropdown-item-icon {
+            margin-right: 0.5rem;
+            line-height: 1;
+
+            svg {
+                height: 0.9em;
+                width: 0.9em;
+            }
+        }
+
+        &:active {
+            .dropdown-item-icon {
+                color: #fff;
+            }
+        }
+    }
+
+    .dropdown-item.active {
+        .dropdown-item-icon {
+            color: #fff;
+        }
+    }
+}
+
+.dropdown {
+    .dropdown-toggle {
+        display: inline-flex;
+        align-items: center;
+
+        .dropdown-arrow {
+            margin-left: 0.4rem;
+            margin-right: 0;
+            transition: transform 0.1s ease-in-out;
+            font-size: 0.6em;
+        }
+    }
+}
+
+.dropdown.show {
+    .dropdown-toggle {
+        .dropdown-arrow {
+            transform: rotate(90deg);
+        }
+    }
+}

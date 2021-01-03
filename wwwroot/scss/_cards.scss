@@ -37,4 +37,170 @@
             }
         }
     }
+
+  
+    
+}
+.card-waves {
+    .card-body {
+        background-size: 100% auto;
+        background-repeat: no-repeat;
+        background-position: center bottom;
+        background-image: url("/img/bg-waves.svg");
+    }
+}
+
+
+
+.card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    word-wrap: break-word;
+    background-color: #fff;
+    background-clip: border-box;
+    border: 1px solid rgba(33, 40, 50, 0.125);
+    border-radius: 0.35rem;
+
+    > hr {
+        margin-right: 0;
+        margin-left: 0;
+    }
+
+    > .list-group {
+        border-top: inherit;
+        border-bottom: inherit;
+
+        &:first-child {
+            border-top-width: 0;
+            border-top-left-radius: 0.35rem;
+            border-top-right-radius: 0.35rem;
+        }
+
+        &:last-child {
+            border-bottom-width: 0;
+            border-bottom-right-radius: 0.35rem;
+            border-bottom-left-radius: 0.35rem;
+        }
+
+        + {
+            .card-footer {
+                border-top: 0;
+            }
+        }
+    }
+
+    > .card-header {
+        + {
+            .list-group {
+                border-top: 0;
+            }
+        }
+    }
+}
+
+.card-body {
+    flex: 1 1 auto;
+    min-height: 1px;
+    padding: 1.35rem;
+}
+
+.card-title {
+    margin-bottom: 1rem;
+}
+
+.card-subtitle {
+    margin-top: -0.5rem;
+    margin-bottom: 0;
+}
+
+.card-text {
+    &:last-child {
+        margin-bottom: 0;
+    }
+}
+
+.card-link {
+    &:hover {
+        text-decoration: none;
+    }
+
+    + {
+        .card-link {
+            margin-left: 1.35rem;
+        }
+    }
+}
+
+.card-header {
+    padding: 1rem 1.35rem;
+    margin-bottom: 0;
+    background-color: rgba(33, 40, 50, 0.03);
+    border-bottom: 1px solid rgba(33, 40, 50, 0.125);
+
+    &:first-child {
+        border-radius: 0.35rem 0.35rem 0 0;
+    }
+}
+
+.card-footer {
+    padding: 1rem 1.35rem;
+    background-color: rgba(33, 40, 50, 0.03);
+    border-top: 1px solid rgba(33, 40, 50, 0.125);
+
+    &:last-child {
+        border-radius: 0 0 0.35rem 0.35rem;
+    }
+}
+
+.card-header-tabs {
+    margin-right: -0.675rem;
+    margin-bottom: -1rem;
+    margin-left: -0.675rem;
+    border-bottom: 0;
+}
+
+.card-header-pills {
+    margin-right: -0.675rem;
+    margin-left: -0.675rem;
+}
+
+.card-img-overlay {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    padding: 1.25rem;
+    border-radius: 0.35rem;
+}
+
+.card-img {
+    flex-shrink: 0;
+    width: 100%;
+    border-top-left-radius: 0.35rem;
+    border-top-right-radius: 0.35rem;
+    border-bottom-right-radius: 0.35rem;
+    border-bottom-left-radius: 0.35rem;
+}
+
+.card-img-top {
+    flex-shrink: 0;
+    width: 100%;
+    border-top-left-radius: 0.35rem;
+    border-top-right-radius: 0.35rem;
+}
+
+.card-img-bottom {
+    flex-shrink: 0;
+    width: 100%;
+    border-bottom-right-radius: 0.35rem;
+    border-bottom-left-radius: 0.35rem;
+}
+
+.card-deck {
+    .card {
+        margin-bottom: 0.75rem;
+    }
 }

@@ -16,17 +16,18 @@ $gray-800: #5a5c69 !default;
 $gray-900: #3a3b45 !default;
 $black: #000 !default;
 
-$blue: #4e73df !default;
-$indigo: #6610f2 !default;
-$purple: #6f42c1 !default;
-$pink: #e83e8c !default;
-$red: #e74a3b !default;
-$orange: #fd7e14 !default;
-$yellow: #f6c23e !default;
-$green: #1cc88a !default;
-$teal: #20c9a6 !default;
-$cyan: #36b9cc !default;
+$blue: #0061f2 !default;
+$indigo: #5800e8 !default;
+$purple: #6900c7 !default;
+$pink: #e30059 !default;
+$red: #e81500 !default;
+$orange: #f76400 !default;
+$yellow: #f4a100 !default;
+$green: #00ac69 !default;
+$teal: #00ba94 !default;
+$cyan: #00cfd5 !default;
 
+  
 // Custom Colors
 $brand-github: #24292e !default;
 
@@ -36,7 +37,7 @@ $yiq-contrasted-threshold: 195 !default;
 // Typography
 $body-color: $gray-600 !default;
 
-$font-family-sans-serif: "Nunito", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", 'Noto Color Emoji' !default;
+$font-family-sans-serif: "Metropolis", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", 'Noto Color Emoji' !default;
 
 $font-weight-light: 300 !default;
 // $font-weight-base: 400;
