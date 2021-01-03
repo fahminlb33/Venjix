@@ -2,8 +2,8 @@
 
 <form class="form-inline" method="post" asp-action="KeySave" asp-controller="Home">
     <label asp-for="ApiKey" class="mr-2">API Key</label>
-    <input type="text" class="flex-fill form-control mr-2" asp-for="ApiKey">
-    <button type="submit" class="btn btn-primary my-1">Save</button>
+    <input type="text" class="flex-fill form-control form-control-sm mr-2" asp-for="ApiKey">
+    <button type="submit" class="btn btn-primary  btn-sm  my-1">Save</button>
 
     <span asp-validation-for="ApiKey" class="text-danger ml-2"></span>
 </form>

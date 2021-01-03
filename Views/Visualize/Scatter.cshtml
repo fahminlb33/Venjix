@@ -5,48 +5,60 @@
     ViewData[ViewKeys.PageSubheading] = "View relations between two measurement in a scatter plot.";
 }
 
-<h1 class="h3 mb-2 text-gray-800">
-    @ViewData[ViewKeys.PageHeading]
-    <a tabindex="0" class="btn btn-link" data-container="body" data-toggle="popover" data-trigger="focus" data-placement="right" data-content="@ViewData[ViewKeys.PageSubheading]">
-        <i class="fas fa-info"></i>
-    </a>
-</h1>
+<vc:header-panel page-heading="@ViewData[ViewKeys.PageHeading]" page-subheading="@ViewData[ViewKeys.PageSubheading]"
+                 action="" action-label="" controller="" action-icon=""></vc:header-panel>
 
-<div class="card shadow mb-4">
-    <div class="card-body">
-        <form>
-            <div class="form-row">
-                <div class="form-group col-md-2">
-                    <label asp-for="SensorAId">Sensor X</label>
-                    <select class="form-control" asp-for="SensorAId" asp-items="Model.Sensors"></select>
-                </div>
-                <div class="form-group col-md-2">
-                    <label asp-for="SensorBId">Sensor Y</label>
-                    <select class="form-control" asp-for="SensorBId" asp-items="Model.Sensors"></select>
+<div class="row">
+    <div class="col-xxl-3 col-xl-4 col-12">
+        <div class="card shadow mb-4" style="min-height:450px;">
+            <div class="card-body">
+                <form>
+                    <div class="form-row">
+                        <div class="form-group col">
+                            <label asp-for="SensorAId">Sensor X</label>
+                            <select class="form-control" asp-for="SensorAId" asp-items="Model.Sensors"></select>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col">
+                            <label asp-for="SensorBId">Sensor Y</label>
+                            <select class="form-control" asp-for="SensorBId" asp-items="Model.Sensors"></select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="StartDate">Date range</label>
+                        <div class="form-row">
+                            <div class="col-3" hidden>
+                                <input id="startdate" type="datetime-local" class="form-control" asp-for="StartDate" step="1">
+                            </div>
+                            <div class="col-3" hidden>
+                                <input id="enddate" type="datetime-local" class="form-control" asp-for="EndDate" step="1">
+                            </div>
+                            <div class="col">
+                                <button type="button" class="btn btn-light btn-sm line-height-normal p-3 align-center" id="reportrange">
+                                    <i class="mr-2 text-primary" data-feather="calendar"></i>
+                                    <span></span>
+                                    <i class="ml-1" data-feather="chevron-down"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button type="button" class="btn btn-success btn-block text-xs position-sticky" id="showButton">
+                        <i data-feather="filter"></i> <span class="ml-2">Apply Filter</span>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-xxl-9 col-xl-8 col-12">
+        <div class="card shadow mb-4" style="min-height:450px;">
+            <div class="card-body">
+                <div class="mt-4">
+                    <div id="chart"></div>
                 </div>
             </div>
-            <div class="form-group">
-                <label asp-for="StartDate">Date range</label>
-                <div class="form-row">
-                    <div class="col-3">
-                        <input type="datetime-local" class="form-control" asp-for="StartDate" step="1">
-                    </div>
-                    <div class="col-3">
-                        <input type="datetime-local" class="form-control" asp-for="EndDate" step="1">
-                    </div>
-                </div>
-            </div>
-
-            <button type="button" class="btn btn-success btn-icon-split" id="showButton">
-                <span class="icon text-white-50">
-                    <i class="fas fa-eye"></i>
-                </span>
-                <span class="text">Apply Filter</span>
-            </button>
-        </form>
-
-        <div class="mt-4">
-            <div id="chart"></div>
         </div>
     </div>
 </div>
@@ -57,6 +69,7 @@
 
 @section Scripts {
     <script src="~/lib/moment.js/moment.min.js"></script>
+    <script src="~/lib/daterangepicker/daterangepicker.js"></script>
     <script src="~/lib/apexcharts/apexcharts.min.js"></script>
     <script>
         var data = [];
@@ -118,6 +131,48 @@
                     }])
                 }
             });
+        });
+
+
+        $(function () {
+            var start = moment().subtract(29, "days");
+            var end = moment();
+
+            function cb(start, end) {
+
+                $("#startdate").val(start.format("yyyy-MM-DD") + "T00:00:00");
+                $("#enddate").val(end.format("yyyy-MM-DD") + "T23:59:59");
+                $("#reportrange span").html(
+                    start.format("MMMM D, YYYY") + " - " + end.format("MMMM D, YYYY")
+                );
+            }
+
+            $("#reportrange").daterangepicker(
+                {
+                    startDate: start,
+                    endDate: end,
+                    ranges: {
+                        Today: [moment(), moment()],
+                        Yesterday: [
+                            moment().subtract(1, "days"),
+                            moment().subtract(1, "days"),
+                        ],
+                        "Last 7 Days": [moment().subtract(6, "days"), moment()],
+                        "Last 30 Days": [moment().subtract(29, "days"), moment()],
+                        "This Month": [
+                            moment().startOf("month"),
+                            moment().endOf("month"),
+                        ],
+                        "Last Month": [
+                            moment().subtract(1, "month").startOf("month"),
+                            moment().subtract(1, "month").endOf("month"),
+                        ],
+                    },
+                },
+                cb
+            );
+
+            cb(start, end);
         });
     </script>
 }

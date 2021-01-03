@@ -3,16 +3,11 @@
     ViewData[ViewKeys.PageHeading] = "Manage Users";
     ViewData[ViewKeys.PageSubheading] = "Add, edit, and delete users.";
 }
+<vc:header-panel page-heading="@ViewData[ViewKeys.PageHeading]" page-subheading="@ViewData[ViewKeys.PageSubheading]"
+                 action="Add" action-label="Add User" controller="Users" action-icon="fas fa-plus"></vc:header-panel>
 
 
-<h1 class="h3 mb-2 text-gray-800">
-    @ViewData[ViewKeys.PageHeading]
-    <a tabindex="0" class="btn btn-link" data-container="body" data-toggle="popover" data-trigger="focus" data-placement="right" data-content="@ViewData[ViewKeys.PageSubheading]">
-        <i class="fas fa-info"></i>
-    </a>
-</h1>
-
-<div class="card shadow mb-4">
+<div class="card shadow mb-4 animated--fade-in">
 
     <div class="card-body">
         @if (TempData[ViewKeys.Message] != null)
@@ -31,6 +26,7 @@
             </table>
         </div>
     </div>
+    
 </div>
 
 @section Styles {
@@ -55,10 +51,12 @@
                 columns: [
                     { name: "Username", data: "username", title: "Username" },
                     { name: "Role", data: "role", title: "Role" },
-                    { title: "Manage", data: null, defaultContent: '<button class="btn btn-outline-primary">Edit</button> <button class="btn btn-outline-danger">Delete</button>' }
+                    {
+                        title: "Manage",
+                        width: '200px', data: null, defaultContent: '<button class="btn btn-sm btn-outline-primary">Edit</button> <button class="btn btn-sm btn-outline-danger">Delete</button>' }
                 ]
             });
-
+             
             $('#dataTable tbody').on('click', 'button', function () {
                 var button = $(this).text()
                 var data = table.row($(this).parents('tr')).data();

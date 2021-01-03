@@ -1,17 +1,13 @@
 ﻿@{
     ViewData[ViewKeys.Title] = "Sensors - Venjix";
     ViewData[ViewKeys.PageHeading] = "Manage Sensors";
-    ViewData[ViewKeys.PageSubheading] = "Add, edit, and delete monitored sensors.";
+    ViewData[ViewKeys.PageSubheading] = "Add, edit, and delete monitored sensors."; 
 }
+ 
+<vc:header-panel page-heading="@ViewData[ViewKeys.PageHeading]" page-subheading = "@ViewData[ViewKeys.PageSubheading]"
+    action = "Add" action-label = "Add Sensors"  controller = "Sensors" action-icon= "fas fa-plus" ></vc:header-panel>
 
-
-<h1 class="h3 mb-2 text-gray-800">
-    @ViewData[ViewKeys.PageHeading]
-    <a tabindex="0" class="btn btn-link" data-container="body" data-toggle="popover" data-trigger="focus" data-placement="right" data-content="@ViewData[ViewKeys.PageSubheading]">
-        <i class="fas fa-info"></i>
-    </a>
-</h1>
-<div class="card shadow mb-4"> 
+<div class="card shadow mb-4">
     <div class="card-body">
         @if (TempData[ViewKeys.Message] != null)
         {
@@ -53,7 +49,12 @@
                 columns: [
                     { name: "ApiField", data: "apiField", title: "API Field" },
                     { name: "DisplayName", data: "displayName", title: "Display Name" },
-                    { title: "Manage", data: null, defaultContent: '<button class="btn btn-outline-primary">Edit</button> <button class="btn btn-outline-danger">Delete</button>' }
+                    {
+                        title: "Manage",
+                        width: '200px',
+                        data: null,
+                        defaultContent: '<button class="btn btn-outline-primary btn-sm">Edit</button> <button class="btn btn-outline-danger btn-sm">Delete</button>'
+                    }
                 ]
             });
 

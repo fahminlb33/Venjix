@@ -4,57 +4,72 @@
     ViewData[ViewKeys.PageHeading] = "Table View";
     ViewData[ViewKeys.PageSubheading] = "View data in table.";
 }
+<vc:header-panel page-heading="@ViewData[ViewKeys.PageHeading]" page-subheading="@ViewData[ViewKeys.PageSubheading]"
+                 action="" action-label="" controller="" action-icon=""></vc:header-panel>
 
-<h1 class="h3 mb-2 text-gray-800">
-    @ViewData[ViewKeys.PageHeading]
-    <a tabindex="0" class="btn btn-link" data-container="body" data-toggle="popover" data-trigger="focus" data-placement="right" data-content="@ViewData[ViewKeys.PageSubheading]">
-        <i class="fas fa-info"></i>
-    </a>
-</h1>
 
-<div class="card shadow mb-4">
-    <div class="card-body">
-        <form method="post" asp-action="TableExport">
-            <div class="form-row">
-                <div class="form-group col-md-2">
-                    <label asp-for="SensorId">Sensor</label>
-                    <select class="form-control" asp-for="SensorId" asp-items="Model.Sensors"></select>
+<div class="row">
+    <div class="col-xxl-3 col-xl-4 col-lg-12">
+        <div class="card shadow mb-4" style="min-height:450px;">
+            <div class="card-body">
+                <form method="post" asp-action="TableExport">
+                    <div class="form-row">
+                        <div class="form-group col">
+                            <label asp-for="SensorId">Sensor</label>
+                            <select class="form-control" asp-for="SensorId" asp-items="Model.Sensors"></select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="StartDate">Date range</label>
+                        <div class="form-row">
+                            <div class="col-3" hidden>
+                                <input id="startdate" type="datetime-local" class="form-control" asp-for="StartDate" step="1">
+                            </div>
+                            <div class="col-3" hidden>
+                                <input id="enddate" type="datetime-local" class="form-control" asp-for="EndDate" step="1">
+                            </div>
+                            <div class="col">
+                                <button type="button" class="btn btn-light btn-sm line-height-normal p-3" id="reportrange">
+                                    <i class="mr-2 text-primary" data-feather="calendar"></i>
+                                    <span></span>
+                                    <i class="ml-1" data-feather="chevron-down"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                </form>
+                <div class="row">
+                    <div class="col">
+                        <button type="button" class="btn btn-success btn-block  text-xs" id="showButton">
+                            <i data-feather="filter"></i> <span class="ml-2">Apply Filter</span>
+                        </button>
+                    </div>
+                    <div class="col">
+                        <button type="button" class="btn  btn-primary btn-block  text-xs">
+                            <i data-feather="download"></i> <span class="ml-2">Download</span>
+                        </button>
+                    </div>
+
                 </div>
             </div>
-            <div class="form-group">
-                <label asp-for="StartDate">Date range</label>
-                <div class="form-row">
-                    <div class="col-3">
-                        <input type="datetime-local" class="form-control" asp-for="StartDate" step="1">
-                    </div>
-                    <div class="col-3">
-                        <input type="datetime-local" class="form-control" asp-for="EndDate" step="1">
-                    </div>
-                </div>
-            </div>
-
-            <button type="button" class="btn btn-success btn-icon-split" id="showButton">
-                <span class="icon text-white-50">
-                    <i class="fas fa-eye"></i>
-                </span>
-                <span class="text">Apply Filter</span>
-            </button>
-            <button type="submit" class="btn btn-primary btn-icon-split">
-                <span class="icon text-white-50">
-                    <i class="fas fa-download"></i>
-                </span>
-                <span class="text">Download as CSV</span>
-            </button>
-        </form>
-
-        <div class="table-responsive mt-5">
-            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                <thead>
-                </thead>
-                <tbody>
-                </tbody>
-            </table>
         </div>
+    </div>
+
+    <div class="col-xxl-9 col-xl-8 col-lg-12">
+        <div class="card shadow mb-4" style="min-height:450px;">
+            <div class="card-body">
+                <div class="table-responsive mt-5">
+                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                        <thead>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
     </div>
 </div>
 
@@ -64,6 +79,8 @@
 
 @section Scripts {
     <script src="~/lib/datatables/js/jquery.dataTables.min.js"></script>
+    <script src="~/lib/moment.js/moment.min.js"></script>
+    <script src="~/lib/daterangepicker/daterangepicker.js"></script>
     <script src="~/lib/datatables/js/dataTables.bootstrap4.min.js"></script>
     <script>
         $(document).ready(function () {
@@ -93,5 +110,49 @@
                 table.draw();
             });
         });
+
+
+
+        $(function () {
+            var start = moment().subtract(29, "days");
+            var end = moment();
+
+            function cb(start, end) {
+
+                $("#startdate").val(start.format("yyyy-MM-DD") + "T00:00:00");
+                $("#enddate").val(end.format("yyyy-MM-DD") + "T23:59:59");
+                $("#reportrange span").html(
+                    start.format("MMMM D, YYYY") + " - " + end.format("MMMM D, YYYY")
+                );
+            }
+
+            $("#reportrange").daterangepicker(
+                {
+                    startDate: start,
+                    endDate: end,
+                    ranges: {
+                        Today: [moment(), moment()],
+                        Yesterday: [
+                            moment().subtract(1, "days"),
+                            moment().subtract(1, "days"),
+                        ],
+                        "Last 7 Days": [moment().subtract(6, "days"), moment()],
+                        "Last 30 Days": [moment().subtract(29, "days"), moment()],
+                        "This Month": [
+                            moment().startOf("month"),
+                            moment().endOf("month"),
+                        ],
+                        "Last Month": [
+                            moment().subtract(1, "month").startOf("month"),
+                            moment().subtract(1, "month").endOf("month"),
+                        ],
+                    },
+                },
+                cb
+            );
+
+            cb(start, end);
+        });
+
     </script>
 }

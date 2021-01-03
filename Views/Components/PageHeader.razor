@@ -1,0 +1,32 @@
+﻿<div class="d-sm-flex align-items-center justify-content-between mb-3">
+    <h4 class="h4 mb-0 text-gray-800">
+        @PageHeading
+        <a tabindex="0" class="btn btn-link" data-container="body" data-toggle="popover" data-trigger="focus" data-placement="right" data-content="@PageSubheading">
+            <i data-feather="info" class="feather-sm"></i>
+        </a>
+    </h4>
+    @if (!String.IsNullOrEmpty(Action))
+    {
+<a asp-action="@Action" asp-controller="@Controller" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow" style="min-width:0.3em">@ActionIcon @ActionLabel</a>
+    }
+</div>
+
+@code { 
+    [Parameter]
+    public string PageSubheading { get; set; }
+
+    [Parameter]
+    public string PageHeading { get; set; } = "Heading";
+
+    [Parameter]
+    public string Action { get; set; }
+
+    [Parameter]
+    public string ActionLabel { get; set; }
+
+    [Parameter]
+    public string Controller { get; set; } 
+
+    [Parameter]
+    public RenderFragment ActionIcon { get; set; }
+}

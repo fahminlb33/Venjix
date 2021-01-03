@@ -4,12 +4,9 @@
     ViewData[ViewKeys.PageSubheading] = "Add, edit, and delete webhooks for wider integration with existing services.";
 }
 
-<h1 class="h3 mb-2 text-gray-800">
-    @ViewData[ViewKeys.PageHeading]
-    <a tabindex="0" class="btn btn-link" data-container="body" data-toggle="popover" data-trigger="focus" data-placement="right" data-content="@ViewData[ViewKeys.PageSubheading]">
-        <i class="fas fa-info"></i>
-    </a>
-</h1>
+<vc:header-panel page-heading="@ViewData[ViewKeys.PageHeading]" page-subheading="@ViewData[ViewKeys.PageSubheading]"
+                 action="Add" action-label="Add Webhook" controller="Webhooks" action-icon="fas fa-plus"></vc:header-panel>
+
 <div class="card shadow mb-4">
     <div class="card-body">
         @if (TempData[ViewKeys.Message] != null)
@@ -40,6 +37,7 @@
     <script>
         $(document).ready(function () {
             var table = $('#dataTable').DataTable({
+                
                 serverSide: true,
                 ajax: {
                     url: '@(Url.Action("TableData"))',
@@ -53,7 +51,9 @@
                     { name: "Name", data: "name", title: "Webhook Name" },
                     { name: "Method", data: "method", title: "Method" },
                     { name: "UriFormat", data: "uriFormat", title: "URI" },
-                    { title: "Manage", data: null, defaultContent: '<button class="btn btn-outline-primary">Edit</button> <button class="btn btn-outline-danger">Delete</button>' }
+                    {
+                        title: "Manage",
+                        width: '200px', data: null, defaultContent: '<button class="btn btn-outline-primary btn-sm">Edit</button> <button class="btn btn-outline-danger btn-sm">Delete</button>' }
                 ]
             });
 

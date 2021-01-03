@@ -8,16 +8,24 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>@ViewData[ViewKeys.Title]</title>
+    <title>@(ViewData[ViewKeys.Title] ?? "Venjix")</title>
 
-    <!-- Custom fonts for this template-->
+    <!-- Custom css-->
     <link href="~/css/Nunito.css" rel="stylesheet preload" as="style">
+
+    <link defer href="~/css/sb-admin-2.min.css" rel="stylesheet">
+    <link defer  href="~/css/styles.min.css" rel="stylesheet">
+    <link href="~/lib/daterangepicker/daterangepicker.css" rel="stylesheet">
     <link href="~/lib/fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet">
 
-    <!-- Custom styles for this template-->
-    <link href="~/css/sb-admin-2.min.css" rel="stylesheet">
+    <script src="https://unpkg.com/feather-icons"></script>
 
-    <link href="~/img/favicon.ico" rel="icon" type="image/x-icon">
+    <link rel="icon shortcut" runat="server" href="~/img/favicon.ico" type="image/x-icon">
+    <meta name="theme-color" content="#4e73df">
+    <link rel="apple-touch-icon" sizes="180x180" href="~/img/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="~/img/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="~/img/favicon-16x16.png">
+    <link rel="manifest" href="~/manifest.json">
 
     @RenderSection("Styles", false)
 </head>
@@ -31,15 +39,16 @@
         <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
             <!-- Sidebar - Brand -->
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" asp-action="Index">
-                <div class="sidebar-brand-icon rotate-n-15">
-                    <i class="fas fa-laugh-wink"></i>
-                </div>
-                <div class="sidebar-brand-text mx-3">Venjix</div>
-            </a>
-
+            <li>
+                <a class="sidebar-brand d-flex align-items-center justify-content-center" asp-action="Index">
+                    <div class="sidebar-brand-icon rotate-n-15">
+                        <i class="fas fa-microchip"></i>
+                    </div>
+                    <div class="sidebar-brand-text mx-3">Venjix</div>
+                </a>
+            </li>
             <!-- Divider -->
-            <hr class="sidebar-divider my-0">
+            <li role="separator" class="sidebar-divider my-0"></li>
 
             <!-- Nav Item - Dashboard -->
             <li class="nav-item" active-when="/Home/Index">
@@ -50,12 +59,12 @@
             </li>
 
             <!-- Divider -->
-            <hr class="sidebar-divider">
+            <li role="separator" class="sidebar-divider"></li>
 
             <!-- Heading -->
-            <div class="sidebar-heading">
+            <li class="sidebar-heading">
                 Data Acquisition
-            </div>
+            </li>
 
             <!-- Nav Item - Sensors -->
             <li class="nav-item" active-when="/Sensors/">
@@ -98,57 +107,36 @@
             </li>
 
             <!-- Divider -->
-            <hr class="sidebar-divider">
+            <li role="separator" class="sidebar-divider"></li>
 
             <!-- Heading -->
-            <div class="sidebar-heading">
-                Management
-            </div>
-
-            <!-- Nav Item - Users -->
-            <li class="nav-item" active-when="/Users/">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUsers" aria-expanded="true"
-                   aria-controls="collapseUsers" collapsed-when="/Users/">
-                    <i class="fas fa-fw fa-users"></i>
-                    <span>Users</span>
-                </a>
-                <div id="collapseUsers" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar" show-when="/Users/">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" active-when="/Users/Profile" asp-controller="Users" asp-action="Profile">Profile</a>
-                        <a class="collapse-item" active-when="/Users/Add|Edit" asp-controller="Users" asp-action="Add">Add User</a>
-                        <a class="collapse-item" active-when="/Users/Index" asp-controller="Users" asp-action="Index">Users</a>
-                    </div>
-                </div>
+            <li class="sidebar-heading">
+                Integration
             </li>
 
+
             <!-- Nav Item - Webhooks -->
-            <li class="nav-item" active-when="/Webhooks/">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseWebhooks" aria-expanded="true"
-                   aria-controls="collapseWebhooks" collapsed-when="/Webhooks/">
+            <li class="nav-item" active-when="/Webhooks/Index">
+                <a class="nav-link" active-when="/Webhooks/Index" asp-controller="Webhooks" asp-action="Index">
                     <i class="fas fa-fw fa-link"></i>
                     <span>Webhooks</span>
                 </a>
-                <div id="collapseWebhooks" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar" show-when="/Webhooks/">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" active-when="/Webhooks/Add|Edit" asp-controller="Webhooks" asp-action="Add">Add Hook</a>
-                        <a class="collapse-item" active-when="/Webhooks/Index" asp-controller="Webhooks" asp-action="Index">Hooks</a>
-                    </div>
-                </div>
             </li>
 
             <!-- Nav Item - Triggers -->
-            <li class="nav-item" active-when="/Triggers/">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTriggers" aria-expanded="true"
-                   aria-controls="collapseTriggers" collapsed-when="/Triggers/">
+            <li class="nav-item" active-when="/Triggers/Index">
+                <a class="nav-link" active-when="/Triggers/Index" asp-controller="Triggers" asp-action="Index">
                     <i class="fas fa-fw fa-bolt"></i>
                     <span>Triggers</span>
                 </a>
-                <div id="collapseTriggers" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar" show-when="/Triggers/">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" active-when="/Triggers/Add|Edit" asp-controller="Triggers" asp-action="Add">Add Trigger</a>
-                        <a class="collapse-item" active-when="/Triggers/Index" asp-controller="Triggers" asp-action="Index">Triggers</a>
-                    </div>
-                </div>
+            </li>
+
+            <!-- Nav Item - Users -->
+            <li class="nav-item" active-when="/Users/Index">
+                <a class="nav-link" active-when="/Users/Index" asp-controller="Users" asp-action="Index">
+                    <i class="fas fa-fw fa-user"></i>
+                    <span>Users</span>
+                </a>
             </li>
 
             <!-- Nav Item - Settings -->
@@ -168,12 +156,12 @@
             </li>
 
             <!-- Divider -->
-            <hr class="sidebar-divider d-none d-md-block">
+            <li role="separator" class="sidebar-divider"></li>
 
             <!-- Sidebar Toggler (Sidebar) -->
-            <div class="text-center d-none d-md-inline">
+            <li class="text-center d-none d-md-inline">
                 <button class="rounded-circle border-0" id="sidebarToggle"></button>
-            </div>
+            </li>
         </ul>
         <!-- End of Sidebar -->
         <!-- Content Wrapper -->
@@ -199,6 +187,7 @@
         <!-- End of Content Wrapper -->
     </div>
     <!-- End of Page Wrapper -->
+
     <!-- Scroll to Top Button-->
     <a class="scroll-to-top rounded" href="#page-top">
         <i class="fas fa-angle-up"></i>
@@ -225,21 +214,24 @@
 
     <!-- Bootstrap core JavaScript-->
     <script src="~/lib/jquery/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/lib/jquery/jquery.min.js"></script>
+    <script defer src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 
     <!-- Core plugin JavaScript-->
     <script src="~/lib/jquery-easing/jquery.easing.min.js"></script>
 
     <!-- Custom scripts for all pages-->
-    <script src="~/js/sb-admin-2.js"></script>
+    <script defer src="~/js/sb-admin-2.js"></script>
 
-    <script> 
+    <script>
+        feather.replace()
         $(function () {
             $('[data-toggle="popover"]').popover({
                 trigger: 'focus'
             });
-        })
+        }) 
     </script>
     @RenderSection("Scripts", false)
+   
 </body>
 </html>
