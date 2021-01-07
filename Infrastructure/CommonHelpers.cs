@@ -8,6 +8,8 @@ namespace Venjix.Infrastructure
 {
     public static class CommonHelpers
     {
+        public static readonly CultureInfo USCulture = new CultureInfo("en-US");
+
         public static async Task<Stream> SerializeCsvRecords<T>(IEnumerable<T> records)
         {
             var ms = new MemoryStream();
