@@ -17,6 +17,7 @@
 
             span {
                 font-size: 0.65rem;
+                margin: 0.1rem 0rem;
                 display: block;
             }
         }
@@ -205,6 +206,7 @@
                 // Accordion Arrow Icon
                 &[data-toggle="collapse"] {
                     &::after {
+                        margin: 0.1rem 0rem;
                         width: 1rem;
                         text-align: center;
                         float: right;
@@ -345,6 +347,7 @@
             // Accordion
             &[data-toggle="collapse"]::after {
                 color: $gray-500;
+                margin:0.5rem 0rem;
             }
         }
 
@@ -421,7 +424,7 @@
     }
     // Color the sidebar toggler
     #sidebarToggle {
-        background-color: fade-out($white, 0.8);
+        background-color: fade-out($white, 0.6);
 
         &::after {
             color: fade-out($white, 0.5);

@@ -22,8 +22,8 @@
                             </div>
                             <div class="h5 mb-0 font-weight-bold text-gray-800">@Model.SensorsCount</div>
                         </div>
-                        <div class="col-auto">
-                            <i class="fas fa-satellite-dish fa-2x text-gray-300"></i>
+                        <div class="col-auto"> 
+                            <i data-feather="radio" class="feather-xl text-gray-300"></i>
                         </div>
                     </div>
                 </div>
@@ -40,7 +40,7 @@
                             <div class="h5 mb-0 font-weight-bold text-gray-800">@Model.RecordedDataCount</div>
                         </div>
                         <div class="col-auto">
-                            <i class="fas fa-list-ol fa-2x text-gray-300"></i>
+                            <i data-feather="list"  class="feather-xl text-gray-300"></i>
                         </div>
                     </div>
                 </div>
@@ -57,9 +57,9 @@
                             <div class="h5 mb-0 font-weight-bold text-gray-800">@(Model.LastUpdate?.ToString() ?? "No data recorded")</div>
                         </div>
                         <div class="col-auto">
-                            <i class="fas fa-calendar fa-2x text-gray-300"></i>
+                            <i data-feather="calendar" class="feather-xl text-gray-300"></i>
                         </div>
-                    </div>
+                    </div>  
                 </div>
             </div>
         </div>
