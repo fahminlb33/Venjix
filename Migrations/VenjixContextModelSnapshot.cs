@@ -14,7 +14,7 @@ namespace Venjix.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "3.1.9");
+                .HasAnnotation("ProductVersion", "5.0.1");
 
             modelBuilder.Entity("Venjix.Infrastructure.DAL.Recording", b =>
                 {
@@ -29,6 +29,7 @@ namespace Venjix.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<double>("Value")
+                        .HasPrecision(4)
                         .HasColumnType("REAL");
 
                     b.HasKey("RecordingId");
@@ -156,6 +157,8 @@ namespace Venjix.Migrations
                         .HasForeignKey("SensorId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Sensor");
                 });
 
             modelBuilder.Entity("Venjix.Infrastructure.DAL.Trigger", b =>
@@ -170,6 +173,15 @@ namespace Venjix.Migrations
                         .WithMany("Triggers")
                         .HasForeignKey("WebhookId")
                         .OnDelete(DeleteBehavior.Cascade);
+
+                    b.Navigation("Sensor");
+
+                    b.Navigation("Webhook");
+                });
+
+            modelBuilder.Entity("Venjix.Infrastructure.DAL.Webhook", b =>
+                {
+                    b.Navigation("Triggers");
                 });
 #pragma warning restore 612, 618
         }
