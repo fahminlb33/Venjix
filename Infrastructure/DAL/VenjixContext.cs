@@ -23,7 +23,7 @@ namespace Venjix.Infrastructure.DAL
             modelBuilder.Entity<User>()
                 .HasData(new User
                 {
-                    UserId = 1,
+                    UserId = Roles.SuperadminUserId,
                     Role = Roles.Admin,
                     Username = "admin",
                     Password = "$2y$12$XIMeV8tAOoC7D0XRJF5TjOQNy0T9Wj71JkETAdEmrjH6X9nIf50ZO"
