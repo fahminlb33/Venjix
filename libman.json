@@ -35,6 +35,10 @@
     {
       "library": "bootstrap-daterangepicker@3.1",
       "destination": "wwwroot/lib/daterangepicker/"
+    },
+    {
+      "library": "feather-icons@4.28.0",
+      "destination": "wwwroot/lib/feather-icons/"
     }
   ]
 }
