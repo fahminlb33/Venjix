@@ -38,7 +38,7 @@
             <li>
                 <a class="sidebar-brand d-flex align-items-center justify-content-center" asp-action="Index">
                     <div class="sidebar-brand-icon rotate-n-15">
-                        <i class="fas fa-microchip"></i>
+                        <i data-feather="cpu" class="feather-lg"></i>
                     </div>
                     <div class="sidebar-brand-text mx-3">Venjix</div>
                 </a>
@@ -48,8 +48,8 @@
 
             <!-- Nav Item - Dashboard -->
             <li class="nav-item" active-when="/Home/Index">
-                <a class="nav-link" asp-controller="Home" asp-action="Index">
-                    <i class="fas fa-fw fa-tachometer-alt"></i>
+                <a class="nav-link" asp-controller="Home" asp-action="Index">  
+                    <i data-feather="layout" class="feather-fw"></i>
                     <span>Dashboard</span>
                 </a>
             </li>
@@ -65,8 +65,8 @@
             <!-- Nav Item - Sensors -->
             <li class="nav-item" active-when="/Sensors/">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseSensors" aria-expanded="true"
-                   aria-controls="collapseSensors" collapsed-when="/Sensors/">
-                    <i class="fas fa-fw fa-satellite-dish"></i>
+                   aria-controls="collapseSensors" collapsed-when="/Sensors/"> 
+                    <i data-feather="radio" class="feather-fw"></i>
                     <span>Sensors</span>
                 </a>
                 <div id="collapseSensors" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar" show-when="/Sensors/">
@@ -82,7 +82,8 @@
             <li class="nav-item" active-when="/Visualize/">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseVisualize" aria-expanded="true"
                    aria-controls="collapseVisualize" collapsed-when="/Visualize/">
-                    <i class="fas fa-fw fa-chart-area"></i>
+                   
+                    <i data-feather="bar-chart-2" class="feather-fw"></i>
                     <span>Visualize</span>
                 </a>
                 <div id="collapseVisualize" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar" show-when="/Visualize/">
@@ -97,7 +98,7 @@
             <!-- Nav Item - Forecast -->
             <li class="nav-item" active-when="/Forecast/">
                 <a class="nav-link" active-when="/Forecast/Index" asp-controller="Forecast" asp-action="Index">
-                    <i class="fas fa-fw fa-brain"></i>
+                    <i data-feather="fast-forward" class="feather-fw"></i>
                     <span>Forecast (ML)</span>
                 </a>
             </li>
@@ -114,7 +115,7 @@
             <!-- Nav Item - Webhooks -->
             <li class="nav-item" active-when="/Webhooks/Index">
                 <a class="nav-link" active-when="/Webhooks/Index" asp-controller="Webhooks" asp-action="Index">
-                    <i class="fas fa-fw fa-link"></i>
+                    <i data-feather="link"  class="feather-fw"></i>
                     <span>Webhooks</span>
                 </a>
             </li>
@@ -122,7 +123,8 @@
             <!-- Nav Item - Triggers -->
             <li class="nav-item" active-when="/Triggers/Index">
                 <a class="nav-link" active-when="/Triggers/Index" asp-controller="Triggers" asp-action="Index">
-                    <i class="fas fa-fw fa-bolt"></i>
+
+                    <i data-feather="zap"  class="feather-fw"></i>
                     <span>Triggers</span>
                 </a>
             </li>
@@ -130,7 +132,7 @@
             <!-- Nav Item - Users -->
             <li class="nav-item" active-when="/Users/Index">
                 <a class="nav-link" active-when="/Users/Index" asp-controller="Users" asp-action="Index">
-                    <i class="fas fa-fw fa-user"></i>
+                    <i data-feather="user" class="feather-fw"></i>
                     <span>Users</span>
                 </a>
             </li>
@@ -138,7 +140,7 @@
             <!-- Nav Item - Settings -->
             <li class="nav-item" active-when="/Home/Settings">
                 <a class="nav-link" active-when="/Home/Settings" asp-controller="Home" asp-action="Settings">
-                    <i class="fas fa-fw fa-cog"></i>
+                    <i data-feather="settings" class="feather-fw"></i>
                     <span>Settings</span>
                 </a>
             </li>
@@ -146,7 +148,7 @@
             <!-- Nav Item - About -->
             <li class="nav-item" active-when="/Home/About">
                 <a class="nav-link" active-when="/Home/About" asp-controller="Home" asp-action="About">
-                    <i class="fas fa-fw fa-info"></i>
+                    <i data-feather="info" class="feather-fw"></i>
                     <span>About</span>
                 </a>
             </li>

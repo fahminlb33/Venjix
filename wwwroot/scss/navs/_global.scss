@@ -76,12 +76,12 @@
     }
 
     .nav-link.active {
-        color: #0061f2;
-        border-bottom-color: #0061f2;
+        color: $blue;
+        border-bottom-color: $blue;
     }
 
     .nav-link.disabled {
-        color: #c5ccd6;
+        color: $gray-200;
     }
 }
 
@@ -102,6 +102,6 @@
     }
 
     .nav-link.active {
-        border-right-color: #0061f2;
+        border-right-color: $blue;
     }
 }
