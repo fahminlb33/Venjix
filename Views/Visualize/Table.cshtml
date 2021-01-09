@@ -90,12 +90,13 @@
                 );
             }
 
-            function getFormData() {
+            function getFormData(extra = {}) {
                 const dp = $("#reportrange").data("daterangepicker");
                 const body = {
                     sensorId: $('#SensorId option:selected').val(),
                     startDate: dp.startDate,
                     endDate: dp.endDate,
+                    ...extra
                 };
 
                 return JSON.stringify(body);
@@ -139,7 +140,7 @@
                     orderMulti: false,
                     type: 'POST',
                     contentType: 'application/json',
-                    data: getFormData()
+                    data: getFormData
                 },
                 columns: [
                     { name: "Timestamp", data: "timestamp", title: "Timestamp" },
