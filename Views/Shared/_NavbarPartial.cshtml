@@ -1,14 +1,9 @@
 ﻿<nav class="navbar navbar-expand navbar-light bg-white topbar mb-3 static-top shadow">
-
-    <!-- Sidebar Toggle (Topbar) -->
-    <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
-        <i class="fa fa-bars"></i>
+    <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded mr-3">
+        <i data-feather="sidebar"></i>
     </button>
-
-    <!-- Topbar Navbar -->
     <ul class="navbar-nav ml-auto">
          
-          
         <li class="nav-item dropdown no-caret p-2 dropdown-user">
             <a class="btn btn-icon btn-transparent-dark dropdown-toggle" id="navbarDropdownUserImage" href="javascript:void(0);" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <div class="avatar">
@@ -20,8 +15,7 @@
                     <div class="dropdown-header d-flex align-items-center">
                         <img class="dropdown-user-img"  src="~/img/user-placeholder.png">
                         <div class="dropdown-user-details">
-                            <div class="dropdown-user-details-name">@(User.FindFirst(System.Security.Claims.ClaimTypes.Name).Value)</div>
-                            @*<div class="dropdown-user-details-email">User Email</div>*@
+                            <div class="dropdown-user-details-name">@(User.FindFirst(System.Security.Claims.ClaimTypes.Name).Value)</div> 
                         </div>
 
                     </div>
@@ -41,6 +35,5 @@
                 </a>
             </div>
         </li>
-
     </ul>
 </nav>

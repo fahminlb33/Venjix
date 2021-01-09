@@ -6,8 +6,7 @@
  
     <div class="row h-100 justify-content-center align-items-center">
         <div class="col-12 col-xl-8 col-xxl-6">
-
-            <div class="card o-hidden border-0 shadow-lg my-5">
+            <div class="card o-hidden animated--fade-in border-0 shadow-lg my-5">
                 <div class="card-body p-0"> 
                     <div class="row">
                         <div class="col-lg-6 d-none d-lg-block bg-login-image"></div>
@@ -22,7 +21,6 @@
                                         @ViewData[ViewKeys.Message]
                                     </div>
                                 }
-
                                 <form class="user" method="post" asp-action="LoginAuthorization" asp-antiforgery="true">
                                     <div class="form-group">
                                         <input name="username" type="text" class="form-control form-control-user" autocomplete="username" placeholder="Username" asp-for="Username">
@@ -35,7 +33,7 @@
                                     </button>
                                     <hr>
                                     <a href="https://github.com/fahminlb33/Venjix" class="btn btn-github btn-user btn-block">
-                                        <i class="fab fa-github fa-fw"></i> Fork me on GitHub!
+                                        <i data-feather="github" class="mr-2"></i> Fork me on GitHub!
                                     </a>
                                 </form>
                             </div>

@@ -9,9 +9,7 @@
                  action="" action-label="" controller="" action-icon=""></vc:header-panel>
 
 <div class="row">
-
     <div class="col">
-       
         <div class="card animated--fade-in"> 
             <div class="card-body p-1">
                 <ul class="nav nav-borders" id="cardTab" role="tablist">
@@ -28,14 +26,12 @@
 
                 <div class="tab-content mt-2 p-4" id="cardTabContent">
                     <div class="tab-pane fade show active" id="bot" role="tabpanel" aria-labelledby="bot-tab">
-                        <h6 class="mb-3">Status: <span class="badge badge-@(Model.IsTelegramTokenValid ? "success" : "danger")">@(Model.IsTelegramTokenValid ? "Activated" : "Disabled")</span></h6>
                         <partial name="_SettingsTelegramBotPartial" />
                     </div>
                     <div class="tab-pane fade" id="api" role="tabpanel" aria-labelledby="api-tab"> 
                         <partial name="_SettingsKeyPartial" />
                     </div>
                     <div class="tab-pane fade" id="health" role="tabpanel" aria-labelledby="health-tab">
-                         
                         <partial name="_SettingsHealthPartial" />
                     </div>
                 </div>

@@ -99,9 +99,9 @@
         cursor: pointer;
 
         &::after {
+            content: url("../../img/chevron-down.svg");
+            stroke: $white;
             font-weight: 900;
-            content: '\f104';
-            font-family: 'Font Awesome 5 Free';
             margin-right: 0.1rem;
         }
 
@@ -119,8 +119,8 @@
         overflow: hidden;
 
         #sidebarToggle::after {
-            content: '\f105';
-            font-family: 'Font Awesome 5 Free';
+            content: url("../../img/chevron-right.svg");
+            stroke: $white;    
             margin-left: 0.25rem;
         }
     }
@@ -213,12 +213,13 @@
                         vertical-align: 0;
                         border: 0;
                         font-weight: 900;
-                        content: '\f107';
-                        font-family: 'Font Awesome 5 Free';
+                        content: url("../../img/chevron-down.svg");
+                        stroke: $white;
                     }
 
                     &.collapsed::after {
-                        content: '\f105';
+                        content: url("../../img/chevron-right.svg");
+                        stroke: $white;
                     }
                 }
             }
@@ -440,4 +441,30 @@
             color: fade-out($white, 0.5);
         }
     }
+}
+
+.nav-sticky {
+	top: 5.125rem;
+	font-size: 0.9rem;
+	.nav-link {
+		padding-top: 0.25rem;
+		padding-bottom: 0.25rem;
+	}
+	.nav-link.active {
+		font-weight: 600;
+	}
+	ul.nav {
+		>li.nav-item {
+			>.nav {
+				display: none;
+			}
+			>a.nav-link.active {
+				~ {
+					.nav {
+						display: flex;
+					}
+				}
+			}
+		}
+	}
 }

@@ -5,19 +5,18 @@
 }
  
 <vc:header-panel page-heading="@ViewData[ViewKeys.PageHeading]" page-subheading = "@ViewData[ViewKeys.PageSubheading]"
-    action = "Add" action-label = "Add Sensors"  controller = "Sensors" action-icon= "fas fa-plus" ></vc:header-panel>
+    action = "Add" action-label = "Add Sensors"  controller = "Sensors" action-icon= "" ></vc:header-panel>
 
 <div class="card shadow mb-4">
     <div class="card-body">
         @if (TempData[ViewKeys.Message] != null)
         {
-            <div class="alert alert-@((bool)TempData[ViewKeys.IsSuccess] == true ? "success" : "danger")" role="alert">
+            <div class='alert alert-@((bool)TempData[ViewKeys.IsSuccess] == true ? "success" : "danger")' role="alert">
                 @TempData[ViewKeys.Message]
             </div>
         }
-
-        <div class="table-responsive">
-            <table class="table table-bordered table-sm" id="dataTable" width="100%" cellspacing="0">
+        <div class="table-responsive-sm">
+            <table class="table table-sm table-bordered" id="dataTable" width="100%" cellspacing="0">
                 <thead>
                 </thead>
                 <tbody>
@@ -52,7 +51,7 @@
                     {
                         title: "Manage",
                         width: '200px',
-                        data: null,
+                        data: null, orderable: false,
                         defaultContent: '<button class="btn btn-outline-primary btn-sm">Edit</button> <button class="btn btn-outline-danger btn-sm">Delete</button>'
                     }
                 ]

@@ -1,5 +1,7 @@
 ﻿@model SettingsModel
 
+<h6 class="mb-3">Status: <span class="badge badge-@(Model.IsTelegramTokenValid ? "success" : "danger")">@(Model.IsTelegramTokenValid ? "Activated" : "Disabled")</span></h6>
+
 <form class="form-inline" method="post" asp-action="TelegramSave" asp-controller="Home">
     <label asp-for="TelegramToken" class="mr-2">Telegram Token</label>
     <input type="text" class="flex-fill form-control form-control-sm mr-2" asp-for="TelegramToken">

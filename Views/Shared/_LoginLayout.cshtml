@@ -10,17 +10,18 @@
 
     <title>@(ViewData[ViewKeys.Title] ?? "Venjix")</title>
 
-    <!-- Custom fonts for this template-->
-    <link href="~/css/Nunito.css" rel="stylesheet preload" as="style">
-    <link href="~/lib/fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet">
-    <link defer href="~/css/sb-admin-2.min.css" rel="stylesheet"> 
+
+    <link defer href="~/css/venjix.min.css" rel="stylesheet">
+
 
     <link rel="icon shortcut" runat="server" href="~/img/favicon.ico" type="image/x-icon">
     <meta name="theme-color" content="#4e73df">
     <link rel="apple-touch-icon" sizes="180x180" href="~/img/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="~/img/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="~/img/favicon-16x16.png">
-    <link rel="manifest" href="~/manifest.json"> 
+    <link rel="manifest" href="~/manifest.json">
+
+    <script src="~/lib/feather-icons/feather.min.js"></script>
 </head>
 
 <body class="bg-gradient-primary " style="min-height:100%">
@@ -29,11 +30,8 @@
         @RenderBody()
     </div>
 
-    <!-- Bootstrap core JavaScript-->
-    <script src="~/lib/jquery/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-
-    <!-- Core plugin JavaScript-->
-    <script src="~/lib/jquery-easing/jquery.easing.min.js"></script>
+    <script>
+        feather.replace()
+    </script> 
 </body>
-</html>
+    </html>
