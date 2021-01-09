@@ -16,45 +16,39 @@
     <link href="~/css/Nunito.css" rel="stylesheet preload" as="style">
 
     <link href="~/lib/daterangepicker/daterangepicker.css" rel="stylesheet">
-    <link href="~/lib/fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet">
-    <link defer href="~/css/sb-admin-2.min.css" rel="stylesheet">
+    <link href="~/css/venjix.min.css" rel="stylesheet">
 
     <link rel="icon shortcut" runat="server" href="~/img/favicon.ico" type="image/x-icon">
     <link rel="apple-touch-icon" sizes="180x180" href="~/img/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="~/img/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="~/img/favicon-16x16.png">
     <link rel="manifest" href="~/manifest.json">
+
+    <script src="~/lib/feather-icons/feather.min.js"></script>
+
 </head>
 
 <body id="page-top">
 
-    <!-- Page Wrapper -->
+
     <div id="wrapper">
-
-
         <partial name="_SidebarPartial" />
-
         <div id="content-wrapper" class="d-flex flex-column">
-
             <div id="content">
-
                 <partial name="_NavbarPartial" />
-
                 <div class="container-fluid">
                     @RenderBody()
                 </div>
             </div>
-
             <partial name="_FooterPartial" />
         </div>
     </div>
-    <!-- End of Page Wrapper -->
-    <!-- Scroll to Top Button-->
+
     <a class="scroll-to-top rounded" href="#page-top">
-        <i class="fas fa-angle-up"></i>
+        <i data-feather="chevron-up"></i>
     </a>
 
-    <!-- Logout Modal-->
+
     <div class="modal animated--fade-in-up" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -64,7 +58,7 @@
                         <span aria-hidden="true">×</span>
                     </button>
                 </div>
-                <div class="modal-body border-0">Select "Logout" below if you are ready to end your current session.</div>
+                <div class="modal-body border-0">Click "Logout" below if you are ready to end your current session.</div>
                 <div class="modal-footer border-0">
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
                     <a class="btn btn-primary" asp-controller="Login" asp-action="Logout">
@@ -75,6 +69,10 @@
         </div>
     </div>
 
+    <script>
+        feather.replace()
+    </script>
+
     <!-- Bootstrap core JavaScript-->
     <script src="~/lib/jquery/jquery.min.js"></script>
     <script defer src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
@@ -83,10 +81,8 @@
     <!-- Core plugin JavaScript-->
     <script src="~/lib/jquery-easing/jquery.easing.min.js"></script>
 
-    <script src="~/lib/feather-icons/feather.min.js"></script>
 
     <script>
-        feather.replace()
         $(function () {
             $('[data-toggle="popover"]').popover({
                 trigger: 'focus'
