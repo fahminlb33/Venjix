@@ -5,12 +5,9 @@
 }
 <div class="container-fluid">
 
-    <!-- Page Heading -->
-    <div class="d-sm-flex align-items-center justify-content-between mb-4">
-        <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
-    </div>
+    <vc:header-panel page-heading="@ViewData[ViewKeys.PageHeading]" page-subheading=""
+                     action="" action-label="" controller="" action-icon=""></vc:header-panel>
 
-    <!-- Content Row -->
     <div class="row">
         <div class="col-xl-4 mb-4">
             <div class="card lift border-left-primary shadow h-100 py-2">
@@ -22,7 +19,7 @@
                             </div>
                             <div class="h5 mb-0 font-weight-bold text-gray-800">@Model.SensorsCount</div>
                         </div>
-                        <div class="col-auto"> 
+                        <div class="col-auto">
                             <i data-feather="radio" class="feather-xl text-gray-300"></i>
                         </div>
                     </div>
@@ -40,7 +37,7 @@
                             <div class="h5 mb-0 font-weight-bold text-gray-800">@Model.RecordedDataCount</div>
                         </div>
                         <div class="col-auto">
-                            <i data-feather="list"  class="feather-xl text-gray-300"></i>
+                            <i data-feather="list" class="feather-xl text-gray-300"></i>
                         </div>
                     </div>
                 </div>
@@ -59,18 +56,15 @@
                         <div class="col-auto">
                             <i data-feather="calendar" class="feather-xl text-gray-300"></i>
                         </div>
-                    </div>  
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 
-
-    <!-- Page Heading -->
     <div class="d-sm-flex align-items-center justify-content-between my-4">
         <h1 class="h3 mb-0 text-gray-800">Tools</h1>
     </div>
-
 
     <div class="row">
         <div class="col-xl-4 mb-4">
@@ -123,7 +117,6 @@
                 <div class="card-body d-flex justify-content-center flex-column">
                     <div class="d-flex align-items-center justify-content-between">
                         <div class="mr-3">
-
                             <i class="feather-xl text-primary mb-3" data-feather="bar-chart-2"></i>
                             <h5> Visualizer </h5>
                             <div class="text-muted small">Create informative visual view of your data.</div>
@@ -172,7 +165,6 @@
                     No overview provided...
                 </div>
             </div>
-
         </div>
 
         <div class="col-xxl-4 col-xl-6 col-lg-6 col-12">

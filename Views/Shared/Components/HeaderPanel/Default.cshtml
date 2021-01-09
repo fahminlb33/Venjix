@@ -8,7 +8,6 @@
     @if (!String.IsNullOrEmpty(Model.Action))
     {
         <a asp-action="@Model.Action" asp-controller="@Model.Controller" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow animated--fade-in" style="min-width:0.3em">
-    
             <i class="@Model.ActionIcon fa-sm text-white-50"></i>
             &nbsp; @Model.ActionLabel
         </a>
