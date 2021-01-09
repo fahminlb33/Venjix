@@ -31,161 +31,24 @@
     <!-- Page Wrapper -->
     <div id="wrapper">
 
-        <!-- Sidebar -->
-        <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
-            <!-- Sidebar - Brand -->
-            <li>
-                <a class="sidebar-brand d-flex align-items-center justify-content-center" asp-action="Index">
-                    <div class="sidebar-brand-icon rotate-n-15">
-                        <i data-feather="cpu" class="feather-lg"></i>
-                    </div>
-                    <div class="sidebar-brand-text mx-3">Venjix</div>
-                </a>
-            </li>
-            <!-- Divider -->
-            <li role="separator" class="sidebar-divider my-0"></li>
+        <partial name="_SidebarPartial" />
 
-            <!-- Nav Item - Dashboard -->
-            <li class="nav-item" active-when="/Home/Index">
-                <a class="nav-link" asp-controller="Home" asp-action="Index">  
-                    <i data-feather="layout" class="feather-fw"></i>
-                    <span>Dashboard</span>
-                </a>
-            </li>
-
-            <!-- Divider -->
-            <li role="separator" class="sidebar-divider"></li>
-
-            <!-- Heading -->
-            <li class="sidebar-heading">
-                Data Acquisition
-            </li>
-
-            <!-- Nav Item - Sensors -->
-            <li class="nav-item" active-when="/Sensors/">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseSensors" aria-expanded="true"
-                   aria-controls="collapseSensors" collapsed-when="/Sensors/"> 
-                    <i data-feather="radio" class="feather-fw"></i>
-                    <span>Sensors</span>
-                </a>
-                <div id="collapseSensors" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar" show-when="/Sensors/">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" active-when="/Sensors/Add|Edit" asp-controller="Sensors" asp-action="Add">Add Sensor</a>
-                        <a class="collapse-item" active-when="/Sensors/Index" asp-controller="Sensors" asp-action="Index">Sensors</a>
-                        <a class="collapse-item" active-when="/Sensors/Statistics" asp-controller="Sensors" asp-action="Statistics">Statistics</a>
-                    </div>
-                </div>
-            </li>
-
-            <!-- Nav Item - Visualize -->
-            <li class="nav-item" active-when="/Visualize/">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseVisualize" aria-expanded="true"
-                   aria-controls="collapseVisualize" collapsed-when="/Visualize/">
-                   
-                    <i data-feather="bar-chart-2" class="feather-fw"></i>
-                    <span>Visualize</span>
-                </a>
-                <div id="collapseVisualize" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar" show-when="/Visualize/">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" active-when="/Visualize/Table" asp-controller="Visualize" asp-action="Table"> Table</a>
-                        <a class="collapse-item" active-when="/Visualize/TimeSeries" asp-controller="Visualize" asp-action="TimeSeries">Time Series</a>
-                        <a class="collapse-item" active-when="/Visualize/Scatter" asp-controller="Visualize" asp-action="Scatter">Scatter</a>
-                    </div>
-                </div>
-            </li>
-
-            <!-- Nav Item - Forecast -->
-            <li class="nav-item" active-when="/Forecast/">
-                <a class="nav-link" active-when="/Forecast/Index" asp-controller="Forecast" asp-action="Index">
-                    <i data-feather="fast-forward" class="feather-fw"></i>
-                    <span>Forecast (ML)</span>
-                </a>
-            </li>
-
-            <!-- Divider -->
-            <li role="separator" class="sidebar-divider"></li>
-
-            <!-- Heading -->
-            <li class="sidebar-heading">
-                Integration
-            </li>
-
-
-            <!-- Nav Item - Webhooks -->
-            <li class="nav-item" active-when="/Webhooks/Index">
-                <a class="nav-link" active-when="/Webhooks/Index" asp-controller="Webhooks" asp-action="Index">
-                    <i data-feather="link"  class="feather-fw"></i>
-                    <span>Webhooks</span>
-                </a>
-            </li>
-
-            <!-- Nav Item - Triggers -->
-            <li class="nav-item" active-when="/Triggers/Index">
-                <a class="nav-link" active-when="/Triggers/Index" asp-controller="Triggers" asp-action="Index">
-
-                    <i data-feather="zap"  class="feather-fw"></i>
-                    <span>Triggers</span>
-                </a>
-            </li>
-
-            <!-- Nav Item - Users -->
-            <li class="nav-item" active-when="/Users/Index">
-                <a class="nav-link" active-when="/Users/Index" asp-controller="Users" asp-action="Index">
-                    <i data-feather="user" class="feather-fw"></i>
-                    <span>Users</span>
-                </a>
-            </li>
-
-            <!-- Nav Item - Settings -->
-            <li class="nav-item" active-when="/Home/Settings">
-                <a class="nav-link" active-when="/Home/Settings" asp-controller="Home" asp-action="Settings">
-                    <i data-feather="settings" class="feather-fw"></i>
-                    <span>Settings</span>
-                </a>
-            </li>
-
-            <!-- Nav Item - About -->
-            <li class="nav-item" active-when="/Home/About">
-                <a class="nav-link" active-when="/Home/About" asp-controller="Home" asp-action="About">
-                    <i data-feather="info" class="feather-fw"></i>
-                    <span>About</span>
-                </a>
-            </li>
-
-            <!-- Divider -->
-            <li role="separator" class="sidebar-divider"></li>
-
-            <!-- Sidebar Toggler (Sidebar) -->
-            <li class="text-center d-none d-md-inline">
-                <button class="rounded-circle border-0" id="sidebarToggle"></button>
-            </li>
-        </ul>
-        <!-- End of Sidebar -->
-        <!-- Content Wrapper -->
         <div id="content-wrapper" class="d-flex flex-column">
 
-            <!-- Main Content -->
             <div id="content">
 
-                <!-- Topbar -->
                 <partial name="_NavbarPartial" />
-                <!-- End of Topbar -->
-                <!-- Begin Page Content -->
+
                 <div class="container-fluid">
                     @RenderBody()
                 </div>
-                <!-- /.container-fluid -->
             </div>
-            <!-- End of Main Content -->
-            <!-- Footer -->
+
             <partial name="_FooterPartial" />
-            <!-- End of Footer -->
         </div>
-        <!-- End of Content Wrapper -->
     </div>
     <!-- End of Page Wrapper -->
-
     <!-- Scroll to Top Button-->
     <a class="scroll-to-top rounded" href="#page-top">
         <i class="fas fa-angle-up"></i>
@@ -215,14 +78,12 @@
     <!-- Bootstrap core JavaScript-->
     <script src="~/lib/jquery/jquery.min.js"></script>
     <script defer src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script defer src="~/js/sb-admin-2.js"></script>
 
     <!-- Core plugin JavaScript-->
     <script src="~/lib/jquery-easing/jquery.easing.min.js"></script>
 
     <script src="~/lib/feather-icons/feather.min.js"></script>
-
-    <!-- Custom scripts for all pages-->
-    <script defer src="~/js/sb-admin-2.js"></script>
 
     <script>
         feather.replace()
@@ -230,10 +91,10 @@
             $('[data-toggle="popover"]').popover({
                 trigger: 'focus'
             });
-        }) 
+        })
     </script>
 
     @RenderSection("Scripts", false)
-   
+
 </body>
 </html>

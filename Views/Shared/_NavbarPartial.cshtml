@@ -1,11 +1,7 @@
 ﻿<nav class="navbar navbar-expand navbar-light bg-white topbar mb-3 static-top shadow">
-
-    <!-- Sidebar Toggle (Topbar) -->
     <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
         <i class="fa fa-bars"></i>
     </button>
-
-    <!-- Topbar Navbar -->
     <ul class="navbar-nav ml-auto">
          
           
@@ -20,8 +16,7 @@
                     <div class="dropdown-header d-flex align-items-center">
                         <img class="dropdown-user-img"  src="~/img/user-placeholder.png">
                         <div class="dropdown-user-details">
-                            <div class="dropdown-user-details-name">@(User.FindFirst(System.Security.Claims.ClaimTypes.Name).Value)</div>
-                            @*<div class="dropdown-user-details-email">User Email</div>*@
+                            <div class="dropdown-user-details-name">@(User.FindFirst(System.Security.Claims.ClaimTypes.Name).Value)</div> 
                         </div>
 
                     </div>
@@ -41,6 +36,5 @@
                 </a>
             </div>
         </li>
-
     </ul>
 </nav>
