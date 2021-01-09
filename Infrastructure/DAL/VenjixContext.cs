@@ -35,6 +35,10 @@ namespace Venjix.Infrastructure.DAL
                 .OnDelete(DeleteBehavior.Cascade)
                 .HasForeignKey(x => x.WebhookId)
                 .IsRequired(false);
+
+            modelBuilder.Entity<Recording>()
+                .Property(x => x.Value)
+                .HasPrecision(4);
         }
     }
 }

@@ -4,9 +4,9 @@
     ViewData[ViewKeys.PageHeading] = "Table View";
     ViewData[ViewKeys.PageSubheading] = "View data in table.";
 }
+
 <vc:header-panel page-heading="@ViewData[ViewKeys.PageHeading]" page-subheading="@ViewData[ViewKeys.PageSubheading]"
                  action="" action-label="" controller="" action-icon=""></vc:header-panel>
-
 
 <div class="row">
     <div class="col-xxl-3 col-xl-4 col-lg-12">
@@ -20,15 +20,7 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label asp-for="StartDate">Date range</label>
-                        <div class="form-row">
-                            <div class="col-3" hidden>
-                                <input id="startdate" type="datetime-local" class="form-control" asp-for="StartDate" step="1">
-                            </div>
-                            <div class="col-3" hidden>
-                                <input id="enddate" type="datetime-local" class="form-control" asp-for="EndDate" step="1">
-                            </div>
-                        </div>
+                        <label for="reportrange">Date range</label>
                         <div class="form-row">
                             <div class="col">
                                 <button type="button" class="btn btn-light btn-block btn-sm line-height-normal p-2" id="reportrange">
@@ -43,12 +35,12 @@
                 </form>
                 <div class="row">
                     <div class="col">
-                        <button type="button" class="btn btn-success btn-block  text-xs" id="showButton">
+                        <button type="button" class="btn btn-success btn-block text-xs" id="showButton">
                             <i data-feather="filter"></i> <span class="ml-2">Apply Filter</span>
                         </button>
                     </div>
                     <div class="col">
-                        <button type="button" class="btn  btn-primary btn-block  text-xs">
+                        <button type="button" class="btn  btn-primary btn-block text-xs" id="exportButton">
                             <i data-feather="download"></i> <span class="ml-2">Download</span>
                         </button>
                     </div>
@@ -86,41 +78,11 @@
     <script src="~/lib/datatables/js/dataTables.bootstrap4.min.js"></script>
     <script>
         $(document).ready(function () {
-            var table = $('#dataTable').DataTable({
-                serverSide: true,
-                ajax: {
-                    url: '@(Url.Action("TableData"))',
-                    processing: true,
-                    searching: false,
-                    orderMulti: false,
-                    type: 'POST',
-                    contentType: 'application/json',
-                    data: function (d) {
-                        d.sensorId = $('#SensorId option:selected').val();
-                        d.startDate = $('#StartDate').val();
-                        d.endDate = $('#EndDate').val();
-                        return JSON.stringify(d);
-                    }
-                },
-                columns: [
-                    { name: "Timestamp", data: "timestamp", title: "Timestamp" },
-                    { name: "Value", data: "value", title: "value" }
-                ]
-            });
+            var start = moment().subtract(29, "days").startOf("day");
+            var end = moment().endOf("day");
 
-            $('#showButton').on('click', function () {
-                table.draw();
-            });
-        });
-
-
-
-        $(function () {
-            var start = moment().subtract(29, "days");
-            var end = moment();
-
+            // ----- Functions
             function cb(start, end) {
-
                 $("#startdate").val(start.format("yyyy-MM-DD") + "T00:00:00");
                 $("#enddate").val(end.format("yyyy-MM-DD") + "T23:59:59");
                 $("#reportrange span").html(
@@ -128,18 +90,30 @@
                 );
             }
 
+            function getFormData() {
+                const dp = $("#reportrange").data("daterangepicker");
+                const body = {
+                    sensorId: $('#SensorId option:selected').val(),
+                    startDate: dp.startDate,
+                    endDate: dp.endDate,
+                };
+
+                return JSON.stringify(body);
+            }
+
+            // ----- Date Range Picker
             $("#reportrange").daterangepicker(
                 {
                     startDate: start,
                     endDate: end,
                     ranges: {
-                        Today: [moment(), moment()],
+                        Today: [moment().startOf("day"), moment().endOf("day")],
                         Yesterday: [
-                            moment().subtract(1, "days"),
-                            moment().subtract(1, "days"),
+                            moment().subtract(1, "days").startOf("day"),
+                            moment().subtract(1, "days").endOf("day"),
                         ],
-                        "Last 7 Days": [moment().subtract(6, "days"), moment()],
-                        "Last 30 Days": [moment().subtract(29, "days"), moment()],
+                        "Last 7 Days": [moment().subtract(6, "days").startOf("day"), moment().endOf("day")],
+                        "Last 30 Days": [moment().subtract(29, "days").startOf("day"), moment().endOf("day")],
                         "This Month": [
                             moment().startOf("month"),
                             moment().endOf("month"),
@@ -154,6 +128,55 @@
             );
 
             cb(start, end);
+
+            // ----- DataTables
+            var table = $('#dataTable').DataTable({
+                serverSide: true,
+                ajax: {
+                    url: '@(Url.Action("TableData"))',
+                    processing: true,
+                    searching: false,
+                    orderMulti: false,
+                    type: 'POST',
+                    contentType: 'application/json',
+                    data: getFormData()
+                },
+                columns: [
+                    { name: "Timestamp", data: "timestamp", title: "Timestamp" },
+                    { name: "Value", data: "value", title: "value" }
+                ]
+            });
+
+            // ----- Button Handlers
+            $('#showButton').on('click', function () {
+                table.draw();
+            });
+
+            $('#exportButton').on('click', function () {
+                $('#exportButton').prop("disabled", true);
+                $.ajax({
+                    url: '@Url.Action("TableExport")',
+                    type: 'POST',
+                    contentType: 'application/json',
+                    data: getFormData(),
+                    xhrFields: {
+                        responseType: 'blob'
+                    },
+                    success: function (data) {
+                        var a = document.createElement('a');
+                        var url = window.URL.createObjectURL(data);
+                        a.href = url;
+                        a.download = 'export.csv';
+                        document.body.append(a);
+                        a.click();
+                        a.remove();
+                        window.URL.revokeObjectURL(url);
+                    },
+                    complete: function() {
+                        $('#exportButton').removeAttr("disabled");
+                    }
+                });
+            });
         });
 
     </script>

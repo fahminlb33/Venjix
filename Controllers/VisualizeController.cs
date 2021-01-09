@@ -142,7 +142,7 @@ namespace Venjix.Controllers
 
         [HttpPost]
         [Authorize(Roles = Roles.AdminOrUser)]
-        public async Task<IActionResult> TableExport(VisualizeTableRequestDto model)
+        public async Task<IActionResult> TableExport([FromBody] VisualizeTableRequestDto model)
         {
             var records = await _context.Recordings.Where(x => x.SensorId == model.SensorId)
                 .Where(x => x.Timestamp >= model.StartDate && x.Timestamp <= model.EndDate)

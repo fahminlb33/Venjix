@@ -28,14 +28,6 @@
                     <div class="form-group">
                         <label asp-for="StartDate">Date range</label>
                         <div class="form-row">
-                            <div class="col-3">
-                                <input id="startdate" type="hidden" class="form-control" asp-for="StartDate" step="1">
-                            </div>
-                            <div class="col-3">
-                                <input id="enddate" type="hidden" class="form-control" asp-for="EndDate" step="1">
-                            </div>
-                        </div>
-                        <div class="form-row">
                             <div class="col">
                                 <button type="button" class="btn btn-light btn-block btn-sm line-height-normal p-2" id="reportrange">
                                     <i class="mr-2 text-primary" data-feather="calendar"></i>
@@ -65,81 +57,52 @@
     </div>
 </div>
 
-@section Styles {
-    <link href="~/lib/Chart.js/Chart.min.css" rel="stylesheet">
-}
-
 @section Scripts {
     <script src="~/lib/moment.js/moment.min.js"></script>
     <script src="~/lib/daterangepicker/daterangepicker.js"></script>
     <script src="~/lib/apexcharts/apexcharts.min.js"></script>
     <script>
-        var data = [];
-        var options = {
-            series: [{
-                data: data.slice()
-            }],
-            chart: {
-                height: 350,
-                type: 'scatter'
-            },
-            yaxis: {
-                type: 'numeric'
-            },
-            xaxis: {
-                type: 'numeric',
+        $(function () {
+            // ----- Global Data
+            var start = moment().subtract(29, "days").startOf("day");
+            var end = moment().endOf("day");
+
+            var data = [];
+            var options = {
+                series: [{
+                    data: data.slice()
+                }],
+                chart: {
+                    height: 350,
+                    type: 'scatter'
+                },
+                yaxis: {
+                    type: 'numeric'
+                },
+                xaxis: {
+                    type: 'numeric',
+                    tooltip: {
+                        enabled: false
+                    }
+                },
+                legend: {
+                    show: false
+                },
                 tooltip: {
-                    enabled: false
+                    custom: function ({ series, seriesIndex, dataPointIndex, w }) {
+                        var point = data[dataPointIndex];
+                        return '<div class="m-3">' +
+                            '<span>' + $('#SensorAId option:selected').text() + ': ' + point[0] + '</span><br/>' +
+                            '<span>' + $('#SensorBId option:selected').text() + ': ' + point[1] + '</span>' +
+                            '</div>'
+                    }
                 }
-            },
-            legend: {
-                show: false
-            },
-            tooltip: {
-                custom: function ({ series, seriesIndex, dataPointIndex, w }) {
-                    var point = data[dataPointIndex];
-                    return '<div class="m-3">' +
-                        '<span>' + $('#SensorAId option:selected').text() + ': ' + point[0] + '</span><br/>' +
-                        '<span>' + $('#SensorBId option:selected').text() + ': ' + point[1] + '</span>' +
-                        '</div>'
-                }
-            }
-        };
-
-        var chart = new ApexCharts(document.querySelector("#chart"), options);
-        chart.render();
-
-        $("#showButton").on("click", function (e) {
-            e.preventDefault();
-
-            d = {
-                sensorAId: $('#SensorAId option:selected').val(),
-                sensorBId: $('#SensorBId option:selected').val(),
-                startDate: $('#StartDate').val(),
-                endDate: $('#EndDate').val()
             };
 
-            $.ajax({
-                type: "POST",
-                url: "@Url.Action("ScatterData")",
-                data: JSON.stringify(d),
-                contentType: "application/json; charset=utf-8",
-                dataType: "json",
-                success: function (response) {
-                    data = response;
-                    chart.updateSeries([{
-                        name: "Value",
-                        data: response
-                    }])
-                }
-            });
-        });
+            var chart = new ApexCharts(document.querySelector("#chart"), options);
+            chart.render();
 
-
-        $(function () {
-            var start = moment().subtract(29, "days");
-            var end = moment();
-
+            // ----- Functions
             function cb(start, end) {
 
                 $("#startdate").val(start.format("yyyy-MM-DD") + "T00:00:00");
@@ -149,18 +112,19 @@
                 );
             }
 
+            // ----- Date Range Picker
             $("#reportrange").daterangepicker(
                 {
                     startDate: start,
                     endDate: end,
                     ranges: {
-                        Today: [moment(), moment()],
+                        Today: [moment().startOf("day"), moment().endOf("day")],
                         Yesterday: [
-                            moment().subtract(1, "days"),
-                            moment().subtract(1, "days"),
+                            moment().subtract(1, "days").startOf("day"),
+                            moment().subtract(1, "days").endOf("day"),
                         ],
-                        "Last 7 Days": [moment().subtract(6, "days"), moment()],
-                        "Last 30 Days": [moment().subtract(29, "days"), moment()],
+                        "Last 7 Days": [moment().subtract(6, "days").startOf("day"), moment().endOf("day")],
+                        "Last 30 Days": [moment().subtract(29, "days").startOf("day"), moment().endOf("day")],
                         "This Month": [
                             moment().startOf("month"),
                             moment().endOf("month"),
@@ -175,6 +139,34 @@
             );
 
             cb(start, end);
+
+            // ----- Button Handlers
+             $("#showButton").on("click", function (e) {
+                e.preventDefault();
+
+                const dp = $("#reportrange").data("daterangepicker");
+                const body = {
+                    sensorAId: $('#SensorAId option:selected').val(),
+                    sensorBId: $('#SensorBId option:selected').val(),
+                    startDate: dp.startDate,
+                    endDate: dp.endDate
+                };
+
+                $.ajax({
+                    type: "POST",
+                    url: "@Url.Action("ScatterData")",
+                    data: JSON.stringify(body),
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function (response) {
+                        data = response;
+                        chart.updateSeries([{
+                            name: "Value",
+                            data: response
+                        }])
+                    }
+                });
+            });
         });
     </script>
 }

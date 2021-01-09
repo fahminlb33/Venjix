@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Venjix.Infrastructure;
 using Venjix.Infrastructure.DAL;
 using Venjix.Infrastructure.Services;
 
@@ -82,12 +83,12 @@ namespace Venjix.Controllers
                 var count = 0;
                 var sensors = await _context.Sensors.ToListAsync();
                 var recordings = new List<Recording>();
-                var now = DateTime.Now;
+                var now = DateTime.Now.ToUniversalTime();
                 foreach (var entry in dict)
                 {
                     var sensor = sensors.Find(x => x.ApiField == entry.Key);
                     if (sensor == null) continue;
-                    if (!double.TryParse(entry.Value, out double value)) continue;
+                    if (!double.TryParse(entry.Value, System.Globalization.NumberStyles.AllowDecimalPoint, CommonHelpers.USCulture, out double value)) continue;
 
                     var record = new Recording
                     {
