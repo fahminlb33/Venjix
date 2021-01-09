@@ -22,9 +22,11 @@
                     <div class="form-group">
                         <label asp-for="UpdateInterval">
                             Auto update
-                        </label>   <a tabindex="0" class="btn btn-link" data-container="body" data-toggle="popover" data-trigger="focus" data-placement="right"
+                        </label>   
+                        <a tabindex="0" class="btn btn-link" data-container="body" data-toggle="popover" data-trigger="focus" data-placement="right"
                                       data-content="This auto update respect all the filter above. Make sure to extend the End Date to a time in the future">
-                            <i class="fas fa-info fa-sm"></i>
+                           
+                            <i data-feather="info" class="feather-sm"></i>
                         </a>
                         <select class="form-control" asp-for="UpdateInterval" asp-items="Model.UpdateIntervals"></select>
 

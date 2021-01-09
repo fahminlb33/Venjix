@@ -5,13 +5,13 @@
 }
  
 <vc:header-panel page-heading="@ViewData[ViewKeys.PageHeading]" page-subheading = "@ViewData[ViewKeys.PageSubheading]"
-    action = "Add" action-label = "Add Sensors"  controller = "Sensors" action-icon= "fas fa-plus" ></vc:header-panel>
+    action = "Add" action-label = "Add Sensors"  controller = "Sensors" action-icon= "" ></vc:header-panel>
 
 <div class="card shadow mb-4">
     <div class="card-body">
         @if (TempData[ViewKeys.Message] != null)
         {
-            <div class="alert alert-@((bool)TempData[ViewKeys.IsSuccess] == true ? "success" : "danger")" role="alert">
+            <div class='alert alert-@((bool)TempData[ViewKeys.IsSuccess] == true ? "success" : "danger")' role="alert">
                 @TempData[ViewKeys.Message]
             </div>
         }
