@@ -23,10 +23,9 @@
                         <label asp-for="UpdateInterval">
                             Auto update
                         </label>   
-                        <a tabindex="0" class="btn btn-link" data-container="body" data-toggle="popover" data-trigger="focus" data-placement="right"
+                        <a tabindex="0" class="btn btn-link btn-circle-link btm-sm p-0" data-container="body" data-toggle="popover" data-trigger="focus" data-placement="right"
                                       data-content="This auto update respect all the filter above. Make sure to extend the End Date to a time in the future">
-                           
-                            <i data-feather="info" class="feather-sm"></i>
+                            <i data-feather="info" class="feather-sm m-0"></i>
                         </a>
                         <select class="form-control" asp-for="UpdateInterval" asp-items="Model.UpdateIntervals"></select>
 
@@ -34,14 +33,16 @@
                     <div class="form-group">
                         <label asp-for="StartDate">Date range</label>
                         <div class="form-row">
-                            <div class="col-3" hidden>
-                                <input id="startdate" type="datetime-local" class="form-control" asp-for="StartDate" step="1">
+                            <div class="col-3">
+                                <input id="startdate" type="hidden" class="form-control" asp-for="StartDate" step="1">
                             </div>
-                            <div class="col-3" hidden>
-                                <input id="enddate" type="datetime-local" class="form-control" asp-for="EndDate" step="1">
+                            <div class="col-3">
+                                <input id="enddate" type="hidden" class="form-control" asp-for="EndDate" step="1">
                             </div>
+                        </div>
+                        <div class="form-row">
                             <div class="col">
-                                <button type="button" class="btn btn-light btn-sm line-height-normal p-3" id="reportrange">
+                                <button type="button" class="btn btn-light btn-block btn-sm line-height-normal p-2" id="reportrange">
                                     <i class="mr-2 text-primary" data-feather="calendar"></i>
                                     <span></span>
                                     <i class="ml-1" data-feather="chevron-down"></i>

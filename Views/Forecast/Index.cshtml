@@ -9,7 +9,7 @@
                  action="" action-label="" controller="" action-icon=""></vc:header-panel>
 
 <div class="row">
-    <div class="col-xxl-4 col-xl-5 col-lg-12">
+    <div class="col-xxl-3 col-xl-4 col-lg-12">
         <div class="card shadow mb-4" style="min-height:450px">
             <div class="card-body">
                 <form>
@@ -37,26 +37,39 @@
                             <input type="number" class="form-control" asp-for="Horizon">
                         </div>
                         <div class="form-group col">
-                            <label asp-for="TestSize">Test size (%)</label>
-                            <input type="number" class="form-control" asp-for="TestSize">
+                            <label asp-for="TestSize">Test size</label>
+                            <div class="input-group">
+                                <input type="number" class="form-control" asp-for="TestSize">
+                                <div class="input-group-append">
+                                    <span class="input-group-text">%</span>
+                                </div>
+                            </div>
                         </div>
+                      
                         <div class="form-group col">
-                            <label asp-for="ConfidenceLevel">Confidence (%)</label>
-                            <input type="number" class="form-control" asp-for="ConfidenceLevel">
+                            <label asp-for="ConfidenceLevel">Confidence</label>
+                            <div class="input-group">
+                                <input type="number" class="form-control" asp-for="ConfidenceLevel">
+                                <div class="input-group-append">
+                                    <span class="input-group-text">%</span>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
                     <div class="form-group">
                         <label asp-for="StartDate">Date range</label>
                         <div class="form-row">
-                            <div class="col-3" hidden>
-                                <input id="startdate" type="datetime-local" class="form-control" asp-for="StartDate" step="1">
+                            <div class="col-3">
+                                <input id="startdate" type="hidden" class="form-control" asp-for="StartDate" step="1">
                             </div>
-                            <div class="col-3" hidden>
-                                <input id="enddate" type="datetime-local" class="form-control" asp-for="EndDate" step="1">
+                            <div class="col-3">
+                                <input id="enddate" type="hidden" class="form-control" asp-for="EndDate" step="1">
                             </div>
+                        </div>
+                        <div class="form-row">
                             <div class="col">
-                                <button type="button" class="btn btn-light btn-sm line-height-normal p-3" id="reportrange">
+                                <button type="button" class="btn btn-light btn-block btn-sm line-height-normal p-2" id="reportrange">
                                     <i class="mr-2 text-primary" data-feather="calendar"></i>
                                     <span></span>
                                     <i class="ml-1" data-feather="chevron-down"></i>
@@ -73,7 +86,7 @@
         </div>
     </div>
 
-    <div class="col-xxl-8 col-xl-7 col-lg-12">
+    <div class="col-xxl-9 col-xl-8 col-lg-12">
         <div class="card shadow mb-4" style="min-height:450px">
             <div class="card-body">
                 <p id="forecastResult">Run forecast to see results.</p>

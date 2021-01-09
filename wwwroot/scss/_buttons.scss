@@ -19,6 +19,13 @@
         font-size: 1.35rem;
     }
 }
+.btn-circle-link {
+    border-radius: 100%;
+    font-size: 1rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center; 
+}
 
 .btn-icon-split {
     padding: 0;
@@ -60,6 +67,7 @@
 }
 
 .btn-icon {
+    display: inline-flex;
     padding: 0;
     justify-content: center;
     overflow: hidden;
@@ -69,7 +77,7 @@
     width: calc( (0.875rem * 1) + (0.875rem * 2) + (2px) ) !important;
 
     .feather {
-        margin-top: 0 !important;
+        vertical-align: middle !important;
     }
 }
 
