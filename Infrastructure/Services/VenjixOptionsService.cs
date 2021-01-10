@@ -15,7 +15,7 @@ namespace Venjix.Infrastructure.Services
 
     public class VenjixOptionsService : IVenjixOptionsService
     {
-        private static readonly string _jsonPath = Path.Combine(Path.GetDirectoryName(AppDomain.CurrentDomain.BaseDirectory), "settings.json");
+        private static readonly string _jsonPath = Path.Combine(Path.GetDirectoryName(AppDomain.CurrentDomain.BaseDirectory), "data/settings.json");
 
         public VenjixOptions Options { get; set; }
 
