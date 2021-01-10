@@ -110,10 +110,6 @@
     </div>
 </div>
 
-@section Styles {
-    <link href="~/lib/Chart.js/Chart.min.css" rel="stylesheet">
-}
-
 @section Scripts {
     <script src="~/lib/moment.js/moment.min.js"></script>
     <script src="~/lib/daterangepicker/daterangepicker.js"></script>
@@ -182,10 +178,16 @@
             function fetch_new_data() {
                 $('#showButton').attr('disabled', 'disabled');
 
-                d = {
+                const dp = $("#reportrange").data("daterangepicker");
+                const d = {
                     sensorId: $('#SensorId option:selected').val(),
-                    startDate: $('#StartDate').val(),
-                    endDate: $('#EndDate').val()
+                    startDate: dp.startDate,
+                    endDate: dp.endDate,
+                    seriesLength: $('#SeriesLength').val(),
+                    windowSize: $('#WindowSize').val(),
+                    horizon: $('#Horizon').val(),
+                    testSize: $('#TestSize').val(),
+                    confidenceLevel: $('#ConfidenceLevel').val(),
                 };
 
                 $.ajax({
@@ -199,7 +201,7 @@
                         var forecasted = data.forecasted;
                         var upperBound = data.upperBound;
                         var lowerBound = data.lowerBound;
-                        $("#forecastResult").html(`MAE: ${response.mae}<br>RMSE: ${data.rmse}`);
+                        $("#forecastResult").html(`MAE: ${data.mae}<br>RMSE: ${data.rmse}`);
 
                         chart.updateOptions({
                             xaxis: {
