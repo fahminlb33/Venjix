@@ -4,5 +4,5 @@
   "TelegramBotCallName": "",
   "TelegramBotUsername": "",
   "TelegramChatId": 0,
-  "TriggerCooldown": 0
+  "TriggerCooldown": 30
 }
