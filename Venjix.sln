@@ -5,7 +5,20 @@ VisualStudioVersion = 16.0.30611.23
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Venjix", "frontend\Venjix.csproj", "{368C5B85-9ADD-4E1A-BDD1-A91713EC7EE4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Venjix.Backend", "backend\Venjix.Backend.csproj", "{34DDE6AC-5E87-463C-8CD2-B452E12B0FB6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Venjix.Backend", "backend\Venjix.Backend.csproj", "{34DDE6AC-5E87-463C-8CD2-B452E12B0FB6}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Files", "Files", "{063CB1FF-2AB8-4CC0-91C6-E792C449ADEE}"
+	ProjectSection(SolutionItems) = preProject
+		license.md = license.md
+		readme.md = readme.md
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{239B06B6-F9F8-469E-B690-99D53030822E}"
+	ProjectSection(SolutionItems) = preProject
+		.github\workflows\backend-dotnet-core.yml = .github\workflows\backend-dotnet-core.yml
+		.github\workflows\codeql-analysis.yml = .github\workflows\codeql-analysis.yml
+		.github\workflows\frontend-dotnet-core.yml = .github\workflows\frontend-dotnet-core.yml
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -24,6 +37,9 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{239B06B6-F9F8-469E-B690-99D53030822E} = {063CB1FF-2AB8-4CC0-91C6-E792C449ADEE}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {F3458CDF-D791-4200-BD83-321C52C5C52E}
