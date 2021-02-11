@@ -1,0 +1,195 @@
+﻿@model VisualizeFilterModel
+@{
+    ViewData[ViewKeys.Title] = "Visualize: Time Series - Venjix";
+    ViewData[ViewKeys.PageHeading] = "Time Series Chart";
+    ViewData[ViewKeys.PageSubheading] = "View time Series data in a line chart.";
+}
+
+<vc:header-panel page-heading="@ViewData[ViewKeys.PageHeading]" page-subheading="@ViewData[ViewKeys.PageSubheading]"
+                 action="" action-label="" controller="" action-icon=""></vc:header-panel>
+
+<div class="row">
+    <div class="col-xxl-3 col-xl-4 col-lg-12">
+        <div class="card shadow mb-4" style="min-height:450px;">
+            <div class="card-body">
+                <form>
+                    <div class="form-group">
+                        <label asp-for="SensorId">Sensor</label>
+                        <select class="form-control" asp-for="SensorId" asp-items="Model.Sensors"></select>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="UpdateInterval">
+                            Auto update
+                        </label>   
+                        <a tabindex="0" class="btn btn-link btn-circle-link btm-sm p-0" data-container="body" data-toggle="popover" data-trigger="focus" data-placement="right"
+                                      data-content="This auto update respect all the filter above. Make sure to extend the End Date to a time in the future">
+                            <i data-feather="info" class="feather-sm m-0"></i>
+                        </a>
+                        <select class="form-control" asp-for="UpdateInterval" asp-items="Model.UpdateIntervals"></select>
+
+                    </div>
+                    <div class="form-group">
+                        <label for="reportrange">Date range</label>
+                        <div class="form-row">
+                            <div class="col">
+                                <button type="button" class="btn btn-light btn-block btn-sm line-height-normal p-2" id="reportrange">
+                                    <i class="mr-2 text-primary" data-feather="calendar"></i>
+                                    <span></span>
+                                    <i class="ml-1" data-feather="chevron-down"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button type="button" class="btn btn-success btn-block" id="showButton">
+                        <i data-feather="filter"></i> <span class="ml-2 text-xs">Apply Filter</span>
+                    </button>
+                </form>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="col-xxl-9 col-xl-8 col-lg-12">
+        <div class="card shadow mb-4" style="min-height:450px;">
+            <div class="card-body">
+                <div class="mt-4">
+                    <div id="chart"></div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/lib/moment.js/moment.min.js"></script>
+    <script src="~/lib/daterangepicker/daterangepicker.js"></script>
+    <script src="~/lib/apexcharts/apexcharts.min.js"></script>
+    <script>
+        $(function () {
+            // ----- Global Data
+            var start = moment().subtract(29, "days").startOf("day");
+            var end = moment().endOf("day");
+
+            var data = [];
+            var interval = null;            
+            var options = {
+                series: [{
+                    name: $('#SensorId option:selected').text(),
+                    data: data.slice()
+                }],
+                chart: {
+                    id: 'realtime',
+                    height: 350,
+                    type: 'line'
+                },
+                dataLabels: {
+                    enabled: false
+                },
+                xaxis: {
+                    type: 'datetime',
+                    tooltip: {
+                        enabled: false
+                    }
+                },
+                legend: {
+                    show: false
+                },
+                markers: {
+                    size: 4
+                },
+                tooltip: {
+                    x: {
+                        formatter: function (value, { series, seriesIndex, dataPointIndex, w }) {
+                            return moment(value).format("DD/MM/YYYY hh:mm:ss");
+                        }
+                    }
+                }
+            };
+
+            var chart = new ApexCharts(document.querySelector("#chart"), options);
+            chart.render();
+
+            // ----- Functions
+            function fetch_new_data() {
+                const dp = $("#reportrange").data("daterangepicker");
+                const body = {
+                    sensorId: $('#SensorId option:selected').val(),
+                    startDate: dp.startDate,
+                    endDate: dp.endDate,
+                };
+
+                $.ajax({
+                    type: "POST",
+                    url: "@Url.Action("TimeSeriesData")",
+                    data: JSON.stringify(body),
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function (response) {
+                        data = response;
+                        chart.updateSeries([{
+                            name: $('#SensorId option:selected').text(),
+                            data: response
+                        }])
+                    }
+                });
+            }
+
+            function cb(start, end) {
+                $("#reportrange span").html(
+                    start.format("MMMM D, YYYY") + " - " + end.format("MMMM D, YYYY")
+                );
+            }
+
+            // ----- Date Range Picker
+            $("#reportrange").daterangepicker(
+                {
+                    startDate: start,
+                    endDate: end,
+                    ranges: {
+                        Today: [moment().startOf("day"), moment().endOf("day")],
+                        Yesterday: [
+                            moment().subtract(1, "days").startOf("day"),
+                            moment().subtract(1, "days").endOf("day"),
+                        ],
+                        "Last 7 Days": [moment().subtract(6, "days").startOf("day"), moment().endOf("day")],
+                        "Last 30 Days": [moment().subtract(29, "days").startOf("day"), moment().endOf("day")],
+                        "This Month": [
+                            moment().startOf("month"),
+                            moment().endOf("month"),
+                        ],
+                        "Last Month": [
+                            moment().subtract(1, "month").startOf("month"),
+                            moment().subtract(1, "month").endOf("month"),
+                        ],
+                    },
+                },
+                cb
+            );
+
+            cb(start, end);
+
+            // ----- Button Handlers
+            $("#showButton").on("click", function (e) {
+                e.preventDefault();
+                fetch_new_data();
+            });
+
+            $('#UpdateInterval').on("change", function () {
+                if (interval !== null) {
+                    clearInterval(interval);
+                }
+
+                var selectedInterval = parseInt(this.value);
+                if (selectedInterval == 0) return;
+
+                interval = window.setInterval(function () {
+                    fetch_new_data();
+                }, selectedInterval * 1000);
+            });
+        });
+
+    </script>
+}
