@@ -1,0 +1,39 @@
+﻿<nav class="navbar navbar-expand navbar-light bg-white topbar mb-3 static-top shadow">
+    <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded mr-3">
+        <i data-feather="sidebar"></i>
+    </button>
+    <ul class="navbar-nav ml-auto">
+         
+        <li class="nav-item dropdown no-caret p-2 dropdown-user">
+            <a class="btn btn-icon btn-transparent-dark dropdown-toggle" id="navbarDropdownUserImage" href="javascript:void(0);" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <div class="avatar">
+                    <img class="avatar-img img-fluid" style="max-height:48px;max-width:48px"   src="~/img/user-placeholder.png">
+                </div>
+            </a>
+            <div class="dropdown-menu dropdown-menu-right border-0 shadow animated--fade-in-up" aria-labelledby="navbarDropdownUserImage">
+                <a asp-controller="Users" asp-action="Profile" class="dropdown-item" >
+                    <div class="dropdown-header d-flex align-items-center">
+                        <img class="dropdown-user-img"  src="~/img/user-placeholder.png">
+                        <div class="dropdown-user-details">
+                            <div class="dropdown-user-details-name">@(User.FindFirst(System.Security.Claims.ClaimTypes.Name).Value)</div> 
+                        </div>
+
+                    </div>
+                </a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item"  asp-controller="Home" asp-action="Settings">
+                    <div class="dropdown-item-icon"> 
+                        <i data-feather="settings" class="feather-sm text-muted"></i> 
+                    </div>
+                    Settings
+                </a>
+                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
+                    <div class="dropdown-item-icon"> 
+                        <i data-feather="log-out" class="feather-sm text-muted"></i>    
+                    </div>
+                    Logout
+                </a>
+            </div>
+        </li>
+    </ul>
+</nav>

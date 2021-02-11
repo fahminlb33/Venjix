@@ -1,0 +1,28 @@
+﻿@model SettingsModel
+
+<h6 class="mb-3">Status: <span class="badge badge-@(Model.IsTelegramTokenValid ? "success" : "danger")">@(Model.IsTelegramTokenValid ? "Activated" : "Disabled")</span></h6>
+
+<form class="form-inline" method="post" asp-action="TelegramSave" asp-controller="Home">
+    <label asp-for="TelegramToken" class="mr-2">Telegram Token</label>
+    <input type="text" class="flex-fill form-control form-control-sm mr-2" asp-for="TelegramToken">
+
+    <button type="submit" class="btn btn-primary btn-sm mr-2 my-1">Save</button>
+    <a class="btn btn-outline-primary btn-sm mr-2 my-1" asp-action="TelegramRefresh" asp-controller="Home">Reactivate</a>
+</form>
+
+<span asp-validation-for="TelegramToken" class="text-danger"></span>
+
+@if (Model.IsTelegramTokenValid)
+{
+    <p class="mt-3">Bot name: @Model.TelegramBotCallName (@Model.TelegramBotUsername)</p>
+}
+
+<h5 class="mt-3">How to enable Telegram Bot</h5>
+<ol>
+    <li>Create bot by chatting to <a href="https://telegram.me/botfather" target="_blank">BotFather</a>.</li>
+    <li>Chat "VENJIX-NOTIFY" to the bot.</li>
+    <li>Copy bot token to above form and click <b>Save</b>.</li>
+    <li>The status will turn <b>Activated</b> if the process is successful.</li>
+    <li>To disable, remove token and save.</li>
+</ol>
+<small>Currently bot only supports single channel message (you can add the bot to a group instead of directly chatting to the bot).</small>

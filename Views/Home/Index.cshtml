@@ -1,0 +1,180 @@
+﻿@model DashboardModel
+@{
+    ViewData[ViewKeys.Title] = "Dashboard - Venjix";
+    ViewData[ViewKeys.PageHeading] = "Dashboard"; 
+}
+<div class="container-fluid">
+
+    <vc:header-panel page-heading="@ViewData[ViewKeys.PageHeading]" page-subheading=""
+                     action="" action-label="" controller="" action-icon=""></vc:header-panel>
+
+    <div class="row">
+        <div class="col-xl-4 mb-4">
+            <div class="card lift border-left-primary shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                Sensors
+                            </div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">@Model.SensorsCount</div>
+                        </div>
+                        <div class="col-auto">
+                            <i data-feather="radio" class="feather-xl text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-4 mb-4">
+            <div class="card lift border-left-success shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                                Total Recorded Data
+                            </div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">@Model.RecordedDataCount</div>
+                        </div>
+                        <div class="col-auto">
+                            <i data-feather="list" class="feather-xl text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-4 mb-4">
+            <div class="card lift border-left-info shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
+                                Last Recorded Data
+                            </div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">@(Model.LastUpdate?.ToString() ?? "No data recorded")</div>
+                        </div>
+                        <div class="col-auto">
+                            <i data-feather="calendar" class="feather-xl text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="d-sm-flex align-items-center justify-content-between my-4">
+        <h1 class="h3 mb-0 text-gray-800">Tools</h1>
+    </div>
+
+    <div class="row">
+        <div class="col-xl-4 mb-4">
+            <a class="card lift h-100" asp-controller="Webhooks" asp-action="Index">
+                <div class="card-body d-flex justify-content-center flex-column">
+                    <div class="d-flex align-items-center justify-content-between">
+                        <div class="mr-3">
+
+                            <i class="feather-xl text-primary mb-3" data-feather="link"></i>
+                            <h5> Webhooks </h5>
+                            <div class="text-muted small">Manage connection between webapps</div>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="col-xl-4 mb-4">
+            <a class="card lift h-100" href="https://github.com/fahminlb33/Venjix/wiki" target="_blank">
+                <div class="card-body d-flex justify-content-center flex-column">
+                    <div class="d-flex align-items-center justify-content-between">
+                        <div class="mr-3">
+                            <i class="feather-xl text-secondary mb-3" data-feather="book"></i>
+                            <h5>Documentation</h5>
+                            <div class="text-muted small">Access the documentation to learn and understand Venjix</div>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="col-xl-4 mb-4">
+            <a class="card lift h-100" asp-controller="Sensors" asp-action="Index">
+                <div class="card-body d-flex justify-content-center flex-column">
+                    <div class="d-flex align-items-center justify-content-between">
+                        <div class="mr-3">
+
+                            <i class="feather-xl text-primary mb-3" data-feather="thermometer"></i>
+
+                            <h5>Sensors</h5>
+                            <div class="text-muted small">Manage sensors and your IoT Devices</div>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xl-4 mb-4">
+            <a class="card lift h-100" asp-controller="Visualize" asp-action="Table">
+                <div class="card-body d-flex justify-content-center flex-column">
+                    <div class="d-flex align-items-center justify-content-between">
+                        <div class="mr-3">
+                            <i class="feather-xl text-primary mb-3" data-feather="bar-chart-2"></i>
+                            <h5> Visualizer </h5>
+                            <div class="text-muted small">Create informative visual view of your data.</div>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="col-xl-4 mb-4">
+            <a class="card lift h-100" asp-controller="Triggers" asp-action="Index">
+                <div class="card-body d-flex justify-content-center flex-column">
+                    <div class="d-flex align-items-center justify-content-between">
+                        <div class="mr-3">
+                            <i class="feather-xl text-danger mb-3" data-feather="cloud-lightning"></i>
+                            <h5>Triggers</h5>
+                            <div class="text-muted small">Manage triggers for webhook communication</div>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="col-xl-4 mb-4">
+            <a class="card lift h-100" asp-controller="Forecast" asp-action="Index">
+                <div class="card-body d-flex justify-content-center flex-column">
+                    <div class="d-flex align-items-center justify-content-between">
+                        <div class="mr-3">
+
+                            <i class="feather-xl text-success mb-3" data-feather="fast-forward"></i>
+
+                            <h5>Forecast</h5>
+                            <div class="text-muted small">Predict next event using gathered data.</div>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xxl-8 col-xl-6 col-lg-6 col-12">
+            <div class="card mb-4">
+                <div class="card-header border-bottom">
+                    Overview
+                </div>
+                <div class="card-body">
+                    No overview provided...
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xxl-4 col-xl-6 col-lg-6 col-12">
+            <div class="card mb-4">
+                <div class="card-header">Venjix Information</div>
+                <div class="card-body">
+                    Version : @Model.VenjixVersion
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
