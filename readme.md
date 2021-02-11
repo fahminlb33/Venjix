@@ -25,11 +25,9 @@ You can think this app is like ThingSpeak but hosed in your local server.
 
 ## Build
 
-Project      | Configuration  | Branch | Build Status
--------------|----------------|-------------
-Backend App  | Release AnyCPU | master | ![.NET Core Backend App](https://github.com/fahminlb33/Venjix/workflows/.NET%20Core%20Backend%20App/badge.svg)
-Frontend App | Release AnyCPU | master | ![.NET Core Frontend App](https://github.com/fahminlb33/Venjix/workflows/.NET%20Core%20Frontend%20App/badge.svg)
-CodeQL       | Release AnyCPU | master | ![CodeQL](https://github.com/fahminlb33/Venjix/workflows/CodeQL/badge.svg)
+Configuration  | Branch | Build Status
+---------------|--------|-------------
+Release AnyCPU | master | ![.NET Core](https://github.com/fahminlb33/Venjix/workflows/.NET%20Core/badge.svg)
 
 ## Features
 
