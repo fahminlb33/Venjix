@@ -1,4 +1,4 @@
-name: .NET Core Frontend App
+name: .NET Core
 
 on:
   push:

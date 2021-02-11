@@ -1,4 +1,4 @@
-name: .NET Core Backend App
+name: .NET Core
 
 on:
   push:
