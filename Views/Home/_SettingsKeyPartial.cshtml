@@ -3,8 +3,24 @@
 <form class="form-inline" method="post" asp-action="KeySave" asp-controller="Home">
     <label asp-for="ApiKey" class="mr-2">API Key</label>
     <input type="text" class="flex-fill form-control form-control-sm mr-2" asp-for="ApiKey">
-    <button type="submit" class="btn btn-primary  btn-sm  my-1">Save</button>
+    <a id="generateApiKey" class="btn btn-primary btn-sm my-1 mr-1">Generate</a>
+    <button type="submit" class="btn btn-primary btn-sm my-1">Save</button>
 
     <span asp-validation-for="ApiKey" class="text-danger ml-2"></span>
 </form>
 <p class="mt-3">This API key will be used when you call <b>POST /api/data</b>. Make sure to keep it secret.</p>
+
+<script>
+    document.getElementById("generateApiKey").onclick = function(e) {
+        e.preventDefault();
+
+        var result           = '';
+        var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+        var charactersLength = characters.length;
+        for ( var i = 0; i < 40; i++ ) {
+            result += characters.charAt(Math.floor(Math.random() * charactersLength));
+        }
+
+        document.getElementById("ApiKey").value = result;
+    }
+</script>
