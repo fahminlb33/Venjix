@@ -1,15 +1,15 @@
-﻿using AutoMapper;
+﻿using System;
+using System.Linq;
+using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Linq;
-using System.Threading.Tasks;
-using Venjix.Infrastructure.AI;
 using Venjix.Infrastructure.Authentication;
-using Venjix.Infrastructure.DAL;
-using Venjix.Models;
+using Venjix.Infrastructure.Database;
+using Venjix.Infrastructure.Services.Forecasting;
+using Venjix.Models.ViewModels;
 
 namespace Venjix.Controllers
 {
@@ -58,7 +58,7 @@ namespace Venjix.Controllers
                 .Where(x => x.Timestamp >= model.StartDate && x.Timestamp <= model.EndDate)
                 .ToListAsync();
             var data = records.GroupBy(x => new DateTime(x.Timestamp.Date.Year, x.Timestamp.Date.Month, x.Timestamp.Date.Day))
-                .Select(x => new ModelInput
+                .Select(x => new ForecastModelInput
                 {
                     RecordTime = x.Key,
                     Value = (float) x.Average(x => x.Value)

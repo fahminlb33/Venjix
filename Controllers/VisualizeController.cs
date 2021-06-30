@@ -1,18 +1,17 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Linq;
-using System.Threading.Tasks;
-using Venjix.Infrastructure;
 using Venjix.Infrastructure.Authentication;
-using Venjix.Infrastructure.DAL;
-using Venjix.Infrastructure.DataTables;
-using Venjix.Infrastructure.DTO;
-using Venjix.Models;
+using Venjix.Infrastructure.Database;
+using Venjix.Infrastructure.Helpers;
+using Venjix.Infrastructure.Services.DataTables;
+using Venjix.Models.Dtos;
+using Venjix.Models.ViewModels;
 
 namespace Venjix.Controllers
 {

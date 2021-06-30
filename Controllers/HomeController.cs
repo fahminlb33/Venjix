@@ -1,16 +1,16 @@
-﻿using AutoMapper;
+﻿using System.Linq;
+using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Linq;
-using System.Threading.Tasks;
 using Venjix.Infrastructure.Authentication;
-using Venjix.Infrastructure.DAL;
-using Venjix.Infrastructure.Services;
-using Venjix.Models;
+using Venjix.Infrastructure.Database;
+using Venjix.Infrastructure.Services.Options;
+using Venjix.Infrastructure.Services.Telegram;
+using Venjix.Models.ViewModels;
 
 namespace Venjix.Controllers
 {
