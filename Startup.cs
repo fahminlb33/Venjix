@@ -27,10 +27,15 @@ namespace Venjix
         public void ConfigureServices(IServiceCollection services)
         {
             // views
+#if DEBUG
             services.AddControllersWithViews()
                 .AddRazorRuntimeCompilation()
                 .AddCustomNewtonsoftJson();
-               
+#else
+            services.AddControllersWithViews()
+                .AddCustomNewtonsoftJson();
+#endif
+
             // routing
             services.AddCustomCors();
             services.AddCustomAuth();
