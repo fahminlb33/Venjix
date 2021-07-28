@@ -1,26 +1,39 @@
-#See https://aka.ms/containerfastmode to understand how Visual Studio uses this Dockerfile to build your images for faster debugging.
+# Visual Studio Optimized Dockerfile
 
+# Base image to run the app
 FROM mcr.microsoft.com/dotnet/aspnet:5.0-buster-slim AS base
 WORKDIR /app
 EXPOSE 80
+EXPOSE 443
 
+# Builder image to compile and build the project
 FROM mcr.microsoft.com/dotnet/sdk:5.0-buster-slim AS build
-RUN curl -sL https://deb.nodesource.com/setup_10.x |  bash -
-RUN apt-get install -y nodejs
-RUN npm install -g sass
 
+# Install necessary packages
+RUN dotnet tool install -g Microsoft.Web.LibraryManager.Cli
+RUN dotnet tool install -g Excubo.WebCompiler
+
+ENV PATH="${PATH}:/root/.dotnet/tools"
+
+# Change work directory
 WORKDIR /src
-COPY ["Venjix.csproj", ""]
-RUN dotnet restore "./Venjix.csproj"
 
+# Copy project source
 COPY . .
-WORKDIR "/src/."
-RUN sass wwwroot/scss/sb-admin-2.scss wwwroot/css/sb-admin-2.css
-RUN dotnet build "Venjix.csproj" -c Release -o /app/build
 
+# Restore package dependencies
+RUN dotnet restore ./Venjix.csproj
+RUN libman restore
+RUN webcompiler wwwroot/scss/venjix.scss -o wwwroot/css/ -z disable
+
+# Compile and build the project
+RUN dotnet build Venjix.csproj -c Release -o /app/build
+
+# Publish project
 FROM build AS publish
-RUN dotnet publish "Venjix.csproj" -c Release -o /app/publish
+RUN dotnet publish Venjix.csproj -c Release -o /app/publish
 
+# Build final image and run the app
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
