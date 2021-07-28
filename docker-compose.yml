@@ -1,0 +1,38 @@
+version: "3.9"
+
+# define volume
+volumes:
+    # Venjix configuration and SQlite database
+    webapp:
+        driver: local
+    # Seq log data
+    logs:
+        driver: local
+
+# define services
+services:
+    # Venjix web app
+    webapp:
+        build: .
+        ports:
+            - 8080:80
+            - 8443:443 # SSL support
+        volumes:
+            - webapp:/data
+    # Seq log server
+    seq:
+        image: datalust/seq:latest
+        deploy:
+            resources:
+                limits:
+                    memory: 1G
+                reservations:
+                    memory: 512M
+        ports:
+            - 8001:80   # dashboard
+            - 5342:5341 # ingest
+        volumes:
+            - logs:/data
+        environment:
+            - ACCEPT_EULA=Y
+            - BASE_URI=http://localhost:5341
